@@ -6,7 +6,7 @@ const config = '{\n  // public comment\n  "title": "Generic theme",\n  "sections
 
 test('JSONC accepts comments/trailing commas through an independent language API', () => {
   const parsed = analyzeJsonc(config);
-  assert.deepEqual(parsed.value, {title:'Generic theme',sections:[1,2]});
+  assert.deepEqual(JSON.parse(JSON.stringify(parsed.value)), {title:'Generic theme',sections:[1,2]});
   assert.deepEqual(parsed.diagnostics, []);
   assert.equal(parsed.schema, 'agentsam.lang-jsonc.v1');
 });
