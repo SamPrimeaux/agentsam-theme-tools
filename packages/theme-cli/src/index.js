@@ -5,7 +5,7 @@ export async function runThemeCommand(argv,{stdout=process.stdout,stderr=process
   const args=[...argv];
   const command=args.shift() || 'help';
   if(command==='help'||command==='--help'||command==='-h'){
-    stdout.write('AgentSam Theme Tools (foundation)\nUsage: agentsam-theme <ingest|inspect|graph|check> <paths...> [--json]\nSources: HTML, directory, ZIP, TAR, TAR.GZ, stdin (-); Git bundle metadata\n');
+    stdout.write('AgentSam Theme Tools (foundation)\nUsage: agentsam-theme <ingest|inspect|graph|check> <paths...> [--json]\nSources: HTML, directory, ZIP, TAR, TAR.GZ, stdin (-); Git bundle snapshots\n');
     return 0;
   }
   if(!CLI_COMMANDS.includes(command)){stderr.write('unknown_command: '+command+'\n');return 2;}

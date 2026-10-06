@@ -5,6 +5,7 @@
  */
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import os from 'node:os';
 import { createHash } from 'node:crypto';
 import { Readable, Transform } from 'node:stream';
 import { createGunzip } from 'node:zlib';
@@ -168,10 +169,48 @@ async function fromDirectory(dir,policy) {
   return records;
 }
 
-function bundleHeads(filename){
-  const p=spawnSync('git',['bundle','list-heads',filename],{encoding:'utf8',timeout:15000,maxBuffer:1024*1024});
-  if(p.status!==0)throw new Error('git_bundle_invalid: '+(p.stderr||p.error?.message||'unknown'));
-  return p.stdout.split(/\r?\n/).filter(Boolean).map(line=>({head:line.trim()}));
+function checkedGit(args,options={}) {
+  const result=spawnSync('git',args,{
+    encoding:options.binary?null:'utf8',
+    timeout:30000,
+    maxBuffer:options.maxBuffer||2*1024*1024,
+    env:{...process.env,GIT_CONFIG_NOSYSTEM:'1',GIT_CONFIG_GLOBAL:'/dev/null',GIT_LFS_SKIP_SMUDGE:'1'}
+  });
+  if(result.status!==0)throw new Error('git_bundle_processing_failed: '+String(result.stderr||result.error?.message||result.stdout||'unknown').slice(0,1000));
+  return result.stdout;
+}
+
+/**
+ * Inspect a Git bundle without a working-tree checkout or executing repository scripts.
+ * Export one branch snapshot using git archive, then read the TAR through the exact same
+ * archive policy as regular uploads. Refs remain inventory metadata.
+ */
+async function readGitBundle(bytes,localPath,policy) {
+  const root=await fs.mkdtemp(path.join(os.tmpdir(),'agentsam-theme-gitbundle-'));
+  try {
+    const bundle=localPath||path.join(root,'upload.bundle');
+    if(!localPath)await fs.writeFile(bundle,bytes);
+    const lines=checkedGit(['bundle','list-heads',bundle]).split(/\r?\n/).filter(Boolean);
+    const heads=lines.map(line=>{
+      const idx=line.indexOf(' ');
+      return {sha:line.slice(0,idx),ref:line.slice(idx+1)};
+    });
+    const chosen=heads.find(h=>h.ref.startsWith('refs/heads/'))||heads.find(h=>h.ref==='HEAD');
+    if(!chosen)throw new Error('git_bundle_has_no_branch_ref');
+    const bare=path.join(root,'repo.git');
+    checkedGit(['init','--bare','-q',bare]);
+    checkedGit(['-c','core.hooksPath=/dev/null','--git-dir='+bare,
+      'fetch','--no-tags',bundle,chosen.ref]);
+    const archive=checkedGit(['-c','core.hooksPath=/dev/null','--git-dir='+bare,
+      'archive','--format=tar','FETCH_HEAD'],{
+      binary:true,maxBuffer:policy.maxExpandedBytes+policy.maxEntries*1024
+    });
+    const files=await fromTar(archive,false,policy);
+    return {files,metadata:{status:'snapshot-extracted',revision:chosen.sha,
+      selectedRef:chosen.ref,heads,snapshotFormat:'tar'}};
+  }finally{
+    await fs.rm(root,{recursive:true,force:true});
+  }
 }
 
 async function obtainSource(source,options,policy) {
@@ -224,8 +263,9 @@ async function processBuffer(bytes,name,localPath,policy) {
   else if(format==='tar')files=await fromTar(bytes,false,policy);
   else if(format==='tar.gz')files=await fromTar(bytes,true,policy);
   else if(format==='git-bundle'){
-    if(!localPath)throw new Error('git_bundle_requires_local_path_for_validation');
-    metadata={status:'history-inventory-only',heads:bundleHeads(localPath)};
+    const result=await readGitBundle(bytes,localPath,policy);
+    files=result.files;
+    metadata=result.metadata;
   } else files=[makeRecord(name,bytes,true)];
   return {origin:format,label:name,sha256:bytesHash(bytes),files,metadata};
 }
