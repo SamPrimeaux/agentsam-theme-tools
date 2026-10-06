@@ -1,0 +1,19 @@
+{
+  "name": "@inneranimalmedia/theme-syntax-html",
+  "version": "0.1.0",
+  "description": "AgentSam Theme Tools: theme-syntax-html",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "src",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "parse5": "^8.0.0"
+  }
+}

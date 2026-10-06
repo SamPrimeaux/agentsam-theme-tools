@@ -1,0 +1,23 @@
+{
+  "name": "@inneranimalmedia/theme-source-ingest",
+  "version": "0.1.0",
+  "private": false,
+  "type": "module",
+  "description": "@inneranimalmedia/theme-source-ingest",
+  "engines": {
+    "node": ">=22"
+  },
+  "files": [
+    "src",
+    "bin"
+  ],
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "dependencies": {
+    "@inneranimalmedia/theme-source-input": "0.1.0",
+    "@inneranimalmedia/theme-graph": "0.1.0",
+    "tar-stream": "^3.1.7",
+    "yauzl": "^3.2.0"
+  }
+}

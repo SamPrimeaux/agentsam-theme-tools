@@ -1,0 +1,21 @@
+{
+  "name": "@inneranimalmedia/agentsam-theme-tools",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Customer-neutral source intelligence and transformation tools for themes",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "cli": "node packages/theme-cli/bin/agentsam-theme.mjs",
+    "verify": "npm test && npm pack --dry-run -w @inneranimalmedia/theme-cli"
+  },
+  "devDependencies": {
+    "yazl": "^3.3.1"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
