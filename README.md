@@ -14,7 +14,9 @@ The objective is straightforward:
 
 ## Project status
 
-**Status: Architecture defined · Implementation and verification pending**
+**Status: Foundation implementation underway · seven independently installable packages, source/archive/Git bundle intake, HTML analysis and rewriting, theme graphs, AgentSam JSONC, CLI, and automated verification.**
+
+Track verified behavior and remaining full-product requirements in [Implementation Status](docs/IMPLEMENTATION_STATUS.md) and [SDK Reuse Boundaries](docs/SDK_REUSE_BOUNDARIES.md).
 
 This README establishes the complete intended implementation scope and release requirements.
 
