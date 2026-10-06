@@ -8,8 +8,8 @@ export const SOURCE_INPUT_SCHEMA = 'agentsam.source-input.v1';
 export function normalizeSourceInput(value) {
   if (typeof value === 'string') {
     if (value === '-') return Object.freeze({ kind: 'stdin' });
-    if (/^https?:\/\//i.test(value)) return Object.freeze({ kind: 'url', url: value });
-    if (!value.trim()) throw new TypeError('source path cannot be empty');
+    if (/^https?:\/\//i.test(value)) return normalizeSourceInput({ kind: 'url', url: value });
+    if (!value.trim() || value.includes('\0')) throw new TypeError('source path cannot be empty or contain NUL');
     return Object.freeze({ kind: 'local-path', path: value });
   }
   if (value instanceof Uint8Array || value instanceof ArrayBuffer) {
@@ -18,7 +18,7 @@ export function normalizeSourceInput(value) {
   if (!value || typeof value !== 'object') throw new TypeError('invalid source input');
   const kind = value.kind;
   if (kind === 'local-path' || kind === 'directory') {
-    if (typeof value.path !== 'string' || !value.path.trim()) throw new TypeError('source path is required');
+    if (typeof value.path !== 'string' || !value.path.trim() || value.path.includes('\0')) throw new TypeError('source path is required');
     return Object.freeze({ kind, path: value.path });
   }
   if (kind === 'stdin') return Object.freeze({ kind });
@@ -33,6 +33,7 @@ export function normalizeSourceInput(value) {
   if (kind === 'url') {
     const url = new URL(value.url);
     if (url.protocol !== 'https:' && url.protocol !== 'http:') throw new TypeError('only HTTP(S) source URLs are supported');
+    if (url.username || url.password) throw new TypeError('source URLs may not include credentials');
     return Object.freeze({ kind, url: url.href });
   }
   if (kind === 'provider-ref') {

@@ -1,9 +1,8 @@
-import path from 'node:path';
 import { analyzeHtml } from '@inneranimalmedia/theme-syntax-html';
 
 export const THEME_GRAPH_SCHEMA = 'agentsam.theme-graph.v1';
 const DEFAULT_DOC = new Set(['.html', '.htm']);
-const SKIP_LOCAL = /^(?:data:|blob:|mailto:|tel:|javascript:|#|\/\/)/i;
+const SKIP_LOCAL = /^(?:data:|blob:|mailto:|tel:|javascript:|#)/i;
 
 /** Build a source-backed graph; no CMS models, customer identity, persistence or network. */
 export function buildThemeGraph(files) {
@@ -15,25 +14,32 @@ export function buildThemeGraph(files) {
     identities.set(id, file);
   }
   const nodes = [...identities].map(([id, file]) => ({
-    id, kind: DEFAULT_DOC.has(path.posix.extname(id).toLowerCase()) ? 'html' : 'resource',
+    id, kind: DEFAULT_DOC.has(extname(id)) ? 'html' : 'resource',
     bytes: file.bytes ?? null, hash: file.sha256 ?? null
   }));
   const edges = [], diagnostics = [], pages = [];
   for (const [id, file] of identities) {
-    if (!DEFAULT_DOC.has(path.posix.extname(id).toLowerCase()) || typeof file.text !== 'string') continue;
+    if (!DEFAULT_DOC.has(extname(id)) || typeof file.text !== 'string') continue;
     const analysis = analyzeHtml(file.text, { filename: id });
     pages.push({ id, title: analysis.title, sections: analysis.sections });
     for (const error of analysis.errors) diagnostics.push({ severity: 'warning', code: 'HTML_PARSE', file: id, ...error });
     for (const ref of analysis.references) {
       if (SKIP_LOCAL.test(ref.value)) continue;
-      if (/^[a-z][a-z0-9+.-]*:/i.test(ref.value)) {
+      if (/^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(ref.value)) {
         edges.push({ from: id, to: ref.value, kind: ref.kind, external: true });
         continue;
       }
       const pathname = ref.value.split(/[?#]/, 1)[0];
       if (!pathname) continue;
-      const target = normalizePath(pathname.startsWith('/')
-        ? pathname.slice(1) : path.posix.join(path.posix.dirname(id), pathname));
+      let target;
+      try {
+        target = normalizePath(pathname.startsWith('/')
+          ? pathname.slice(1) : join(dirname(id), pathname));
+      } catch (error) {
+        diagnostics.push({ severity: 'error', code: 'UNSAFE_REFERENCE_PATH',
+          file: id, reference: ref.value, message: error.message });
+        continue;
+      }
       const resolved = identities.has(target);
       edges.push({ from: id, to: target, kind: ref.kind, external: false, resolved,
         attribute: ref.attr, original: ref.value });
@@ -46,12 +52,31 @@ export function buildThemeGraph(files) {
   return { schema: THEME_GRAPH_SCHEMA, nodes, edges, pages, diagnostics };
 }
 
+function extname(value) {
+  const part = value.slice(value.lastIndexOf('/') + 1);
+  const dot = part.lastIndexOf('.');
+  return dot < 0 ? '' : part.slice(dot).toLowerCase();
+}
+function dirname(value) {
+  const slash = value.lastIndexOf('/');
+  return slash < 0 ? '.' : value.slice(0, slash);
+}
+function join(parent, child) {
+  return parent === '.' ? child : parent + '/' + child;
+}
 function normalizePath(value) {
   if (typeof value !== 'string' || !value.trim()) throw new TypeError('source path required');
-  const posix = value.replace(/\\/g, '/').replace(/^\.\/+/, '');
-  const normalized = path.posix.normalize(posix);
-  if (normalized === '..' || normalized.startsWith('../') || normalized.startsWith('/') || normalized.includes('\0')) {
+  const raw = value.replace(/\\/g, '/');
+  if (raw.startsWith('/') || /^[a-zA-Z]:/.test(raw) || raw.includes('\0')) {
     throw new Error('invalid_graph_path: ' + value);
   }
-  return normalized;
+  const segments = [];
+  for (const part of raw.split('/')) {
+    if (!part || part === '.') continue;
+    if (part === '..') {
+      if (!segments.length) throw new Error('invalid_graph_path: ' + value);
+      segments.pop();
+    } else segments.push(part);
+  }
+  return segments.join('/') || '.';
 }
