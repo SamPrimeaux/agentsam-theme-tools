@@ -12,6 +12,9 @@
     "cli": "node packages/theme-cli/bin/agentsam-theme.mjs",
     "verify": "npm test && npm pack --dry-run -w @inneranimalmedia/theme-cli"
   },
+  "devDependencies": {
+    "yazl": "^3.3.1"
+  },
   "engines": {
     "node": ">=22"
   }
