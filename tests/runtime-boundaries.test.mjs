@@ -45,7 +45,7 @@ test('Worker HTMLRewriter adapter is optional and honors mapped replacements',()
   assert.throws(()=>rewriteResponseWithCloudflare(response,{},null),/unavailable/);
 });
 
-test('Git bundle intake validates history refs without claiming source extraction',async(t)=>{
+test('Git bundle intake exports the branch snapshot without running donor code',async(t)=>{
   if(spawnSync('git',['--version']).status!==0){t.skip('git unavailable');return;}
   const dir=await mkdtemp(path.join(os.tmpdir(),'agentsam-theme-git-'));
   const repo=path.join(dir,'source'),bundle=path.join(dir,'snapshot.bundle');
