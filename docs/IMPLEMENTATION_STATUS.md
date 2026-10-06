@@ -10,6 +10,8 @@ Initial milestone branch: feat/foundation-source-intake-html-20261006.
 - Theme graph resolving local resources and reporting missing referenced assets.
 - Node archive adapters for ZIP, TAR and TAR.GZ, reading in memory without archive extraction.
 - CLI entrypoint for ingest, inspect, graph and check, with structured JSON output.
+- AgentSam-owned JSONC analysis, diagnostics, path editing, formatting, and source location support, using a non-Shopify low-level parser.
+- Reproducible npm lockfile, seven packed library packages, independent installation smoke test, and Node 22/24 CI workflow.
 - Test fixtures exercising unrelated source contents and malformed archive handling.
 
 ## Incomplete; do not claim complete
