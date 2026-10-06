@@ -1,0 +1,11 @@
+{
+  "compatibility_date": "2026-09-27",
+  "deploy_is_explicit": true,
+  "project_name": "theme-rewriter-lab",
+  "schema": "agentsam.rapid-rust.v1",
+  "template": "shared-core",
+  "worker_build_version": "0.8.7",
+  "worker_dir": "worker",
+  "worker_version": "0.8.7",
+  "wrangler_version": "4.145.0"
+}

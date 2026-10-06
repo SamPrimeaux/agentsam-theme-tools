@@ -1,0 +1,12 @@
+{
+  "name": "theme-rewriter-lab-worker",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "deploy:dry": "wrangler deploy --dry-run"
+  },
+  "devDependencies": {
+    "wrangler": "4.145.0"
+  }
+}

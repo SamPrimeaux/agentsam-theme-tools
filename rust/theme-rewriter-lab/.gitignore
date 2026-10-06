@@ -1,0 +1,7 @@
+/target
+/build
+/worker/target
+/worker/build
+/node_modules
+/.wrangler
+.DS_Store
