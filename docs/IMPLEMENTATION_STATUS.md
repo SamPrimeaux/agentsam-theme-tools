@@ -13,7 +13,7 @@ Initial milestone branch: feat/foundation-source-intake-html-20261006.
 - Test fixtures exercising unrelated source contents and malformed archive handling.
 
 ## Incomplete; do not claim complete
-- Git bundle intake currently verifies and inventories heads from local source; no history extraction or theme conversion.
+- Git bundle intake now validates refs, fetches into an isolated temporary bare repository, and exports one branch snapshot for safe archive inspection; multi-revision history conversion and full Git semantics remain unimplemented.
 - Browser File drag/drop and Local Studio terminal PTY upload/transfer bridges are not yet wired. The shared SourceInput contract is prepared.
 - CodeMirror, Monaco, LSP, JSONC, Liquid, CSS semantic graph, full HTML transform planning and visual fidelity require full implementation.
 - Source rewrites are targeted supported operations, not a generic WYSIWYG editor or complete HTMLRewrite parity.
