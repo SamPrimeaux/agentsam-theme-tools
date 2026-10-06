@@ -1,0 +1,17 @@
+{
+  "name": "@inneranimalmedia/theme-source-input",
+  "version": "0.1.0",
+  "description": "AgentSam Theme Tools: theme-source-input",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "src",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {}
+}

@@ -1,0 +1,19 @@
+{
+  "name": "@inneranimalmedia/theme-html-rewriter",
+  "version": "0.1.0",
+  "description": "AgentSam Theme Tools: theme-html-rewriter",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "src",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@inneranimalmedia/theme-syntax-html": "0.1.0"
+  }
+}
