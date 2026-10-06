@@ -61,8 +61,11 @@ test('Git bundle intake validates history refs without claiming source extractio
     git(['-C',repo,'bundle','create',bundle,'--all']);
     const result=await ingestSourceInputs(bundle);
     assert.equal(result.materials[0].origin,'git-bundle');
-    assert.equal(result.materials[0].metadata.status,'history-inventory-only');
+    assert.equal(result.materials[0].metadata.status,'snapshot-extracted');
     assert.ok(result.materials[0].metadata.heads.length>0);
-    assert.equal(result.materials[0].fileCount,0);
+    assert.equal(result.materials[0].fileCount,1);
+    assert.equal(result.materials[0].graph.pages.length,1);
+    const byteUploaded=await ingestSourceInputs({kind:'bytes',bytes:await readFile(bundle),name:'snapshot.bundle'});
+    assert.equal(byteUploaded.materials[0].fileCount,1);
   }finally{await rm(dir,{recursive:true,force:true});}
 });
