@@ -6,7 +6,7 @@ export const SOURCE_INVENTORY_SCHEMA = 'agentsam.theme-source-inventory.v1';
 
 export const SOURCE_IGNORE_DIRS = Object.freeze([
   '.git', 'node_modules', '.agentsam', '.next', '.vercel', '.turbo',
-  '.cache', '.parcel-cache', '.output', 'dist', 'coverage',
+  '.cache', '.parcel-cache', '.output', 'coverage',
 ]);
 const IGNORE = new Set(SOURCE_IGNORE_DIRS);
 const LANGUAGE_EXT = Object.freeze({
