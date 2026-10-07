@@ -47,7 +47,8 @@ export function buildThemeGraph(files) {
       }
       const resolved = identities.has(target);
       edges.push({ from: id, to: target, kind: ref.kind, external: false, resolved,
-        attribute: ref.attr, original: ref.value });
+        attribute: ref.attr, original: ref.value,
+        range: ref.start == null ? null : { start: ref.start, end: ref.end } });
       if (!resolved && ref.kind !== 'navigation') {
         diagnostics.push({ severity: 'warning', code: 'UNRESOLVED_RESOURCE',
           file: id, target, reference: ref.value });
