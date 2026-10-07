@@ -50,6 +50,9 @@ try{
   ].join('\n');
   console.log(run(process.execPath,['--input-type=module','-e',smoke],project));
   console.log(run(process.execPath,[path.join(project,'node_modules/@inneranimalmedia/theme-cli/bin/agentsam-theme.mjs'),'inspect',path.join(root,'examples/basic')],project));
+  const closure=run(process.execPath,[path.join(project,'node_modules/@inneranimalmedia/theme-cli/bin/agentsam-theme.mjs'),'closure',path.join(root,'examples/basic')],project);
+  if(!closure.includes('recognized module closure: 3 files'))throw new Error('Independent CLI closure failed: '+closure);
+  console.log('independent-cli-closure: PASS');
   console.log('independent-packaged-install: PASS ('+archives.length+' packages)');
 } finally {
   fs.rmSync(work,{recursive:true,force:true});
