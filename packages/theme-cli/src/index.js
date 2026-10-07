@@ -46,7 +46,7 @@ export async function runThemeCommand(argv, { stdout = process.stdout, stderr = 
   if (command === 'help' || command === '--help' || command === '-h') {
     stdout.write(
       'AgentSam Theme Tools (foundation)\n' +
-      'Usage: agentsam-theme <ingest|inspect|graph|check|closure> <paths...> [--json]\n' +
+      'Usage: agentsam-theme <ingest|inspect|inventory|graph|check|closure> <paths...> [--json]\n' +
       '       agentsam-theme closure <one path> [--entry relative/path] [--json]\n' +
       'Sources: HTML, directory, ZIP, TAR, TAR.GZ, stdin (-); Git bundle snapshots\n' +
       'Closure is a source-backed candidate report, not a runnable converted theme.\n'
