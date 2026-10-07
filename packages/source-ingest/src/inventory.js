@@ -60,9 +60,10 @@ export function buildSourceInventory(material) {
       throw new Error('unfiltered_generated_metadata: ' + file.path);
     }
     if (paths.has(file.path)) throw new Error('duplicate_inventory_path: ' + file.path);
-    paths.add(file.path);
-    const ext = extensionOf(file.path);
-    const folder = file.path.includes('/') ? file.path.split('/')[0] + '/' : '(root)';
+    const visiblePath = wrapper ? file.path.slice(wrapper.length) : file.path;
+    paths.add(visiblePath);
+    const ext = extensionOf(visiblePath);
+    const folder = visiblePath.includes('/') ? visiblePath.split('/')[0] + '/' : '(root)';
     byExtension.set(ext, (byExtension.get(ext) || 0) + 1);
     byFolder.set(folder, (byFolder.get(folder) || 0) + 1);
     bytes += file.bytes ?? 0;
