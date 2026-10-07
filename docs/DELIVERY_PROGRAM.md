@@ -23,7 +23,7 @@ A passing archive count, Rust WebAssembly compilation, or clean CLI test is **on
 
 ## 2. Source scope contract (fix the failure in the screenshot)
 
-The existing SDK \`agentsam codebaseindex\` command is for **knowledge/repository indexing**. In the SDK checkout inspected on 2026-10-07, \`src/commands/codebaseindex.js\` stages a dropped archive, but calls \`buildInventory({ root, materials: staged })\`. \`src/indexing/ingest/inventory.js\` then walks the repository root irrespective of the archive. This **explains** an SDK inventory showing thousands of repository files after supplying a single ZIP.
+The existing SDK \`agentsam codebaseindex\` command is for **knowledge/repository indexing**. In the SDK checkout inspected on 2026-10-07, \`src/commands/codebaseindex.js\` stages a dropped archive, but calls \`buildInventory({ root, materials: staged })\`. \`src/indexing/ingest/inventory.js\` then walks the repository root irrespective of the archive. This **explains** an SDK inventory showing thousands of repository files after supplying a single ZIP. The defect is tracked in [AgentSam SDK issue #167](https://github.com/SamPrimeaux/agentsam-sdk/issues/167).
 
 Do not duplicate the full knowledge indexer in Theme Tools. Provide the reusable source-scoped inventory API, then make a separate, explicitly coordinated SDK fix.
 
