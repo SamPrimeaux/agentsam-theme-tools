@@ -156,6 +156,13 @@ export async function runThemeCommand(argv, { stdout = process.stdout, stderr = 
           : report, null, 2) + '\n');
     } else {
       for (const material of report.materials) {
+        if (command === 'ingest' || command === 'inspect') {
+          writeInventorySummary(stdout, material);
+          if (command === 'inspect') for (const page of material.graph.pages) {
+            stdout.write('  Page: ' + page.id + ' · ' + page.sections.length + ' structural regions\n');
+          }
+          continue;
+        }
         const graph = material.graph;
         stdout.write(material.label + ' [' + material.origin + ']: ' + material.fileCount + ' files, ' +
           graph.pages.length + ' HTML pages, ' + graph.edges.length + ' references, ' + graph.diagnostics.length + ' diagnostics\n');
