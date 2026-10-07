@@ -42,6 +42,8 @@ try{
     "if(analyzeHtml(s).sections[0].name!=='hero')throw Error('HTML failed');",
     "if(rewriteAssetReferences(s,{'logo.png':'other.png'}).changed!==1)throw Error('Rewriter failed');",
     "if(!buildThemeGraph([{path:'index.html',text:s},{path:'logo.png'}]).edges[0].resolved)throw Error('Graph failed');",
+    "const sourceGraph=buildThemeModuleGraph([{path:'index.html',text:s},{path:'logo.png'}]);",
+    "if(planModuleExtraction(sourceGraph,'index.html').files.length!==2)throw Error('Module closure failed');",
     "if(analyzeJsonc('{ //comment\\n \"x\": 1,}').value.x!==1)throw Error('JSONC failed');",
     "if((await ingestSourceInputs({kind:'bytes',bytes:new TextEncoder().encode(s),name:'index.html'})).materials[0].graph.pages.length!==1)throw Error('Ingest failed');",
     "console.log('independent-package-consumer: PASS');",
