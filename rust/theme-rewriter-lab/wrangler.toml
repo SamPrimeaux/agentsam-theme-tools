@@ -1,0 +1,10 @@
+name = "theme-rewriter-lab"
+main = "worker/build/index.js"
+compatibility_date = "2026-09-27"
+
+# Deliberately not exposed through *.workers.dev or any custom domain.
+# Local testing only. Production requires an authenticated adapter review.
+workers_dev = false
+
+[build]
+command = "cd worker && worker-build --release"

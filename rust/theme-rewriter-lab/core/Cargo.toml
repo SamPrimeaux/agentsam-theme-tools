@@ -1,0 +1,12 @@
+[package]
+name = "theme-rewriter-lab-core"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "Customer-neutral streaming HTML transformation core for AgentSam Theme Tools"
+
+[lib]
+crate-type = ["rlib"]
+
+[dependencies]
+lol_html = "3.0.0"

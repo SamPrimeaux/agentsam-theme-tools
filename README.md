@@ -18,6 +18,8 @@ The objective is straightforward:
 
 Track verified behavior and remaining full-product requirements in [Implementation Status](docs/IMPLEMENTATION_STATUS.md) and [SDK Reuse Boundaries](docs/SDK_REUSE_BOUNDARIES.md).
 
+The isolated [Rust HTML rewriting lab](rust/theme-rewriter-lab/README.md) uses the existing AgentSam Rust scaffolder and an independent `lol-html` core. It is a local test adapter, not a CMS or a deployed Worker.
+
 This README establishes the complete intended implementation scope and release requirements.
 
 Documented capabilities are not considered implemented or production-ready until source code, automated tests, packaged artifacts, and independent consumer verification demonstrate their behavior.

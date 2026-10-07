@@ -21,3 +21,16 @@ jobs:
       - run: npm ci --ignore-scripts --no-audit --no-fund
       - run: npm run verify
       - run: npm run cli -- inspect examples/basic
+
+  rust-core:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - name: Test portable Rust rewriter
+        run: cargo test --locked --manifest-path rust/theme-rewriter-lab/Cargo.toml
+      - name: Check Rust Worker WebAssembly
+        run: cargo check --locked --target wasm32-unknown-unknown --manifest-path rust/theme-rewriter-lab/Cargo.toml
