@@ -37,7 +37,7 @@ try{
     "import {analyzeJsonc} from '@inneranimalmedia/lang-jsonc';",
     "import {rewriteAssetReferences} from '@inneranimalmedia/theme-html-rewriter';",
     "import {buildThemeGraph,buildThemeModuleGraph,planModuleExtraction} from '@inneranimalmedia/theme-graph';",
-    "import {ingestSourceInputs} from '@inneranimalmedia/theme-source-ingest';",
+    "import {ingestSourceInputs,buildSourceInventory} from '@inneranimalmedia/theme-source-ingest';",
     "const s='<!doctype html><html><body><section data-cms-section=\"hero\"><img src=\"logo.png\"></section></body></html>';",
     "if(analyzeHtml(s).sections[0].name!=='hero')throw Error('HTML failed');",
     "if(rewriteAssetReferences(s,{'logo.png':'other.png'}).changed!==1)throw Error('Rewriter failed');",
