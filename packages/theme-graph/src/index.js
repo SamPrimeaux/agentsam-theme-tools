@@ -1,5 +1,8 @@
 import { analyzeHtml } from '@inneranimalmedia/theme-syntax-html';
 
+export { buildThemeModuleGraph, dependencyClosure, affectedModules, planModuleExtraction,
+  MODULE_GRAPH_SCHEMA, CLOSURE_SCHEMA, EXTRACTION_PLAN_SCHEMA } from './module-graph.js';
+
 export const THEME_GRAPH_SCHEMA = 'agentsam.theme-graph.v1';
 const DEFAULT_DOC = new Set(['.html', '.htm']);
 const SKIP_LOCAL = /^(?:data:|blob:|mailto:|tel:|javascript:|#)/i;
