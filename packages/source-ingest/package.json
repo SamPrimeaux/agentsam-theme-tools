@@ -9,8 +9,12 @@
   },
   "files": [
     "src",
-    "bin"
+    "bin",
+    "README.md"
   ],
+  "scripts": {
+    "test": "node --test tests/*.test.mjs"
+  },
   "exports": {
     ".": "./src/index.js"
   },
