@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": false,
   "type": "module",
-  "description": "@inneranimalmedia/theme-cli",
+  "description": "AgentSam Theme Tools: theme developer CLI",
   "engines": {
     "node": ">=22"
   },
@@ -15,9 +15,13 @@
     ".": "./src/index.js"
   },
   "dependencies": {
-    "@inneranimalmedia/theme-source-ingest": "0.1.0"
+    "@inneranimalmedia/theme-source-ingest": "0.1.0",
+    "@inneranimalmedia/theme-graph": "0.1.0"
   },
   "bin": {
     "agentsam-theme": "./bin/agentsam-theme.mjs"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs"
   }
 }
