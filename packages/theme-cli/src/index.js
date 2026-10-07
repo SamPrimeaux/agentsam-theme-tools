@@ -54,7 +54,7 @@ function writeInventorySummary(stdout, material) {
     stdout.write('  Not yet parsed: ' + coverage.notSemanticallyAnalyzed.slice(0, 8)
       .map((d) => d.language + ' ' + d.count).join(' · ') + '\n');
   }
-  stdout.write('  Exclusions: build/dependency folders and macOS metadata ignored by default\n');
+  stdout.write('  Exclusions: dependency/cache folders and macOS metadata ignored by default\n');
   stdout.write('  Coverage: partial — zero diagnostics does not mean the source is validated\n');
 }
 
