@@ -137,6 +137,17 @@ export async function runThemeCommand(argv, { stdout = process.stdout, stderr = 
       }
       return 0;
     }
+    if (command === 'inventory') {
+      if (json) {
+        stdout.write(JSON.stringify({
+          schema: 'agentsam.theme-inventory-report.v1',
+          materials: report.materials.map((material) => material.inventory),
+        }, null, 2) + '\n');
+      } else {
+        for (const material of report.materials) writeInventorySummary(stdout, material);
+      }
+      return 0;
+    }
     if (json || command === 'graph') {
       stdout.write(JSON.stringify(command === 'graph'
         ? { schema: report.schema, materials: report.materials.map((m) => ({ label: m.label, origin: m.origin, graph: m.graph })) }
