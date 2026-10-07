@@ -811,6 +811,7 @@ name = "theme-rewriter-lab-core"
 version = "0.1.0"
 dependencies = [
  "lol_html",
+ "serde",
 ]
 
 [[package]]
