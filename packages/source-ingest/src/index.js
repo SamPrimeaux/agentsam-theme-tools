@@ -14,6 +14,8 @@ import { createRequire } from 'node:module';
 import tar from 'tar-stream';
 import { normalizeSourceInputs } from '@inneranimalmedia/theme-source-input';
 import { buildThemeGraph } from '@inneranimalmedia/theme-graph';
+import { buildSourceInventory, shouldIgnoreSourcePath, SOURCE_IGNORE_DIRS } from './inventory.js';
+export { buildSourceInventory, shouldIgnoreSourcePath, SOURCE_IGNORE_DIRS, SOURCE_INVENTORY_SCHEMA } from './inventory.js';
 
 const require = createRequire(import.meta.url);
 const yauzl = require('yauzl');
