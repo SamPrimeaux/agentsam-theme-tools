@@ -1,7 +1,7 @@
 import { ingestSourceInputs } from '@inneranimalmedia/theme-source-ingest';
 import { buildThemeModuleGraph, planModuleExtraction } from '@inneranimalmedia/theme-graph';
 
-export const CLI_COMMANDS = ['ingest', 'inspect', 'graph', 'check', 'closure'];
+export const CLI_COMMANDS = ['ingest', 'inspect', 'inventory', 'graph', 'check', 'closure'];
 
 function readArgs(argv, command) {
   const args = [...argv];
