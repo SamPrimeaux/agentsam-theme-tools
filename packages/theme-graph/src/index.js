@@ -1,5 +1,8 @@
 import { analyzeHtml } from '@inneranimalmedia/theme-syntax-html';
 
+export { buildThemeModuleGraph, dependencyClosure, affectedModules, planModuleExtraction,
+  MODULE_GRAPH_SCHEMA, CLOSURE_SCHEMA, EXTRACTION_PLAN_SCHEMA } from './module-graph.js';
+
 export const THEME_GRAPH_SCHEMA = 'agentsam.theme-graph.v1';
 const DEFAULT_DOC = new Set(['.html', '.htm']);
 const SKIP_LOCAL = /^(?:data:|blob:|mailto:|tel:|javascript:|#)/i;
@@ -26,7 +29,9 @@ export function buildThemeGraph(files) {
     for (const ref of analysis.references) {
       if (SKIP_LOCAL.test(ref.value)) continue;
       if (/^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(ref.value)) {
-        edges.push({ from: id, to: ref.value, kind: ref.kind, external: true });
+        edges.push({ from: id, to: ref.value, kind: ref.kind, external: true,
+          attribute: ref.attr, original: ref.value,
+          range: ref.start == null ? null : { start: ref.start, end: ref.end } });
         continue;
       }
       const pathname = ref.value.split(/[?#]/, 1)[0];
@@ -42,7 +47,8 @@ export function buildThemeGraph(files) {
       }
       const resolved = identities.has(target);
       edges.push({ from: id, to: target, kind: ref.kind, external: false, resolved,
-        attribute: ref.attr, original: ref.value });
+        attribute: ref.attr, original: ref.value,
+        range: ref.start == null ? null : { start: ref.start, end: ref.end } });
       if (!resolved && ref.kind !== 'navigation') {
         diagnostics.push({ severity: 'warning', code: 'UNRESOLVED_RESOURCE',
           file: id, target, reference: ref.value });

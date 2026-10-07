@@ -36,18 +36,23 @@ try{
     "import {analyzeHtml} from '@inneranimalmedia/theme-syntax-html';",
     "import {analyzeJsonc} from '@inneranimalmedia/lang-jsonc';",
     "import {rewriteAssetReferences} from '@inneranimalmedia/theme-html-rewriter';",
-    "import {buildThemeGraph} from '@inneranimalmedia/theme-graph';",
+    "import {buildThemeGraph,buildThemeModuleGraph,planModuleExtraction} from '@inneranimalmedia/theme-graph';",
     "import {ingestSourceInputs} from '@inneranimalmedia/theme-source-ingest';",
     "const s='<!doctype html><html><body><section data-cms-section=\"hero\"><img src=\"logo.png\"></section></body></html>';",
     "if(analyzeHtml(s).sections[0].name!=='hero')throw Error('HTML failed');",
     "if(rewriteAssetReferences(s,{'logo.png':'other.png'}).changed!==1)throw Error('Rewriter failed');",
     "if(!buildThemeGraph([{path:'index.html',text:s},{path:'logo.png'}]).edges[0].resolved)throw Error('Graph failed');",
+    "const sourceGraph=buildThemeModuleGraph([{path:'index.html',text:s},{path:'logo.png'}]);",
+    "if(planModuleExtraction(sourceGraph,'index.html').files.length!==2)throw Error('Module closure failed');",
     "if(analyzeJsonc('{ //comment\\n \"x\": 1,}').value.x!==1)throw Error('JSONC failed');",
     "if((await ingestSourceInputs({kind:'bytes',bytes:new TextEncoder().encode(s),name:'index.html'})).materials[0].graph.pages.length!==1)throw Error('Ingest failed');",
     "console.log('independent-package-consumer: PASS');",
   ].join('\n');
   console.log(run(process.execPath,['--input-type=module','-e',smoke],project));
   console.log(run(process.execPath,[path.join(project,'node_modules/@inneranimalmedia/theme-cli/bin/agentsam-theme.mjs'),'inspect',path.join(root,'examples/basic')],project));
+  const closure=run(process.execPath,[path.join(project,'node_modules/@inneranimalmedia/theme-cli/bin/agentsam-theme.mjs'),'closure',path.join(root,'examples/basic')],project);
+  if(!closure.includes('recognized module closure: 3 files'))throw new Error('Independent CLI closure failed: '+closure);
+  console.log('independent-cli-closure: PASS');
   console.log('independent-packaged-install: PASS ('+archives.length+' packages)');
 } finally {
   fs.rmSync(work,{recursive:true,force:true});
