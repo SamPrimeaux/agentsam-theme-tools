@@ -36,7 +36,7 @@ try{
     "import {analyzeHtml} from '@inneranimalmedia/theme-syntax-html';",
     "import {analyzeJsonc} from '@inneranimalmedia/lang-jsonc';",
     "import {rewriteAssetReferences} from '@inneranimalmedia/theme-html-rewriter';",
-    "import {buildThemeGraph} from '@inneranimalmedia/theme-graph';",
+    "import {buildThemeGraph,buildThemeModuleGraph,planModuleExtraction} from '@inneranimalmedia/theme-graph';",
     "import {ingestSourceInputs} from '@inneranimalmedia/theme-source-ingest';",
     "const s='<!doctype html><html><body><section data-cms-section=\"hero\"><img src=\"logo.png\"></section></body></html>';",
     "if(analyzeHtml(s).sections[0].name!=='hero')throw Error('HTML failed');",
