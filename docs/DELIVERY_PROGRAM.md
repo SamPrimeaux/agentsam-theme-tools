@@ -21,6 +21,66 @@ A versioned Theme Tools release is **finished** only when a developer, the Agent
 
 A passing archive count, Rust WebAssembly compilation, or clean CLI test is **one input to the release gate**, not completion of the above.
 
+## 1A. Immediate engineering focus — reversible source-to-package extraction
+
+This is the **next engineering focus**, not a new GUI or another CMS. A developer should turn a selected legacy ZIP/HTML/Liquid source into an inspectable candidate with a truthful dependency closure and reviewable portability proposal.
+
+    Selected ZIP | directory | HTML | Liquid
+      -> scoped virtual source and snapshots
+      -> source-range ASTs (HTML, CSS, JS, JSONC, Liquid)
+      -> cross-language graph: entry points, modules, direct/preset/indirect references
+      -> closure(entry) + backlinks + missing/unknown dependency evidence
+      -> candidate package (tokens, styles, behavior, media, renderer contract)
+      -> opt-in source edits + versioned manifest
+      -> original vs target isolated preview and cross-host verification
+      -> approved portable section/theme/scene or explicit needs-review verdict
+
+**Important:** A transitive closure of only recognized edges is NOT a verified portable package. Unknown dynamic selectors, shared global CSS, runtime side effects, external services/fonts, Liquid data objects, and scroll/reduced-motion behavior need explicit evidence/coverage and can block portability claims.
+
+### Build-vs-adopt and package ownership
+
+- Extend existing @inneranimalmedia/theme-graph, do not fork a new graph package. Add rootUri, entry points, typed module URIs/kinds, source/target ranges, inbound and outbound edges, direct/preset/indirect relationships, cycle-safe closure and change impact APIs. Incomplete coverage must travel with every result.
+- Keep existing @inneranimalmedia/theme-syntax-html as the HTML analyzer. Add a parser-provider interface for CSS, JS, Liquid and embedded formats. Adopt maintained parsers; consider @shopify/liquid-html-parser as a well-scoped dependency after evaluating its license, public API and runtime cost. Do NOT copy its handwritten tokenizer/factories into our codebase.
+- Liquid is an **input language** even if the existing CMS runtime does not evaluate Liquid. Donor Liquid must be parsed and safely converted into a target-specific renderer, with unsupported dynamic behavior disclosed.
+- Inline CSS/JS and serialized bundles need nested source ranges. Never execute uploaded JavaScript to discover its internals; unsupported packed formats are flagged as unknown.
+- Adopt Prettier and an optional compatible Liquid plugin for standalone formatting. Keep format-only edits separate from structural changes and never auto-format an imported design without approval.
+- Build Theme Check-like rule/fix APIs and independently runnable diagnostics. Only call a check verified for its actual language coverage.
+- Keep Rust/lol-html as an optional rewriting execution engine with conformance tests; the cross-language parser/graph and package contract remain runtime-neutral.
+
+### Verified existing site/section authority
+
+The actual Inner Animal CMS repository has multiple **related but distinct** contracts under packages/site-contracts:
+
+- src/site-document.ts: SiteDocument v1 with SiteSection (id, type, preset, settings, blocks, data).
+- src/index.ts: SectionInstance, SectionPreset, LayoutManifest, responsive/motion policies and ThemeManifest for renderers.
+- src/content-templates.ts: CmsPageTemplate, assignments, bindings, renderer locks.
+- src/content-bindings.ts: ContentDefinition, ContentEntry, typed source bindings, RendererLock.
+- packages/section-library owns registered section renderers; packages/revise-theme owns presentation character.
+
+Theme Tools should emit a neutral source-backed candidate, plus a separate versioned **compatibility adapter** mapping its inspected component into those existing contracts. Do not serialize an inferred HTML section directly as a CMS section or add another persisted schema.
+
+### Decisions for the four previously open questions
+
+1. **Liquid vs HTML:** Current native CMS and AgentSam SDK sources examined use TypeScript/HTML and no checked-in Liquid templates were discovered; HOWEVER donor Liquid is expressly in scope. Support Liquid as an import language; native CMS output remains its actual typed site contracts.
+2. **Editor:** Existing AgentSam Local Studio uses Monaco via the agentsam-ide package and monaco-pane.tsx. Do Monaco first. No current evidence makes CodeMirror the canonical CMS code editor. Keep LSP and editor API independent; CodeMirror becomes an optional client.
+3. **Section contract:** Integrate with the source files above and preserve the distinction between persisted SiteSection, renderer-facing SectionInstance, template bindings, media identities and renderer locks.
+4. **lang-jsonc:** Existing package supports jsonc-parser-backed analysis, location, formatting and source-safe edits, NOT CodeMirror/Lezer syntax support. Keep this stable semantic API; add a thin optional editor grammar bridge when needed.
+
+### Package-local tests and neutral examples
+
+Prefer colocated tests: packages/theme-graph/tests/closure.test.mjs, packages/syntax-html/tests/embedded.test.mjs, packages/lang-jsonc/tests/edit.test.mjs, packages/source-ingest/tests/archive-scope.test.mjs. Keep tests/integration for independent packed installs, real workflows and runtime parity. Root npm run verify must still run **both** all package-local tests and integration suites with no reductions in test coverage. Every package needs a documented public entrypoint and no customer-branded defaults. Names should identify generic roles; customer provenance belongs in receipts, never in source constants.
+
+### First acceptance evidence
+
+- Scroll FX ZIP: 19-file archive-only inventory, CSS/JS references and selector-linked indirect behavior, one scene extraction *candidate* with exact closure, globals and missing dependencies disclosed, not silently published.
+- Gallery HTML: parse embedded CSS/JS and detect missing doctype; offer a source-range safe-fix diff with no implicit writes.
+- Bundled dashboard HTML: detect and optionally statically decode known serialized manifest/template structures without evaluating scripts; declare remaining coverage gaps.
+- Two distinct consumers must eventually verify the same neutral extracted artifact, preserving original style, responsive layout, behavior and scroll effects.
+
+**Gate 1 cannot close at “19 files, 1 page, 10 references.”** It must yield an auditable component candidate and dependency report, with a safe extraction plan and explicit unknowns, without a new page builder or UI fork.
+
+---
+
 ## 2. Source scope contract (fix the failure in the screenshot)
 
 The existing SDK \`agentsam codebaseindex\` command is for **knowledge/repository indexing**. In the SDK checkout inspected on 2026-10-07, \`src/commands/codebaseindex.js\` stages a dropped archive, but calls \`buildInventory({ root, materials: staged })\`. \`src/indexing/ingest/inventory.js\` then walks the repository root irrespective of the archive. This **explains** an SDK inventory showing thousands of repository files after supplying a single ZIP. The defect is tracked in [AgentSam SDK issue #167](https://github.com/SamPrimeaux/agentsam-sdk/issues/167).
