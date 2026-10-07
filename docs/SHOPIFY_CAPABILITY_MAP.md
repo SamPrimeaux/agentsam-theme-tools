@@ -57,6 +57,20 @@ The seven packages have passed an external npm tarball install smoke test and 23
 
 Check each existing API on its own current main branch before importing; a package name or an isolated test does not establish packaged consumer readiness.
 
+## Practical adoption decisions for the transformation focus
+
+These reconcile the independently supplied proposal and the inspected existing repositories:
+
+1. **The source graph is our differentiator**, but we should extend @inneranimalmedia/theme-graph, not rename it. Its missing semantic graph includes entry points, reverse references, source ranges, direct/preset/indirect relationships, traversal cycles, confidence/completeness and dependency closure. Do not mistake a partial closure for a self-contained component.
+2. **Adopt parsers and formatters** instead of porting the handwritten Shopify parser or its tests: evaluate @shopify/liquid-html-parser as a foreign-source intake dependency; use maintained CSS/JavaScript AST parsers; Prettier is a separate optional formatting pass and has to be diffed for template-sensitive whitespace.
+3. **Monaco first** because AgentSam Local Studio already uses @inneranimalmedia/agentsam-ide with Monaco. The CMS is not proven to use CodeMirror. Shared LSP stays transport/editor-neutral; browser Web Worker and Cloudflare Worker are different runtime adapters and should not be conflated.
+4. **CMS mapping is explicit**, because @inneranimalmedia/site-contracts in inneranimalmedia-cms contains two related shapes: persisted SiteDocument v1 / SiteSection, and renderer-facing SectionInstance/SectionPreset with layout and motion policies. CmsPageTemplate and RendererLock add separate template/renderer identities. A donor HTML <section> is only a candidate until an adapter maps it to these contracts.
+5. **lang-jsonc is already parse/edit**, not CodeMirror grammar. Optional editor support should be a secondary export, with no regression to existing analyze/edit API.
+6. **Root tests should be orchestration**, not the only place unit tests live. Move semantic language/graph/ingest checks close to their owning packages while preserving independent packed-install and cross-runtime integration tests at root.
+7. **Public names and examples remain customer-neutral**. Brand, customer and username identifiers are receipt/source data, not baked-in defaults or top-level package names.
+
+A zip/folder input must have its own virtual root. A chosen ZIP must not silently enumerate the current repo. The current SDK codebaseindex scope bug is already tracked separately as [SDK issue #167](https://github.com/SamPrimeaux/agentsam-sdk/issues/167).
+
 ## Guardrails for naming and implementations
 
 - Existing \`check\` and \`graph\` commands must explicitly describe **which** checks/edges exist. No empty-diagnostics = ready-to-ship claims.
