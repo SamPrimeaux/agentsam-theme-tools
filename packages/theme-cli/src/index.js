@@ -31,6 +31,7 @@ function writeInventorySummary(stdout, material) {
   }
   stdout.write('  File types: ' + item.languages.slice(0, 10)
     .map((d) => d.language + ' ' + d.count).join(' · ') + '\n');
+  if (item.source.virtualRoot !== '.') stdout.write('  Archive root: ' + item.source.virtualRoot + '\n');
   stdout.write('  Source tree:\n');
   const folders = item.folders.slice(0, 14);
   for (let index = 0; index < folders.length; index++) {
