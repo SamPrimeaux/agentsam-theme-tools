@@ -153,7 +153,7 @@ async function fromDirectory(dir,policy) {
   async function visit(current,prefix) {
     const entries=(await fs.readdir(current,{withFileTypes:true})).sort((a,b)=>a.name.localeCompare(b.name));
     for(const entry of entries){
-      if(SKIP_DIR.has(entry.name))continue;
+      if(SKIP_DIR.has(entry.name) || entry.name === '.DS_Store' || entry.name.startsWith('._'))continue;
       const file=path.join(current,entry.name);
       const relative=prefix?prefix+'/'+entry.name:entry.name;
       if(entry.isSymbolicLink())throw new Error('symlink_in_source_tree: '+relative);
