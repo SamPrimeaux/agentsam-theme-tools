@@ -45,7 +45,9 @@ try{
     "const sourceGraph=buildThemeModuleGraph([{path:'index.html',text:s},{path:'logo.png'}]);",
     "if(planModuleExtraction(sourceGraph,'index.html').files.length!==2)throw Error('Module closure failed');",
     "if(analyzeJsonc('{ //comment\\n \"x\": 1,}').value.x!==1)throw Error('JSONC failed');",
-    "if((await ingestSourceInputs({kind:'bytes',bytes:new TextEncoder().encode(s),name:'index.html'})).materials[0].graph.pages.length!==1)throw Error('Ingest failed');",
+    "const mat=(await ingestSourceInputs({kind:'bytes',bytes:new TextEncoder().encode(s),name:'index.html'})).materials[0];",
+    "if(mat.graph.pages.length!==1)throw Error('Ingest failed');",
+    "if(buildSourceInventory(mat).totals.files!==1 || mat.inventory.coverage.htmlPagesAnalyzed!==1)throw Error('Inventory failed');",
     "console.log('independent-package-consumer: PASS');",
   ].join('\n');
   console.log(run(process.execPath,['--input-type=module','-e',smoke],project));
