@@ -109,8 +109,9 @@ export function buildSourceInventory(material) {
   };
   return {
     schema: SOURCE_INVENTORY_SCHEMA,
-    source: { label: material.label, origin: material.origin },
+    source: { label: material.label, origin: material.origin, virtualRoot: wrapper ?? '.' },
     totals: { files: files.length, bytes },
+    keyFiles: [...paths].filter((path) => /^(?:layout\/(?:theme|password)\.liquid|config\/settings_(?:schema|data)\.json|templates\/(?:index|product|collection)(?:\.[^/]*)?\.json|app\/(?:page|layout)\.(?:jsx?|tsx?)|package\.json|next\.config\.(?:js|mjs|ts))$/.test(path)).sort(),
     detected,
     languages,
     extensions: extensionCounts,
