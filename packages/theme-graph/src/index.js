@@ -29,7 +29,9 @@ export function buildThemeGraph(files) {
     for (const ref of analysis.references) {
       if (SKIP_LOCAL.test(ref.value)) continue;
       if (/^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(ref.value)) {
-        edges.push({ from: id, to: ref.value, kind: ref.kind, external: true });
+        edges.push({ from: id, to: ref.value, kind: ref.kind, external: true,
+          attribute: ref.attr, original: ref.value,
+          range: ref.start == null ? null : { start: ref.start, end: ref.end } });
         continue;
       }
       const pathname = ref.value.split(/[?#]/, 1)[0];
