@@ -22,7 +22,7 @@ const yauzl = require('yauzl');
 const FORMATS = new Set(['zip','tar','tar.gz','git-bundle','html','file','directory']);
 const DEFAULTS = Object.freeze({maxArchiveBytes: 64*1024*1024, maxEntries: 10000,
   maxExpandedBytes: 256*1024*1024, maxEntryBytes: 16*1024*1024, maxFileBytes: 64*1024*1024});
-const SKIP_DIR = new Set(['.git','node_modules','.agentsam','dist','coverage']);
+const SKIP_DIR = new Set([...SOURCE_IGNORE_DIRS, '__MACOSX']);
 const TEXT_EXT = /\.(?:html?|css|js|mjs|cjs|ts|tsx|jsx|jsonc?|liquid|svg|md)$/i;
 const HTML_EXT = /\.html?$/i;
 
