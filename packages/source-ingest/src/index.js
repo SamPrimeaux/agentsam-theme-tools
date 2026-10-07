@@ -278,8 +278,13 @@ export async function ingestSourceInputs(inputs,options={}) {
   const materials=[];
   for(const source of sources) {
     const material=await obtainSource(source,options,policy);
+    const scannedEntries=material.files.length;
+    material.files=material.files.filter(file=>!shouldIgnoreSourcePath(file.path));
+    material.excludedFileCount=scannedEntries-material.files.length;
     material.graph=buildThemeGraph(material.files);
     material.fileCount=material.files.length;
+    material.inventory=buildSourceInventory(material);
+    material.inventory.excludedByDefault.skippedLoadedEntries=material.excludedFileCount;
     materials.push(material);
   }
   return {schema:INGEST_SCHEMA,materials,policy,diagnostics:materials.flatMap(m=>m.graph.diagnostics)};
