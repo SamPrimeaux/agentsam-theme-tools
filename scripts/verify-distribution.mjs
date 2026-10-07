@@ -55,6 +55,9 @@ try{
   const closure=run(process.execPath,[path.join(project,'node_modules/@inneranimalmedia/theme-cli/bin/agentsam-theme.mjs'),'closure',path.join(root,'examples/basic')],project);
   if(!closure.includes('recognized module closure: 3 files'))throw new Error('Independent CLI closure failed: '+closure);
   console.log('independent-cli-closure: PASS');
+  const inv=JSON.parse(run(process.execPath,[path.join(project,'node_modules/@inneranimalmedia/theme-cli/bin/agentsam-theme.mjs'),'inventory',path.join(root,'examples/basic'),'--json'],project));
+  if(inv.materials[0].totals.files!==3 || !inv.materials[0].folders.some(f=>f.folder==='assets/'))throw new Error('Independent CLI inventory failed');
+  console.log('independent-cli-inventory: PASS');
   console.log('independent-packaged-install: PASS ('+archives.length+' packages)');
 } finally {
   fs.rmSync(work,{recursive:true,force:true});
