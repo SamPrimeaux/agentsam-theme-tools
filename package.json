@@ -8,7 +8,7 @@
     "packages/*"
   ],
   "scripts": {
-    "test": "node --test tests/*.test.mjs",
+    "test": "node --test tests/*.test.mjs packages/*/tests/*.test.mjs",
     "cli": "node packages/theme-cli/bin/agentsam-theme.mjs",
     "verify": "npm test && node scripts/verify-distribution.mjs",
     "test:rust": "cargo test --locked --manifest-path rust/theme-rewriter-lab/Cargo.toml",
