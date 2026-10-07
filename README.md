@@ -18,6 +18,14 @@ The objective is straightforward:
 
 Track verified behavior and remaining full-product requirements in [Implementation Status](docs/IMPLEMENTATION_STATUS.md) and [SDK Reuse Boundaries](docs/SDK_REUSE_BOUNDARIES.md).
 
+### Canonical product and delivery plan
+
+- [Product Charter](docs/PRODUCT_CHARTER.md) — what Theme Tools **is**, the company-level outcomes, ownership laws, non-goals and definition of finished.
+- [Shopify Capability Map](docs/SHOPIFY_CAPABILITY_MAP.md) — actual upstream package architecture mapped to our seven existing packages, SDK reuse targets, benefits and feature gaps (including JSONC).
+- [Delivery Program](docs/DELIVERY_PROGRAM.md) — source-scope contract, portable review receipts, cohesive release gates, real user-source test fixtures and cross-CMS acceptance criteria.
+
+**Avoid drift:** This project is a portable developer-tooling engine, not another CMS editor, Theme Gallery, or Website Builder. A CLI archive inventory, clean test suite, Rust build or Worker response is not yet a portable theme product. Feature status is maintained in the implementation-status document, not inferred from these plans.
+
 The isolated [Rust HTML rewriting lab](rust/theme-rewriter-lab/README.md) uses the existing AgentSam Rust scaffolder and an independent `lol-html` core. It is a local test adapter, not a CMS or a deployed Worker.
 
 This README establishes the complete intended implementation scope and release requirements.
