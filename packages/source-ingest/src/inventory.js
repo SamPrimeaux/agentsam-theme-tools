@@ -48,6 +48,9 @@ function sortedCounts(map, nameKey) {
 export function buildSourceInventory(material) {
   if (!material || !Array.isArray(material.files)) throw new TypeError('material.files required');
   const files = material.files;
+  const firstFolder = files[0]?.path.split('/')[0];
+  const wrapper = files.length > 1 && firstFolder && files.every((file) =>
+    file.path.startsWith(firstFolder + '/')) ? firstFolder + '/' : null;
   const byExtension = new Map(), byFolder = new Map();
   let bytes = 0;
   const paths = new Set();
