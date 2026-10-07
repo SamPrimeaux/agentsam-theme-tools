@@ -33,6 +33,29 @@ Initial milestone branch: feat/foundation-source-intake-html-20261006.
 - This local-only Worker has `workers_dev = false` and no routes. **It has not been deployed.** A production ingress requires separate authentication and resource-consumption verification.
 - Whole-site fidelity, streamed multi-MB intake, generalized selector rewriting, LSP, media workflows, and SDK/CMS adapter integration remain acceptance gates. Do not infer them from the Rust lab build.
 
+## Rust theme machine build-out (feature branch)
+
+Branch: `feat/rust-theme-machine-20261006`.
+
+- The existing AgentSam-generated `shared-core` Rust workspace is being extended in place; no second Rust project or CMS authority was created.
+- The pure Rust core now exposes bounded `harvest_html`, `inspect_html`, `rewrite_html`, and `verify_html` capabilities on top of `lol-html`.
+- Harvesting inventories HTML resource references, metadata, semantic/declared section candidates, duplicate IDs, inline script/style evidence, and stable structural/text fingerprints without executing source JavaScript or performing network requests.
+- Inspection adds explicit static diagnostics and calls out analysis gaps instead of treating a clean streaming pass as full theme verification.
+- Verification is deliberately scoped to structural HTML invariants: element/marker/text/resource shape and metadata. It is not a visual, CSS, Liquid, or JavaScript behavior proof.
+- The local Workers/WASM adapter exposes `/v1/harvest`, `/v1/inspect`, `/v1/rewrite`, and `/v1/verify`, with bounded local-only requests.
+- The HTTP smoke script now exercises the full harvest -> inspect -> rewrite -> verify path plus JS/Rust rewrite parity and unsafe URL rejection.
+- The path `rust/theme-rewriter-lab` is retained for now to avoid churn and duplicate machinery; naming can be normalized after the contract is proven.
+- This branch still has no production routes and must not be described as a deployed harvesting service.
+
+### Remaining Rust/theme-machine gates
+
+- True chunked input/output streaming through the Worker/CLI boundary instead of buffering the bounded JSON request body.
+- URL/base resolution policy shared with the source-ingest/site-acquisition layer.
+- Cross-runtime harvest equivalence tests against Cloudflare HTMLRewriter and browser adapters.
+- CSS/JS/Liquid semantic parsers and neutral theme-IR integration outside the Rust streaming pass.
+- Visual/runtime fidelity verification using isolated previews and independent site fixtures.
+- CLI/desktop/CMS consumer wiring through public package contracts.
+
 ## SDK integration decisions
 - Consume versioned APIs from agentsam-brand, agentsam-content, agentsam-repository, agentsam-site-scrape, theme-scenes and cms-runtime where audited and available.
 - Never vendor SDK private implementation or create a second CMS content authority.
