@@ -42,6 +42,10 @@ function writeInventorySummary(stdout, material) {
   if (item.folders.length > folders.length) {
     stdout.write('    … + ' + (item.folders.length - folders.length) + ' other folders\n');
   }
+  if (item.keyFiles.length) {
+    stdout.write('  Key files: ' + item.keyFiles.slice(0, 8).join(' · ') +
+      (item.keyFiles.length > 8 ? ' · …' : '') + '\n');
+  }
   const coverage = item.coverage;
   stdout.write('  Analysis: ' + coverage.htmlPagesAnalyzed + ' HTML pages · ' +
     coverage.htmlReferencesDiscovered + ' HTML references · ' +
