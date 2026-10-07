@@ -16,6 +16,43 @@ function readArgs(argv, command) {
   return { json: args.includes('--json'), entryPoint, inputs: args.filter((value) => value !== '--json') };
 }
 
+function formatBytes(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  const unit = bytes >= 1048576 ? 'MB' : 'KB';
+  return (bytes / (unit === 'MB' ? 1048576 : 1024)).toFixed(1) + ' ' + unit;
+}
+
+function writeInventorySummary(stdout, material) {
+  const item = material.inventory;
+  stdout.write(material.label + ' [' + material.origin + ']\n');
+  stdout.write('  Source files: ' + item.totals.files + ' · ' + formatBytes(item.totals.bytes) + '\n');
+  if (item.detected.length) {
+    stdout.write('  Detected: ' + item.detected.map((d) => d.system).join(' + ') + ' (file-layout evidence)\n');
+  }
+  stdout.write('  File types: ' + item.languages.slice(0, 10)
+    .map((d) => d.language + ' ' + d.count).join(' · ') + '\n');
+  stdout.write('  Source tree:\n');
+  const folders = item.folders.slice(0, 14);
+  for (let index = 0; index < folders.length; index++) {
+    const row = folders[index];
+    stdout.write('    ' + (index === folders.length - 1 ? '└─ ' : '├─ ') +
+      row.folder.padEnd(21) + row.count + ' files\n');
+  }
+  if (item.folders.length > folders.length) {
+    stdout.write('    … + ' + (item.folders.length - folders.length) + ' other folders\n');
+  }
+  const coverage = item.coverage;
+  stdout.write('  Analysis: ' + coverage.htmlPagesAnalyzed + ' HTML pages · ' +
+    coverage.htmlReferencesDiscovered + ' HTML references · ' +
+    coverage.diagnostics + ' current diagnostics\n');
+  if (coverage.notSemanticallyAnalyzed.length) {
+    stdout.write('  Not yet parsed: ' + coverage.notSemanticallyAnalyzed.slice(0, 8)
+      .map((d) => d.language + ' ' + d.count).join(' · ') + '\n');
+  }
+  stdout.write('  Exclusions: build/dependency folders and macOS metadata ignored by default\n');
+  stdout.write('  Coverage: partial — zero diagnostics does not mean the source is validated\n');
+}
+
 function writeClosureSummary(stdout, material, graph, plan) {
   const closure = plan.dependencyClosure;
   stdout.write(material.label + ' [' + material.origin + ']\n');
