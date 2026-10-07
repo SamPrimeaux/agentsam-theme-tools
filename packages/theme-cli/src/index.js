@@ -1,7 +1,7 @@
 import { ingestSourceInputs } from '@inneranimalmedia/theme-source-ingest';
 import { buildThemeModuleGraph, planModuleExtraction } from '@inneranimalmedia/theme-graph';
 
-export const CLI_COMMANDS = ['ingest', 'inspect', 'graph', 'check', 'closure'];
+export const CLI_COMMANDS = ['ingest', 'inspect', 'inventory', 'graph', 'check', 'closure'];
 
 function readArgs(argv, command) {
   const args = [...argv];
@@ -14,6 +14,48 @@ function readArgs(argv, command) {
   }
   if (command !== 'closure' && entryPoint !== null) throw new Error('entry_only_supported_for_closure');
   return { json: args.includes('--json'), entryPoint, inputs: args.filter((value) => value !== '--json') };
+}
+
+function formatBytes(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  const unit = bytes >= 1048576 ? 'MB' : 'KB';
+  return (bytes / (unit === 'MB' ? 1048576 : 1024)).toFixed(1) + ' ' + unit;
+}
+
+function writeInventorySummary(stdout, material) {
+  const item = material.inventory;
+  stdout.write(material.label + ' [' + material.origin + ']\n');
+  stdout.write('  Source files: ' + item.totals.files + ' · ' + formatBytes(item.totals.bytes) + '\n');
+  if (item.detected.length) {
+    stdout.write('  Detected: ' + item.detected.map((d) => d.system).join(' + ') + ' (file-layout evidence)\n');
+  }
+  stdout.write('  File types: ' + item.languages.slice(0, 10)
+    .map((d) => d.language + ' ' + d.count).join(' · ') + '\n');
+  if (item.source.virtualRoot !== '.') stdout.write('  Archive root: ' + item.source.virtualRoot + '\n');
+  stdout.write('  Source tree:\n');
+  const folders = item.folders.slice(0, 14);
+  for (let index = 0; index < folders.length; index++) {
+    const row = folders[index];
+    stdout.write('    ' + (index === folders.length - 1 ? '└─ ' : '├─ ') +
+      row.folder.padEnd(21) + row.count + ' files\n');
+  }
+  if (item.folders.length > folders.length) {
+    stdout.write('    … + ' + (item.folders.length - folders.length) + ' other folders\n');
+  }
+  if (item.keyFiles.length) {
+    stdout.write('  Key files: ' + item.keyFiles.slice(0, 8).join(' · ') +
+      (item.keyFiles.length > 8 ? ' · …' : '') + '\n');
+  }
+  const coverage = item.coverage;
+  stdout.write('  Analysis: ' + coverage.htmlPagesAnalyzed + ' HTML pages · ' +
+    coverage.htmlReferencesDiscovered + ' HTML references · ' +
+    coverage.diagnostics + ' current diagnostics\n');
+  if (coverage.notSemanticallyAnalyzed.length) {
+    stdout.write('  Not yet parsed: ' + coverage.notSemanticallyAnalyzed.slice(0, 8)
+      .map((d) => d.language + ' ' + d.count).join(' · ') + '\n');
+  }
+  stdout.write('  Exclusions: dependency/cache folders and macOS metadata ignored by default\n');
+  stdout.write('  Coverage: partial — zero diagnostics does not mean the source is validated\n');
 }
 
 function writeClosureSummary(stdout, material, graph, plan) {
@@ -46,7 +88,7 @@ export async function runThemeCommand(argv, { stdout = process.stdout, stderr = 
   if (command === 'help' || command === '--help' || command === '-h') {
     stdout.write(
       'AgentSam Theme Tools (foundation)\n' +
-      'Usage: agentsam-theme <ingest|inspect|graph|check|closure> <paths...> [--json]\n' +
+      'Usage: agentsam-theme <ingest|inspect|inventory|graph|check|closure> <paths...> [--json]\n' +
       '       agentsam-theme closure <one path> [--entry relative/path] [--json]\n' +
       'Sources: HTML, directory, ZIP, TAR, TAR.GZ, stdin (-); Git bundle snapshots\n' +
       'Closure is a source-backed candidate report, not a runnable converted theme.\n'
@@ -100,6 +142,17 @@ export async function runThemeCommand(argv, { stdout = process.stdout, stderr = 
       }
       return 0;
     }
+    if (command === 'inventory') {
+      if (json) {
+        stdout.write(JSON.stringify({
+          schema: 'agentsam.theme-inventory-report.v1',
+          materials: report.materials.map((material) => material.inventory),
+        }, null, 2) + '\n');
+      } else {
+        for (const material of report.materials) writeInventorySummary(stdout, material);
+      }
+      return 0;
+    }
     if (json || command === 'graph') {
       stdout.write(JSON.stringify(command === 'graph'
         ? { schema: report.schema, materials: report.materials.map((m) => ({ label: m.label, origin: m.origin, graph: m.graph })) }
@@ -108,6 +161,13 @@ export async function runThemeCommand(argv, { stdout = process.stdout, stderr = 
           : report, null, 2) + '\n');
     } else {
       for (const material of report.materials) {
+        if (command === 'ingest' || command === 'inspect') {
+          writeInventorySummary(stdout, material);
+          if (command === 'inspect') for (const page of material.graph.pages) {
+            stdout.write('  Page: ' + page.id + ' · ' + page.sections.length + ' structural regions\n');
+          }
+          continue;
+        }
         const graph = material.graph;
         stdout.write(material.label + ' [' + material.origin + ']: ' + material.fileCount + ' files, ' +
           graph.pages.length + ' HTML pages, ' + graph.edges.length + ' references, ' + graph.diagnostics.length + ' diagnostics\n');

@@ -14,13 +14,15 @@ import { createRequire } from 'node:module';
 import tar from 'tar-stream';
 import { normalizeSourceInputs } from '@inneranimalmedia/theme-source-input';
 import { buildThemeGraph } from '@inneranimalmedia/theme-graph';
+import { buildSourceInventory, shouldIgnoreSourcePath, SOURCE_IGNORE_DIRS } from './inventory.js';
+export { buildSourceInventory, shouldIgnoreSourcePath, SOURCE_IGNORE_DIRS, SOURCE_INVENTORY_SCHEMA } from './inventory.js';
 
 const require = createRequire(import.meta.url);
 const yauzl = require('yauzl');
 const FORMATS = new Set(['zip','tar','tar.gz','git-bundle','html','file','directory']);
 const DEFAULTS = Object.freeze({maxArchiveBytes: 64*1024*1024, maxEntries: 10000,
   maxExpandedBytes: 256*1024*1024, maxEntryBytes: 16*1024*1024, maxFileBytes: 64*1024*1024});
-const SKIP_DIR = new Set(['.git','node_modules','.agentsam','dist','coverage']);
+const SKIP_DIR = new Set([...SOURCE_IGNORE_DIRS, '__MACOSX']);
 const TEXT_EXT = /\.(?:html?|css|js|mjs|cjs|ts|tsx|jsx|jsonc?|liquid|svg|md)$/i;
 const HTML_EXT = /\.html?$/i;
 
@@ -151,7 +153,7 @@ async function fromDirectory(dir,policy) {
   async function visit(current,prefix) {
     const entries=(await fs.readdir(current,{withFileTypes:true})).sort((a,b)=>a.name.localeCompare(b.name));
     for(const entry of entries){
-      if(SKIP_DIR.has(entry.name))continue;
+      if(SKIP_DIR.has(entry.name) || entry.name === '.DS_Store' || entry.name.startsWith('._'))continue;
       const file=path.join(current,entry.name);
       const relative=prefix?prefix+'/'+entry.name:entry.name;
       if(entry.isSymbolicLink())throw new Error('symlink_in_source_tree: '+relative);
@@ -276,8 +278,13 @@ export async function ingestSourceInputs(inputs,options={}) {
   const materials=[];
   for(const source of sources) {
     const material=await obtainSource(source,options,policy);
+    const scannedEntries=material.files.length;
+    material.files=material.files.filter(file=>!shouldIgnoreSourcePath(file.path));
+    material.excludedFileCount=scannedEntries-material.files.length;
     material.graph=buildThemeGraph(material.files);
     material.fileCount=material.files.length;
+    material.inventory=buildSourceInventory(material);
+    material.inventory.excludedByDefault.skippedLoadedEntries=material.excludedFileCount;
     materials.push(material);
   }
   return {schema:INGEST_SCHEMA,materials,policy,diagnostics:materials.flatMap(m=>m.graph.diagnostics)};
