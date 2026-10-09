@@ -175,10 +175,22 @@ export function compileStaticSection(source,{marker,start,sourceId='source.html'
   let scoped='';
   try{scoped=scopeStaticCss(css===undefined?global.css:css);}catch(e){issues.push(e.message);}
   const blockers=[...new Set(issues)];
-  // Preserve unescaped source slices for optimistic patch preconditions.
-  const bindings=fields.map(f=>({...f,before:fragment.slice(f.range.start,f.range.end)}));
+  // Hoist donor <style> into scoped CSS. Original fragment remains archived,
+  // while the rendered copy cannot leak embedded global CSS into the page.
+  const styles=nodes.filter(n=>n.tagName==='style'&&n.sourceCodeLocation)
+    .map(n=>({start:n.sourceCodeLocation.startOffset,end:n.sourceCodeLocation.endOffset}))
+    .sort((a,b)=>a.start-b.start);
+  const removal=styles.map(r=>({start:r.start,end:r.end,
+    before:fragment.slice(r.start,r.end),after:''}));
+  const template=applyPatches(fragment,removal);
+  const bindings=fields.map(f=>{
+    if(styles.some(r=>f.range.start<r.end&&f.range.end>r.start))throw Error('binding_overlaps_donor_style');
+    const shift=styles.filter(r=>r.end<=f.range.start).reduce((v,r)=>v+r.end-r.start,0);
+    const range={start:f.range.start-shift,end:f.range.end-shift};
+    return {...f,range,before:template.slice(range.start,range.end)};
+  });
   const result={schema:STATIC_SECTION_SCHEMA,kind:'artifact-backed-static',
-    type:'generated-static',source:{id:sourceId,marker},template:fragment,
+    type:'generated-static',source:{id:sourceId,marker,start},template,
     css:scoped,settingsSchema:fields.map(({id,label,type})=>({id,label,type})),
     bindings,defaults,blockers,
     state:blockers.length?'blocked':'compiled-static-candidate',
