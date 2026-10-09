@@ -122,7 +122,8 @@ function extract(source,{marker,start}) {
   const matching=nodesOf(source).filter(n=>marker
     ? attribute(n,'data-cms-section')===marker
     : n.sourceCodeLocation?.startOffset===start&&
-      ['section','article','header','footer','aside','main','nav'].includes(n.tagName));
+      (['section','article','header','footer','aside','main','nav'].includes(n.tagName)||
+        (n.tagName==='div'&&attribute(n,'role')==='region')));
   if(matching.length!==1)throw Error('section_selection_must_be_unique:'+matching.length);
   const r=matching[0].sourceCodeLocation;
   if(!r?.endTag||!r.startTag)throw Error('section_requires_end_tag');
