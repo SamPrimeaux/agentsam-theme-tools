@@ -134,6 +134,11 @@ export function compileStaticSection(source,{marker,start,sourceId='source.html'
   if(!Array.isArray(assets)||assets.some(v=>typeof v!=='string'))throw TypeError('assets must be an array of URLs');
   const fragment=extract(source,{marker,start}),global=inspectGlobal(source);
   const issues=[...global.issues],nodes=nodesOf(fragment,true);
+  const stylesheet=css===undefined?global.css:css;
+  for(const match of stylesheet.matchAll(/url\(\s*(?:"([^"]*)"|'([^']*)'|([^)]*))\s*\)/gi)){
+    const value=(match[1]??match[2]??match[3]??'').trim();
+    if(!value||!assets.includes(value))issues.push('unresolved_css_asset:'+value.slice(0,100));
+  }
   const fields=[],defaults={},counts={};
   const next=kind=>kind+'_'+(counts[kind]=(counts[kind]||0)+1);
   function field(kind,label,type,range,original,att=null){
