@@ -129,10 +129,10 @@ function extract(source,{marker,start}) {
   return source.slice(r.startOffset,r.endOffset);
 }
 /** Real normalized output for static scenes; refuses to certify unsafe donor behavior. */
-export function compileStaticSection(source,{marker,sourceId='source.html',css,assets=[],strict=true}={}) {
-  if(typeof source!=='string'||typeof marker!=='string'||!marker)throw TypeError('source and marker are required');
+export function compileStaticSection(source,{marker,start,sourceId='source.html',css,assets=[],strict=true}={}) {
+  if(typeof source!=='string'||(!marker&&!Number.isInteger(start)))throw TypeError('source and marker/start are required');
   if(!Array.isArray(assets)||assets.some(v=>typeof v!=='string'))throw TypeError('assets must be an array of URLs');
-  const fragment=extract(source,marker),global=inspectGlobal(source);
+  const fragment=extract(source,{marker,start}),global=inspectGlobal(source);
   const issues=[...global.issues],nodes=nodesOf(fragment,true);
   const fields=[],defaults={},counts={};
   const next=kind=>kind+'_'+(counts[kind]=(counts[kind]||0)+1);
