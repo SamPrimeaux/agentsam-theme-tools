@@ -10,7 +10,7 @@ function readArgs(argv, command) {
     const index=args.indexOf(flag);
     if(index<0)return null;
     const value=args[index+1];
-    if(!value||value.startsWith('--'))throw Error('missing_option_value: '+flag);
+    if(!value||value.startsWith('--'))throw Error(flag==='--entry'?'missing_entry_point':'missing_option_value: '+flag);
     args.splice(index,2);
     return value;
   };
