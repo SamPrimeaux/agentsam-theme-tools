@@ -1,0 +1,73 @@
+{
+  "schema": "agentsam.theme-refinery.receipt.v1",
+  "date": "2026-10-09",
+  "repository": "SamPrimeaux/agentsam-theme-tools",
+  "branch": "feat/portable-section-refinery-20261009",
+  "outputType": "artifact-backed-static",
+  "state": "STATIC_CANDIDATES_NOT_INSTALLED",
+  "runEvidence": {
+    "localNode": "v22.23.3",
+    "focusedTestsPassed": 9,
+    "latestGithubCISha": "093ed66a1b191ca787bf4f4706740fb35e22000c",
+    "node22And24": "success",
+    "rustCore": "success"
+  },
+  "findings": [
+    {
+      "id": "dd801d1fe31113a2",
+      "sourceSha256": "dd801d1fe31113a2b7b6534ea27091240e5db7aa8cf91c5be3a9bdc5a5cec1b5",
+      "normalizedSha256": "3a97c77f528edcb5db0e8a8ecaf9c877d1a3bb3163415b1a46f514a64976d37b",
+      "sourceR2": "cms/design-library/v1/archived/dd801d1fe31113a2/dd801d1fe31113a2b7b6534ea27091240e5db7aa8cf91c5be3a9bdc5a5cec1b5/source.html",
+      "normalizedR2": "cms/design-library/v1/components/editorial-story/dd801d1fe31113a2/3a97c77f528edcb5db0e8a8ecaf9c877d1a3bb3163415b1a46f514a64976d37b/definition.json",
+      "d1ArtifactId": "art_refinery_dd801d1fe31113a2",
+      "fields": 5,
+      "sourceHashVerified": true,
+      "compiled": true,
+      "cssIsolated": true,
+      "independentRenderVerified": true,
+      "mediaMasterVerified": false,
+      "visualBrowserVerified": false,
+      "cmsInstalled": false,
+      "approved": false
+    },
+    {
+      "id": "c7dc5f355b672876",
+      "sourceSha256": "c7dc5f355b672876f077b6c73fecd72bbe438ce1dd041af73b59489f08798304",
+      "normalizedSha256": "ec30981e3023be3f288df9f7c799ed9ca26e06807efc297f790ce6183c539e28",
+      "sourceR2": "cms/design-library/v1/archived/c7dc5f355b672876/c7dc5f355b672876f077b6c73fecd72bbe438ce1dd041af73b59489f08798304/source.html",
+      "normalizedR2": "cms/design-library/v1/components/editorial-story/c7dc5f355b672876/ec30981e3023be3f288df9f7c799ed9ca26e06807efc297f790ce6183c539e28/definition.json",
+      "d1ArtifactId": "art_refinery_c7dc5f355b672876",
+      "fields": 5,
+      "sourceHashVerified": true,
+      "compiled": true,
+      "cssIsolated": true,
+      "independentRenderVerified": true,
+      "mediaMasterVerified": false,
+      "visualBrowserVerified": false,
+      "cmsInstalled": false,
+      "approved": false
+    },
+    {
+      "id": "49ab578203185923",
+      "sourceSha256": "49ab578203185923a6d585c468dbc20e5f2bd2aa72bab5a7e9751c060e8689fd",
+      "normalizedSha256": "0e1d52e42a8a242bf3a8356f5b77d8f273534d11fbe8635a4222464034b451c4",
+      "sourceR2": "cms/design-library/v1/archived/49ab578203185923/49ab578203185923a6d585c468dbc20e5f2bd2aa72bab5a7e9751c060e8689fd/source.html",
+      "normalizedR2": "cms/design-library/v1/components/editorial-story/49ab578203185923/0e1d52e42a8a242bf3a8356f5b77d8f273534d11fbe8635a4222464034b451c4/definition.json",
+      "d1ArtifactId": "art_refinery_49ab578203185923",
+      "fields": 11,
+      "sourceHashVerified": true,
+      "compiled": true,
+      "cssIsolated": true,
+      "independentRenderVerified": true,
+      "mediaMasterVerified": false,
+      "visualBrowserVerified": false,
+      "cmsInstalled": false,
+      "approved": false
+    }
+  ],
+  "blockers": [
+    "external-media-not-assetcore-approved",
+    "browser-fidelity-not-verified",
+    "CMS-publish-roundtrip-not-verified"
+  ]
+}

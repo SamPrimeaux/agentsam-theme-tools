@@ -66,3 +66,24 @@ test('source section mutation needs a unique trusted marker', () => {
   assert.throws(()=>replaceSectionContent('<section data-cms-section="same"></section><section data-cms-section="same"></section>',
     {marker:'same',html:'X',trusted:true}),/must_be_unique/);
 });
+
+test('real CMS page wrappers retain canonical native owners and nested pattern roles',()=>{
+  const doc='<main data-site-page="stories">' +
+    '<div class="iam-site-section" id="stories-campaign-teaser-1" data-site-preset="revise/campaign-teaser">' +
+      '<section><h2>Story lead</h2><article><h3>Story card</h3></article></section></div>' +
+    '<div class="iam-site-section" id="stories-brand-film-4" data-site-preset="revise/brand-film">' +
+      '<section><h2>Story film</h2></section></div>' +
+    '</main>';
+  const plan=planHtmlRebuild(doc,{filename:'pages/stories.html'});
+  assert.deepEqual(plan.nativeSections.map(x=>x.id),[
+    'stories-campaign-teaser-1','stories-brand-film-4']);
+  assert.deepEqual(plan.nativeSections.map(x=>x.preset),[
+    'revise/campaign-teaser','revise/brand-film']);
+  assert.equal(plan.nestedPatterns,3);
+  const nested=plan.candidates.filter(x=>x.type==='subcomponent-candidate');
+  assert.ok(nested.some(x=>x.ownerSectionId==='stories-campaign-teaser-1'));
+  assert.ok(nested.some(x=>x.ownerSectionId==='stories-brand-film-4'));
+  assert.ok(plan.candidates.filter(x=>x.type==='native-section-instance')
+    .every(x=>x.state==='already-canonical-native'));
+  assert.equal(plan.readyForCms,false);
+});
