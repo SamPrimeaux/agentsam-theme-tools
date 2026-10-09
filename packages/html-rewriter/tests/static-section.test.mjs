@@ -74,3 +74,24 @@ test('missing exact section selection and unsafe instances fail',()=>{
   const c=compileStaticSection(page,options);
   assert.throws(()=>renderStaticSection(c,{uid:'not valid /'}),/invalid_instance_uid/);
 });
+
+test('archived Custom Liquid region hoists nested CSS and preserves emphasized text editability',()=>{
+  const donor = '<div class="donor-story" role="region">' +
+    '<style>.donor-story{color:navy}@media(max-width:700px){.donor-story{padding:8px}}</style>' +
+    '<h2>Original title</h2><p>Before <strong>important</strong> after.</p></div>';
+  const plan=planHtmlRebuild(donor,{filename:'custom-liquid.html'});
+  const region=plan.candidates.find(x=>x.tag==='div'&&x.type==='section');
+  assert.ok(region);
+  const component=compileStaticSection(donor,{start:region.sourceRange.start,sourceId:'custom-liquid.html'});
+  assert.equal(component.blockers.length,0);
+  assert.equal(component.settingsSchema.length,4);
+  assert.ok(component.settingsSchema.some(x=>x.id==='heading_1'));
+  assert.ok(component.settingsSchema.some(x=>x.id==='text_2'));
+  const output=renderStaticSection(component,{uid:'chapterB',
+    settings:{heading_1:'Chapter revised',text_2:'significant'}});
+  assert.ok(!output.html.includes('<style'));
+  assert.match(output.html,/Chapter revised/);
+  assert.match(output.html,/<strong>significant<\/strong>/);
+  assert.match(output.css,/@media/);
+  assert.match(output.css,/data-agent-section-instance="chapterB"/);
+});
