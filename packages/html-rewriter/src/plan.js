@@ -67,12 +67,16 @@ export function planHtmlRebuild(source, { filename = 'index.html', includeSource
       if (child.tagName === 'img') media.push({role:'media.image',src:attribute(child,'src'),alt:attribute(child,'alt')});
       if (child.tagName === 'a') links.push({href:attribute(child,'href'),label:value});
     }
-    const type = tag === 'header' || tag === 'footer' ? 'global-region'
+    const type = nativeId ? 'native-section-instance'
+      : ownerSectionId ? 'subcomponent-candidate'
+      : tag === 'header' || tag === 'footer' ? 'global-region'
       : tag === 'nav' ? 'navigation'
       : tag === 'main' ? 'page-shell' : 'section';
     const entry = {
       candidateId: filename + '#' + (marker || attribute(node,'id') || tag + '@' + loc.startOffset),
       type, marker: marker || null, tag, id: attribute(node,'id'),
+      nativePreset: nativePreset || null,
+      ownerSectionId: ownerSectionId || null, ownerPreset: ownerPreset || null,
       sourceRange:{start:loc.startOffset,end:loc.endOffset,
         contentStart:loc.startTag?.endOffset ?? loc.startOffset,
         contentEnd:loc.endTag?.startOffset ?? loc.endOffset},
