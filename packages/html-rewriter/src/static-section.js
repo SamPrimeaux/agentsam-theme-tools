@@ -163,6 +163,7 @@ export function compileStaticSection(source,{marker,start,sourceId='source.html'
           c.value.trim());
       }else if(direct.length>1)issues.push('mixed_text_not_editable:'+tag);
     }
+    if(tag==='img'&&attribute(n,'alt')===null)issues.push('image_missing_alt');
     if(tag==='img')for(const att of ['src','alt']){
       if(r.attrs?.[att])field(att==='src'?'media':'alt','Image '+att,att==='src'?'media':'text',
         {start:r.attrs[att].startOffset,end:r.attrs[att].endOffset},attribute(n,att)||'',att);
