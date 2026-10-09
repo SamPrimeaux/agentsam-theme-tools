@@ -161,7 +161,7 @@ export function compileStaticSection(source,{marker,start,sourceId='source.html'
         field(kind,tag+' text',kind==='heading'?'text':'textarea',
           {start:c.sourceCodeLocation.startOffset,end:c.sourceCodeLocation.endOffset},
           c.value.trim());
-      }else if(direct.length>1)issues.push('mixed_text_not_editable:'+tag);
+      }else if(direct.length>0)issues.push('mixed_text_not_editable:'+tag);
     }
     if(tag==='img'&&attribute(n,'alt')===null)issues.push('image_missing_alt');
     if(tag==='img')for(const att of ['src','alt']){
