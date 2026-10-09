@@ -195,6 +195,9 @@ export async function runThemeCommand(argv, { stdout = process.stdout, stderr = 
             item.html.candidates.length + ' source-backed section/global candidates\n');
           stdout.write('    closure: ' + item.extraction.files.length + ' files; ' +
             item.extraction.dependencyClosure.blockers.length + ' unverified conditions\n');
+          if (item.html.nativeSections.length) stdout.write('    canonical CMS sections: ' +
+            item.html.nativeSections.length + '; nested visual candidates: ' +
+            item.html.nestedPatterns + ' (not independent stock)\n');
           for (const candidate of item.html.candidates) {
             stdout.write('    ' + candidate.type + ': ' + candidate.candidateId +
               ' · hazards=' + candidate.hazards.length + '\n');
