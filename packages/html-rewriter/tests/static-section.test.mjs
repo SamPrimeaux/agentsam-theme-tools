@@ -86,9 +86,9 @@ test('archived Custom Liquid region hoists nested CSS and preserves emphasized t
   assert.equal(component.blockers.length,0);
   assert.equal(component.settingsSchema.length,4);
   assert.ok(component.settingsSchema.some(x=>x.id==='heading_1'));
-  assert.ok(component.settingsSchema.some(x=>x.id==='text_2'));
+  assert.ok(component.settingsSchema.some(x=>x.id==='text_3'));
   const output=renderStaticSection(component,{uid:'chapterB',
-    settings:{heading_1:'Chapter revised',text_2:'significant'}});
+    settings:{heading_1:'Chapter revised',text_3:'significant'}});
   assert.ok(!output.html.includes('<style'));
   assert.match(output.html,/Chapter revised/);
   assert.match(output.html,/<strong>significant<\/strong>/);
