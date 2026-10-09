@@ -96,7 +96,11 @@ export function planHtmlRebuild(source, { filename = 'index.html', includeSource
     evidence:{title:analyzed.title,elementCount:analyzed.elementCount,
       scriptElements,styleElements,inlineHandlers,inlineStyles,duplicateIds,
       parseErrors:errors,references:analyzed.references},
-    candidates,state:'source-backed-candidates-only',
+    candidates,
+    nativeSections: candidates.filter(c => c.type === 'native-section-instance')
+      .map(c => ({id:c.id,preset:c.nativePreset,sourceRange:c.sourceRange})),
+    nestedPatterns: candidates.filter(c => c.type === 'subcomponent-candidate').length,
+    state:'source-backed-candidates-only',
     readyForCms:false,verifiedPreview:false,approved:false,
   };
 }
