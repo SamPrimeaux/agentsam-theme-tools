@@ -34,10 +34,10 @@ export function planHtmlRebuild(source, { filename = 'index.html', includeSource
     if (!CANDIDATE_TAGS.has(tag) && !marker) continue;
     if (!loc || !Number.isInteger(loc.startOffset) || !Number.isInteger(loc.endOffset)) continue;
     const original = source.slice(loc.startOffset, loc.endOffset);
-    const nested = nodes.filter(n => {
-      const r = n.sourceCodeLocation;
-      return r && r.startOffset >= loc.startOffset && r.endOffset <= loc.endOffset;
-    });
+    // Walk this actual subtree rather than scanning the entire document per candidate.
+    // This keeps rebuild planning proportional to each section's tree depth.
+    const nested = [];
+    walkHtml(node, descendant => nested.push(descendant));
     const deps = analyzed.references.filter(ref => ref.start != null && ref.end != null &&
       ref.start >= loc.startOffset && ref.end <= loc.endOffset).map(ref => ({
         tag:ref.tag, attribute:ref.attr, value:ref.value, kind:ref.kind, external:ref.external,
