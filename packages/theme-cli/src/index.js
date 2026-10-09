@@ -1,20 +1,31 @@
 import { ingestSourceInputs } from '@inneranimalmedia/theme-source-ingest';
 import { buildThemeModuleGraph, planModuleExtraction } from '@inneranimalmedia/theme-graph';
-import { planHtmlRebuild } from '@inneranimalmedia/theme-html-rewriter';
+import { planHtmlRebuild, compileStaticSection } from '@inneranimalmedia/theme-html-rewriter';
 
-export const CLI_COMMANDS = ['ingest', 'inspect', 'inventory', 'graph', 'check', 'closure', 'plan'];
+export const CLI_COMMANDS = ['ingest', 'inspect', 'inventory', 'graph', 'check', 'closure', 'plan', 'normalize'];
 
 function readArgs(argv, command) {
   const args = [...argv];
-  let entryPoint = null;
-  const index = args.indexOf('--entry');
-  if (index >= 0) {
-    entryPoint = args[index + 1];
-    if (!entryPoint || entryPoint.startsWith('--')) throw new Error('missing_entry_point');
-    args.splice(index, 2);
-  }
-  if (!['closure', 'plan'].includes(command) && entryPoint !== null) throw new Error('entry_only_supported_for_closure_or_plan');
-  return { json: args.includes('--json'), entryPoint, inputs: args.filter((value) => value !== '--json') };
+  const take = flag => {
+    const index=args.indexOf(flag);
+    if(index<0)return null;
+    const value=args[index+1];
+    if(!value||value.startsWith('--'))throw Error('missing_option_value: '+flag);
+    args.splice(index,2);
+    return value;
+  };
+  const entryPoint=take('--entry');
+  const marker=take('--marker');
+  const startRaw=take('--start');
+  const start=startRaw===null?null:Number(startRaw);
+  const assets=[];
+  while(args.includes('--asset'))assets.push(take('--asset'));
+  if(entryPoint!==null&&!['closure','plan','normalize'].includes(command))throw Error('entry_option_not_supported');
+  if(command!=='normalize'&&(marker!==null||startRaw!==null||assets.length))throw Error('normalize_options_not_supported');
+  if(command==='normalize'&&(marker===null)===(startRaw===null))throw Error('provide_exactly_one_of_marker_or_start');
+  if(startRaw!==null&&(!Number.isSafeInteger(start)||start<0))throw Error('invalid_source_start');
+  return {json:args.includes('--json'),entryPoint,marker,start,assets,
+    inputs:args.filter(value=>value!=='--json')};
 }
 
 function formatBytes(bytes) {
@@ -89,9 +100,10 @@ export async function runThemeCommand(argv, { stdout = process.stdout, stderr = 
   if (command === 'help' || command === '--help' || command === '-h') {
     stdout.write(
       'AgentSam Theme Tools (foundation)\n' +
-      'Usage: agentsam-theme <ingest|inspect|inventory|graph|check|closure|plan> <paths...> [--json]\n' +
+      'Usage: agentsam-theme <ingest|inspect|inventory|graph|check|closure|plan|normalize> <paths...> [--json]\n' +
       '       agentsam-theme closure <one path> [--entry relative/path] [--json]\n' +
       '       agentsam-theme plan <one path> [--entry relative/path.html] [--json]\n' +
+      '       agentsam-theme normalize <one path> [--entry relative/path.html] (--marker name|--start offset) [--asset URL] [--json]\n' +
       'Sources: HTML, directory, ZIP, TAR, TAR.GZ, stdin (-); Git bundle snapshots\n' +
       'Closure is a source-backed candidate report, not a runnable converted theme.\n'
     );
@@ -108,17 +120,49 @@ export async function runThemeCommand(argv, { stdout = process.stdout, stderr = 
     stderr.write(String(error?.message || error) + '\n');
     return 2;
   }
-  const { json, entryPoint, inputs } = options;
+  const { json, entryPoint, marker, start, assets, inputs } = options;
   if (!inputs.length) {
     stderr.write('source_required: supply one or more paths or -\n');
     return 2;
   }
-  if (['closure', 'plan'].includes(command) && inputs.length !== 1) {
+  if (['closure', 'plan', 'normalize'].includes(command) && inputs.length !== 1) {
     stderr.write('closure_requires_exactly_one_source\n');
     return 2;
   }
   try {
     const report = await ingestSourceInputs(inputs, { stdin });
+    if (command === 'normalize') {
+      const material = report.materials[0];
+      const graph = buildThemeModuleGraph(material.files);
+      const chosen = entryPoint || (graph.entryPoints.length===1?graph.entryPoints[0]:null);
+      if(!chosen || graph.modules[chosen]?.type!=='html') {
+        stderr.write('html_entry_required: specify --entry when multiple HTML files exist\n');
+        return 2;
+      }
+      const file=material.files.find(f=>f.path===chosen);
+      if(!file||typeof file.text!=='string')throw Error('html_source_unavailable: '+chosen);
+      const sourceAssets=material.graph.edges.filter(e=>
+        e.from===chosen && e.resolved && e.kind==='asset').map(e=>e.original);
+      const component=compileStaticSection(file.text,{
+        sourceId:chosen, ...(marker!==null?{marker}:{start}),
+        assets:[...new Set([...sourceAssets,...assets])],
+        strict:false
+      });
+      const output={
+        schema:'agentsam.theme-normalization-report.v1',
+        source:chosen,component,
+        readyForCms:false,installed:false,
+        status:component.blockers.length?'blocked':'compiled-static-candidate'
+      };
+      if(json)stdout.write(JSON.stringify(output,null,2)+'\n');
+      else {
+        stdout.write(chosen+' → '+output.status+'\n');
+        stdout.write('  settings: '+component.settingsSchema.length+'; blockers: '+component.blockers.length+'\n');
+        for(const blocker of component.blockers)stdout.write('  blocker: '+blocker+'\n');
+        stdout.write('  CMS installation and browser fidelity are not verified\n');
+      }
+      return component.blockers.length?1:0;
+    }
     if (command === 'plan') {
       const material = report.materials[0];
       const graph = buildThemeModuleGraph(material.files);
