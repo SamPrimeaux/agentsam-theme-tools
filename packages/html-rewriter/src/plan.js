@@ -31,7 +31,7 @@ export function planHtmlRebuild(source, { filename = 'index.html', includeSource
     const loc = node.sourceCodeLocation;
     const tag = node.tagName;
     const marker = attribute(node, 'data-cms-section');
-    if (!CANDIDATE_TAGS.has(tag) && !marker) continue;
+    if (!CANDIDATE_TAGS.has(tag) && !marker && !(tag==='div'&&attribute(node,'role')==='region')) continue;
     if (!loc || !Number.isInteger(loc.startOffset) || !Number.isInteger(loc.endOffset)) continue;
     const original = source.slice(loc.startOffset, loc.endOffset);
     // Walk this actual subtree rather than scanning the entire document per candidate.
