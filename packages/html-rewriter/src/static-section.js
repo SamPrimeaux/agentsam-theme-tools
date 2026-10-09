@@ -3,7 +3,8 @@ import { applyPatches, validateRewriteUrl } from './index.js';
 
 export const STATIC_SECTION_SCHEMA = 'agentsam.static-section.v1';
 const uidPattern = /^[A-Za-z0-9_-]{1,64}$/;
-const textTags = new Set(['h1','h2','h3','h4','h5','h6','p','small','figcaption','blockquote']);
+const textTags = new Set(['h1','h2','h3','h4','h5','h6','p','small','figcaption','blockquote',
+  'span','strong','em','b','i','a','li','button','label','time']);
 function escapeText(v) {return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function escapeAttr(v) {return escapeText(v).replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
 function nodesOf(source,fragment=false) {
