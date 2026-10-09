@@ -158,12 +158,12 @@ export function compileStaticSection(source,{marker,start,sourceId='source.html'
     }
     if(textTags.has(tag)){
       const direct=(n.childNodes||[]).filter(c=>c.nodeName==='#text'&&c.value?.trim()&&c.sourceCodeLocation);
-      if(direct.length===1 && (n.childNodes||[]).every(c=>c.nodeName==='#text')){
-        const c=direct[0],kind=/^h[1-6]$/.test(tag)?'heading':'text';
-        field(kind,tag+' text',kind==='heading'?'text':'textarea',
+      for(let index=0;index<direct.length;index++){
+        const c=direct[index],kind=/^h[1-6]$/.test(tag)?'heading':'text';
+        field(kind,tag+' text '+(index+1),kind==='heading'?'text':'textarea',
           {start:c.sourceCodeLocation.startOffset,end:c.sourceCodeLocation.endOffset},
           c.value.trim());
-      }else if(direct.length>0)issues.push('mixed_text_not_editable:'+tag);
+      }
     }
     if(tag==='img'&&attribute(n,'alt')===null)issues.push('image_missing_alt');
     if(tag==='img')for(const att of ['src','alt']){
