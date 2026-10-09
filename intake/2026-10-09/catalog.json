@@ -13,7 +13,10 @@
   "storage": {
     "bucket": "cms",
     "prefix": "design-library/v1/intake/2026-10-09/",
-    "public": false
+    "public": false,
+    "catalogR2Key": "design-library/v1/intake/2026-10-09/catalog.json",
+    "projection": "agentsam_artifacts",
+    "recordedStatus": "private-draft"
   },
   "originals": [
     {
@@ -70,7 +73,8 @@
         "isolatedRuntime": false,
         "browserVerified": false,
         "cmsInstalled": false
-      }
+      },
+      "d1ArtifactId": "art_mining_20261009_iam_services"
     },
     {
       "id": "interactive-brand-kit",
@@ -92,7 +96,8 @@
         "isolatedRuntime": false,
         "browserVerified": false,
         "cmsInstalled": false
-      }
+      },
+      "d1ArtifactId": "art_mining_20261009_brand_kit"
     },
     {
       "id": "agentsam-create",
@@ -115,7 +120,8 @@
         "isolatedRuntime": false,
         "browserVerified": false,
         "cmsInstalled": false
-      }
+      },
+      "d1ArtifactId": "art_mining_20261009_agentsam_create"
     }
   ],
   "relatedArchives": {
@@ -136,7 +142,8 @@
     },
     "glassScript": {
       "githubSource": "intake/2026-10-09/experiments/glass-shapes/build.py",
-      "status": "draft-not-rendered"
+      "status": "draft-not-rendered",
+      "d1ArtifactId": "art_mining_20261009_glass_pipeline"
     }
   },
   "promotionGates": [
