@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+
+<html lang="en" class="scroll-smooth">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Primary Meta Tags -->
+
+    <title>Create | AgentSam by InnerAnimal Media</title>
+
+    <meta name="title" content="Create | AgentSam by InnerAnimal Media">
+
+    <meta name="description" content="Agent Sam is your conversational AI co-pilot built on Workers AI and Anthropic Claude. Deeply integrated into the Cloudflare ecosystem for deployment, D1 queries, and code generation.">
+
+    <meta name="keywords" content="AgentSam, AI DevOps, Cloudflare Workers AI, Anthropic Claude, InnerAnimal Media, D1 Database, @inneranimalmedia/agentsam-sdk, Brand Guidelines, Design System">
+
+    <meta name="author" content="InnerAnimal Media">
+
+    <!-- Open Graph / Facebook -->
+
+    <meta property="og:type" content="website">
+
+    <meta property="og:url" content="https://inneranimalmedia.com/create">
+
+    <meta property="og:title" content="Create | AgentSam AI Co-Pilot">
+
+    <meta property="og:description" content="Your conversational AI co-pilot for Cloudflare infrastructure. Diagnose errors, explain schemas, and write Workers code on the fly.">
+
+    <meta property="og:image" content="https://asr.inneranimalmedia.com/brands/agentsam/app-icon/v1/raster/AgentSam-Icon-1024.avif">
+
+
+
+    <!-- Twitter -->
+
+    <meta property="twitter:card" content="summary_large_image">
+
+    <meta property="twitter:url" content="https://inneranimalmedia.com/create">
+
+    <meta property="twitter:title" content="Create | AgentSam AI Co-Pilot">
+
+    <meta property="twitter:description" content="Your conversational AI co-pilot for Cloudflare infrastructure. Diagnose errors, explain schemas, and write Workers code on the fly.">
+
+    <meta property="twitter:image" content="https://asr.inneranimalmedia.com/brands/agentsam/app-icon/v1/raster/AgentSam-Icon-1024.avif">
+
+
+
+    <!-- Fonts -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Tailwind -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Three.js -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script>
+
+        tailwind.config = {
+
+            theme: {
+
+                extend: {
+
+                    fontFamily: { 
+
+                        sans: ['Inter', 'sans-serif'],
+
+                        mono: ['JetBrains Mono', 'monospace'],
+
+                    },
+
+                    colors: {
+
+                        brand: {
+
+                            indigo: '#6366F1',    // Primary Indigo (AgentSam Theme)
+
+                            violet: '#8B5CF6',    // Secondary Violet
+
+                            cyan: '#06B6D4',      // Accent
+
+                            navy: '#1E293B',      // Neutral Dark
+
+                            dark: '#020617',      // Deepest Navy
+
+                            slate: '#334155',     // Neutral 700
+
+                            muted: '#94A3B8',     // Text Muted
+
+                            light: '#CBD5E1',     // Text Light
+
+                            grey: '#F1F5F9',      // BG Secondary
+
+                            surface: '#FFFFFF',   // Pure White
+
+                        }
+
+                    },
+
+                    maxWidth: {
+
+                        'screen-xl-tight': '1280px',
+
+                    },
+
+                    animation: {
+
+                        'fade-in-up': 'fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+
+                        'marquee-left': 'marqueeLeft 40s linear infinite',
+
+                        'marquee-right': 'marqueeRight 40s linear infinite',
+
+                    },
+
+                    keyframes: {
+
+                        fadeInUp: {
+
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+
+                        },
+
+                        marqueeLeft: {
+
+                            '0%': { transform: 'translateX(0)' },
+
+                            '100%': { transform: 'translateX(-50%)' },
+
+                        },
+
+                        marqueeRight: {
+
+                            '0%': { transform: 'translateX(-50%)' },
+
+                            '100%': { transform: 'translateX(0)' },
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    </script>
+
+
+
+    <style>
+
+        :root {
+
+            --glass-white: rgba(255, 255, 255, 0.9);
+
+            --glass-border: rgba(255, 255, 255, 0.1);
+
+            --transition-speed: 0.8s;
+
+        }
+
+
+
+        body {
+
+            background-color: #020617;
+
+            color: #E2E8F0;
+
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+
+        }
+
+
+
+        /* Glass Header */
+
+        .glass-header {
+
+            background: rgba(2, 6, 23, 0.6);
+
+            backdrop-filter: blur(20px);
+
+            -webkit-backdrop-filter: blur(20px);
+
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+        }
+
+        .glass-header.light-mode {
+
+            background: rgba(255, 255, 255, 0.85);
+
+            border-bottom: 1px solid rgba(30, 41, 59, 0.08);
+
+        }
+
+
+
+        /* Nav Links */
+
+        .nav-link { 
+
+            position: relative;
+
+            color: #94A3B8; 
+
+            transition: color 0.3s;
+
+        }
+
+        .nav-link:hover { color: #FFFFFF; }
+
+        .nav-link.active { color: #6366F1; font-weight: 700; }
+
+        .glass-header.light-mode .nav-link { color: #64748B; }
+
+        .glass-header.light-mode .nav-link:hover { color: #6366F1; }
+
+
+
+        /* AgentSam SVG Logo Handling */
+
+        .logo-mark {
+
+            transition: filter 0.5s ease;
+
+            filter: invert(1); /* White on dark background by default */
+
+        }
+
+        .glass-header.light-mode .logo-mark {
+
+            filter: invert(0); /* Black on light background */
+
+        }
+
+
+
+        /* Deep Space Gradient */
+
+        .hero-galaxy {
+
+            background: radial-gradient(circle at 100% 0%, #1E1B4B 0%, #020617 40%, #000000 80%);
+
+        }
+
+        /* 3D Background Container */
+
+        #bg-canvas-container {
+
+            position: fixed;
+
+            top: 0;
+
+            left: 0;
+
+            width: 100%;
+
+            height: 100%;
+
+            z-index: -1;
+
+            pointer-events: none;
+
+        }
+
+
+
+        /* Marquee specific styles */
+
+        .marquee-container {
+
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+
+        }
+
+
+
+        /* Bento Card Hover */
+
+        .bento-card {
+
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+
+        }
+
+        .bento-card:hover {
+
+            transform: translateY(-4px);
+
+            box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.15);
+
+        }
+
+
+
+        /* Scrollbar */
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+
+        /* Mobile Menu */
+
+        #mobile-menu {
+
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+
+        }
+
+        #mobile-menu.active {
+
+            transform: translateX(0);
+
+            opacity: 1;
+
+        }
+
+        /* User Trigger Morph */
+
+        .user-trigger {
+
+            position: relative;
+
+            z-index: 60;
+
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+        }
+
+        .user-trigger .icon-state {
+
+            transition: all 0.4s ease;
+
+            position: absolute;
+
+            inset: 0;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            backface-visibility: hidden;
+
+        }
+
+        .user-trigger.active {
+
+            transform: rotate(180deg);
+
+            border-color: #EF4444; 
+
+        }
+
+        .user-trigger.active .img-state { opacity: 0; transform: scale(0.5); }
+
+        .user-trigger.active .close-state { opacity: 1; transform: scale(1); }
+
+        .user-trigger .close-state { opacity: 0; transform: scale(0.5); color: #EF4444; }
+
+    </style>
+
+</head>
+
+<body class="antialiased selection:bg-brand-indigo selection:text-white">
+
+
+
+    <!-- Fixed 3D Background -->
+
+    <div id="bg-canvas-container"></div>
+
+
+
+    <!-- GLOBAL HEADER COMPONENT -->
+
+    <header id="main-header" class="fixed top-0 left-0 w-full z-50 glass-header h-[88px] flex items-center justify-center transition-all duration-500">
+
+        <div class="w-full max-w-screen-xl-tight px-6 flex items-center justify-between">
+
+            <!-- Logo (AgentSam Branding) -->
+
+            <a href="/" class="flex items-center gap-3 transition-transform hover:scale-105">
+
+                <!-- SVG dynamically inverts based on background -->
+
+                <img id="header-logo" src="https://asr.inneranimalmedia.com/brands/agentsam/app-icon/v1/vector/AgentSam-Mark.svg" alt="AgentSam" class="w-10 h-10 object-contain logo-mark">
+
+                <span class="text-xl font-bold tracking-tight hidden sm:block text-current logo-mark" style="filter: none;">AgentSam</span>
+
+            </a>
+
+
+
+            <!-- Desktop Nav -->
+
+            <nav class="hidden md:flex items-center gap-10">
+
+                <a href="/" class="text-sm font-medium nav-link opacity-80 hover:opacity-100">Home</a>
+
+                <a href="/work" class="text-sm font-medium nav-link opacity-80 hover:opacity-100">Work</a>
+
+                <a href="/create" class="text-sm font-bold nav-link active text-brand-indigo">Create</a>
+
+                <a href="/about" class="text-sm font-medium nav-link opacity-80 hover:opacity-100">About</a>
+
+                <a href="/services" class="text-sm font-medium nav-link opacity-80 hover:opacity-100">Services</a>
+
+            </nav>
+
+
+
+            <!-- User / Mobile Trigger -->
+
+            <button id="user-circle" class="user-trigger w-14 h-14 rounded-full overflow-hidden border-2 border-white/20 cursor-pointer hover:border-brand-indigo transition-all shadow-lg bg-black/20 backdrop-blur-sm" onclick="toggleMobileMenu()">
+
+                <div class="icon-state img-state">
+
+                    <img id="header-user" src="https://imagedelivery.net/g7wf09fCONpnidkRnR_5vw/f8bfc7dd-7234-4336-1029-6f31a5bd7d00/avatar" alt="User" class="w-full h-full object-cover">
+
+                </div>
+
+                <div class="icon-state close-state">
+
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+
+                </div>
+
+            </button>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- Mobile Menu Overlay -->
+
+    <div id="mobile-menu" class="fixed inset-0 z-40 bg-brand-dark/95 backdrop-blur-2xl translate-x-full opacity-0 flex flex-col justify-center items-center">
+
+        <nav class="flex flex-col gap-8 text-center">
+
+            <a href="/" class="text-4xl font-black text-white hover:text-brand-indigo transition-colors">Home</a>
+
+            <a href="/work" class="text-4xl font-black text-white hover:text-brand-indigo transition-colors">Work</a>
+
+            <a href="/create" class="text-4xl font-black text-brand-indigo tracking-tight">Create</a>
+
+            <a href="/about" class="text-4xl font-black text-white hover:text-brand-indigo transition-colors">About</a>
+
+            <a href="/contact" class="text-4xl font-black text-white hover:text-brand-indigo transition-colors">Contact</a>
+
+        </nav>
+
+    </div>
+
+
+
+    <main class="relative w-full overflow-hidden">
+
+        <!-- SECTION 1: Brand System & Guidelines (Light) -->
+
+        <section id="section-brand-system" class="relative min-h-[160vh] pt-32 pb-48 bg-brand-surface light-section overflow-hidden z-10">
+
+            <div class="w-full max-w-screen-xl-tight px-6 mx-auto relative z-20">
+
+                <!-- Header -->
+
+                <div class="text-center mb-24 opacity-0 animate-fade-in-up" style="animation-delay: 0.1s;">
+
+                    <div class="flex items-center justify-center gap-3 mb-6">
+
+                        <img src="https://asr.inneranimalmedia.com/brands/agentsam/app-icon/v1/raster/AgentSam-Icon-1024.avif" class="w-12 h-12 rounded-xl shadow-lg border border-brand-indigo/20" alt="AgentSam">
+
+                        <span class="text-xs font-bold uppercase tracking-[0.2em] text-brand-indigo">Design System v2.0</span>
+
+                    </div>
+
+                    <h1 class="text-5xl md:text-8xl font-black tracking-tight text-brand-navy mb-8">
+
+                        Create with <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-indigo to-brand-violet">Clarity.</span>
+
+                    </h1>
+
+                    <p class="text-xl text-brand-muted max-w-2xl mx-auto leading-relaxed">
+
+                        Explore our comprehensive brand guidelines, UI kits, and component libraries. Built for seamless integration across the InnerAnimal ecosystem.
+
+                    </p>
+
+                </div>
+
+
+
+                <!-- Storyboard / Marquee Lanes -->
+
+                <div class="w-full flex flex-col gap-8 marquee-container my-16 opacity-0 animate-fade-in-up" style="animation-delay: 0.3s;">
+
+                    <!-- Lane 1: Fast Left (UI Components) -->
+
+                    <div class="flex gap-8 w-max animate-marquee-left">
+
+                        <!-- Mockup Cards (Aspect Ratios varied for masonry feel) -->
+
+                        <div class="w-[400px] h-[250px] bg-white rounded-2xl shadow-sm border border-brand-grey p-6 flex flex-col justify-between">
+
+                            <div class="flex justify-between items-start"><div class="w-10 h-10 bg-indigo-50 rounded-lg"></div><div class="text-xs font-mono text-gray-400">Typography</div></div>
+
+                            <div class="space-y-2"><div class="h-4 bg-gray-200 w-3/4 rounded"></div><div class="h-4 bg-gray-100 w-1/2 rounded"></div></div>
+
+                        </div>
+
+                        <div class="w-[300px] h-[250px] bg-[#0F172A] rounded-2xl shadow-lg border border-white/10 p-6 flex flex-col justify-between">
+
+                             <div class="text-xs font-mono text-indigo-400">Dark Mode Palette</div>
+
+                             <div class="flex gap-2"><div class="w-12 h-12 rounded-full bg-brand-indigo"></div><div class="w-12 h-12 rounded-full bg-brand-violet"></div></div>
+
+                        </div>
+
+                        <div class="w-[500px] h-[250px] bg-white rounded-2xl shadow-sm border border-brand-grey overflow-hidden relative">
+
+                             <img src="https://imagedelivery.net/g7wf09fCONpnidkRnR_5vw/4256e5ec-b922-4cfa-e2fd-3959255e2000/medium" class="w-full h-full object-cover opacity-80" alt="UI">
+
+                             <div class="absolute inset-0 bg-gradient-to-t from-white/90 to-transparent flex items-end p-6">
+
+                                 <span class="font-bold text-brand-navy">Dashboard Layouts</span>
+
+                             </div>
+
+                        </div>
+
+                        <!-- Duplicates for loop -->
+
+                        <div class="w-[400px] h-[250px] bg-white rounded-2xl shadow-sm border border-brand-grey p-6 flex flex-col justify-between">
+
+                            <div class="flex justify-between items-start"><div class="w-10 h-10 bg-indigo-50 rounded-lg"></div><div class="text-xs font-mono text-gray-400">Typography</div></div>
+
+                            <div class="space-y-2"><div class="h-4 bg-gray-200 w-3/4 rounded"></div><div class="h-4 bg-gray-100 w-1/2 rounded"></div></div>
+
+                        </div>
+
+                        <div class="w-[300px] h-[250px] bg-[#0F172A] rounded-2xl shadow-lg border border-white/10 p-6 flex flex-col justify-between">
+
+                             <div class="text-xs font-mono text-indigo-400">Dark Mode Palette</div>
+
+                             <div class="flex gap-2"><div class="w-12 h-12 rounded-full bg-brand-indigo"></div><div class="w-12 h-12 rounded-full bg-brand-violet"></div></div>
+
+                        </div>
+
+                        <div class="w-[500px] h-[250px] bg-white rounded-2xl shadow-sm border border-brand-grey overflow-hidden relative">
+
+                             <img src="https://imagedelivery.net/g7wf09fCONpnidkRnR_5vw/4256e5ec-b922-4cfa-e2fd-3959255e2000/medium" class="w-full h-full object-cover opacity-80" alt="UI">
+
+                             <div class="absolute inset-0 bg-gradient-to-t from-white/90 to-transparent flex items-end p-6">
+
+                                 <span class="font-bold text-brand-navy">Dashboard Layouts</span>
+
+                             </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Lane 2: Slower Right (Icons & Assets) -->
+
+                    <div class="flex gap-8 w-max animate-marquee-right" style="animation-duration: 50s;">
+
+                        <div class="w-[250px] h-[250px] bg-white rounded-2xl shadow-sm border border-brand-grey p-8 flex items-center justify-center">
+
+                            <img src="https://imagedelivery.net/g7wf09fCONpnidkRnR_5vw/d1864d11-4485-4a38-1849-168f567aa200/avatar" class="w-32 h-32 rounded-3xl" alt="App">
+
+                        </div>
+
+                        <div class="w-[450px] h-[250px] bg-indigo-50 rounded-2xl border border-indigo-100 p-8 flex flex-col justify-center">
+
+                            <h3 class="text-2xl font-bold text-brand-indigo mb-2">Custom Iconography</h3>
+
+                            <p class="text-brand-navy/70 text-sm">Consistent stroke weights and corner radii across the entire suite.</p>
+
+                        </div>
+
+                        <div class="w-[350px] h-[250px] bg-white rounded-2xl shadow-sm border border-brand-grey p-8 flex flex-wrap gap-4 items-center justify-center">
+
+                            <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-gray-500"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg></div>
+
+                            <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-gray-500"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4"></path></svg></div>
+
+                            <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-gray-500"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path></svg></div>
+
+                        </div>
+
+                        <!-- Duplicates for loop -->
+
+                        <div class="w-[250px] h-[250px] bg-white rounded-2xl shadow-sm border border-brand-grey p-8 flex items-center justify-center">
+
+                            <img src="https://imagedelivery.net/g7wf09fCONpnidkRnR_5vw/d1864d11-4485-4a38-1849-168f567aa200/avatar" class="w-32 h-32 rounded-3xl" alt="App">
+
+                        </div>
+
+                        <div class="w-[450px] h-[250px] bg-indigo-50 rounded-2xl border border-indigo-100 p-8 flex flex-col justify-center">
+
+                            <h3 class="text-2xl font-bold text-brand-indigo mb-2">Custom Iconography</h3>
+
+                            <p class="text-brand-navy/70 text-sm">Consistent stroke weights and corner radii across the entire suite.</p>
+
+                        </div>
+
+                        <div class="w-[350px] h-[250px] bg-white rounded-2xl shadow-sm border border-brand-grey p-8 flex flex-wrap gap-4 items-center justify-center">
+
+                            <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-gray-500"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg></div>
+
+                            <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-gray-500"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4"></path></svg></div>
+
+                            <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-gray-500"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path></svg></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Action Area -->
+
+                <div class="flex justify-center pt-16">
+
+                    <button class="px-8 py-4 bg-brand-navy text-white rounded-xl font-bold shadow-lg hover:bg-gray-800 transition-colors flex items-center gap-3">
+
+                        Download UI Kit <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- SECTION 2: Service Grid (Dark) -->
+
+        <section id="section-services" class="relative py-48 hero-galaxy overflow-hidden z-10">
+
+            <div class="w-full max-w-screen-xl-tight px-6 mx-auto relative z-20">
+
+                <div class="text-center mb-24">
+
+                    <span class="text-xs font-bold uppercase tracking-widest text-brand-indigo mb-4 block">SDK & Tools</span>
+
+                    <h2 class="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight">Capabilities</h2>
+
+                    <p class="text-brand-muted text-xl max-w-3xl mx-auto font-light leading-relaxed">Integrate AgentSam intelligence directly into your own infrastructure.</p>
+
+                </div>
+
+
+
+                <!-- Bento Box Grid -->
+
+                <div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-6 h-auto md:h-[600px]">
+
+                    <!-- Hero Tile (Spans 2x2) -->
+
+                    <div class="md:col-span-2 md:row-span-2 bg-[#0F172A] rounded-[32px] p-10 border border-white/10 relative overflow-hidden bento-card">
+
+                        <div class="relative z-10 h-full flex flex-col">
+
+                            <div class="w-14 h-14 rounded-2xl bg-indigo-500/20 flex items-center justify-center text-indigo-400 mb-6 border border-indigo-500/30">
+
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+
+                            </div>
+
+                            <h3 class="text-3xl font-bold text-white mb-4">SDK Integration</h3>
+
+                            <p class="text-brand-light leading-relaxed max-w-md text-lg">Integrate AgentSam into your own applications with our robust npm package <code>@inneranimalmedia/agentsam-sdk</code>.</p>
+
+                            <div class="mt-auto pt-8">
+
+                                <a href="#" class="text-indigo-400 font-bold hover:text-white transition-colors flex items-center gap-2">View Documentation <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg></a>
+
+                            </div>
+
+                        </div>
+
+                        <!-- Abstract BG Glow -->
+
+                        <div class="absolute -right-20 -bottom-20 w-96 h-96 bg-brand-indigo/20 rounded-full blur-[100px]"></div>
+
+                    </div>
+
+
+
+                    <!-- Tile 2 -->
+
+                    <div class="md:col-span-2 bg-[#0F172A] rounded-[32px] p-8 border border-white/10 bento-card flex flex-col justify-center">
+
+                        <div class="flex items-center gap-4 mb-4">
+
+                            <div class="w-12 h-12 rounded-xl bg-violet-500/20 flex items-center justify-center text-violet-400 border border-violet-500/30">
+
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+
+                            </div>
+
+                            <h3 class="text-2xl font-bold text-white">Code Generation</h3>
+
+                        </div>
+
+                        <p class="text-brand-light leading-relaxed">Let AgentSam write boilerplate Workers code on the fly based on natural language prompts.</p>
+
+                    </div>
+
+
+
+                    <!-- Tile 3 -->
+
+                    <div class="bg-[#0F172A] rounded-[32px] p-8 border border-white/10 bento-card">
+
+                        <h3 class="text-xl font-bold text-white mb-3">D1 Insights</h3>
+
+                        <p class="text-brand-muted text-sm leading-relaxed mb-6">Real-time schema analysis and query optimization suggestions.</p>
+
+                        <div class="w-full h-12 bg-[#020617] rounded-lg overflow-hidden relative border border-white/5">
+
+                             <div class="absolute left-2 bottom-0 w-1/3 h-6 bg-brand-cyan/40 border-t border-brand-cyan rounded-t-sm"></div>
+
+                             <div class="absolute left-1/3 bottom-0 w-1/3 h-10 bg-brand-indigo/40 border-t border-brand-indigo rounded-t-sm ml-2"></div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Tile 4 -->
+
+                    <div class="bg-gradient-to-br from-brand-indigo to-brand-violet rounded-[32px] p-8 border border-white/20 bento-card flex flex-col justify-center items-center text-center">
+
+                        <svg class="w-10 h-10 text-white mb-4 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+
+                        <h3 class="text-xl font-bold text-white mb-2">Automate DevOps</h3>
+
+                        <p class="text-white/80 text-sm">Deploy faster with AI.</p>
+
+                    </div>
+
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- GLOBAL FOOTER COMPONENT -->
+
+        <footer class="bg-[#020617] text-white pt-32 pb-16 border-t border-white/5 relative z-10">
+
+            <div class="w-full max-w-screen-xl-tight px-6 mx-auto grid grid-cols-1 md:grid-cols-4 gap-16">
+
+                <div class="md:col-span-1">
+
+                    <img src="https://imagedelivery.net/g7wf09fCONpnidkRnR_5vw/dbb316af-9c97-4959-f09f-bf58b2783d00/small" alt="InnerAnimal Logo" class="w-12 h-12 mb-8 opacity-100">
+
+                    <p class="text-gray-400 text-sm leading-relaxed max-w-xs">
+
+                        Unleash your InnerAnimal and Optimize Output by optimizing IA level AI.
+
+                    </p>
+
+                </div>
+
+                <div>
+
+                    <h4 class="text-brand-indigo font-bold mb-6 text-sm tracking-widest uppercase">Products</h4>
+
+                    <ul class="space-y-4 text-sm text-gray-400">
+
+                        <li><a href="/agentsam" class="hover:text-white transition-colors block text-brand-indigo">AgentSam</a></li>
+
+                        <li><a href="/meauxide" class="hover:text-white transition-colors block">MeauxIDE</a></li>
+
+                        <li><a href="/meauxsql" class="hover:text-white transition-colors block">MeauxSQL</a></li>
+
+                        <li><a href="/learn" class="hover:text-white transition-colors block">InnerAutodidact</a></li>
+
+                    </ul>
+
+                </div>
+
+
+
+                <div>
+
+                    <h4 class="text-brand-indigo font-bold mb-6 text-sm tracking-widest uppercase">Company</h4>
+
+                    <ul class="space-y-4 text-sm text-gray-400">
+
+                        <li><a href="/work" class="hover:text-white transition-colors block">Work</a></li>
+
+                        <li><a href="/services" class="hover:text-white transition-colors block">Services</a></li>
+
+                        <li><a href="/about" class="hover:text-white transition-colors block">About</a></li>
+
+                        <li><a href="/contact" class="hover:text-white transition-colors block">Contact</a></li>
+
+                    </ul>
+
+                </div>
+
+
+
+                <div>
+
+                    <h4 class="text-brand-indigo font-bold mb-6 text-sm tracking-widest uppercase">Legal</h4>
+
+                    <ul class="space-y-4 text-sm text-gray-400">
+
+                        <li><a href="/privacy" class="hover:text-white transition-colors block">Privacy</a></li>
+
+                        <li><a href="/terms" class="hover:text-white transition-colors block">Terms</a></li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+            <div class="w-full max-w-screen-xl-tight px-6 mx-auto mt-24 pt-10 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
+
+                <p>© 2026 InnerAnimal Media. All rights reserved.</p>
+
+                <p>System v3.5</p>
+
+            </div>
+
+        </footer>
+
+
+
+    </main>
+
+
+
+    <script>
+
+        // --- Mobile Menu Toggle ---
+
+        function toggleMobileMenu() {
+
+            const menu = document.getElementById('mobile-menu');
+
+            const trigger = document.getElementById('user-circle');
+
+            if (menu.classList.contains('translate-x-full')) {
+
+                menu.classList.remove('translate-x-full');
+
+                menu.classList.remove('opacity-0');
+
+                trigger.classList.add('active');
+
+            } else {
+
+                menu.classList.add('translate-x-full');
+
+                menu.classList.add('opacity-0');
+
+                trigger.classList.remove('active');
+
+            }
+
+        }
+
+
+
+        // --- Background 3D Scene (Floating Abstract Shapes) ---
+
+        const initBgScene = () => {
+
+            const container = document.getElementById('bg-canvas-container');
+
+            if(!container) return;
+
+            const scene = new THREE.Scene();
+
+            const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+            camera.position.z = 50; 
+
+
+
+            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+
+            container.appendChild(renderer.domElement);
+
+
+
+            const shapesGroup = new THREE.Group();
+
+            scene.add(shapesGroup);
+
+
+
+            // Create floating shapes colored similarly to backgrounds to act as subtle depth
+
+            const createShape = (geo, color, x, y, z) => {
+
+                const mat = new THREE.MeshPhongMaterial({
+
+                    color: color,
+
+                    transparent: true,
+
+                    opacity: 0.15, // Very subtle
+
+                    shininess: 10,
+
+                    flatShading: true
+
+                });
+
+                const mesh = new THREE.Mesh(geo, mat);
+
+                mesh.position.set(x, y, z);
+
+                // Random rotation speeds
+
+                mesh.userData = {
+
+                    rx: (Math.random() - 0.5) * 0.01,
+
+                    ry: (Math.random() - 0.5) * 0.01,
+
+                    rz: (Math.random() - 0.5) * 0.01,
+
+                    oy: y, // Original Y for floating
+
+                    offset: Math.random() * Math.PI * 2
+
+                };
+
+                shapesGroup.add(mesh);
+
+                return mesh;
+
+            };
+
+
+
+            // Add shapes suitable for Light Section (Brand System)
+
+            createShape(new THREE.IcosahedronGeometry(8, 0), 0xF1F5F9, -20, 15, -10); // Light Grey
+
+            createShape(new THREE.OctahedronGeometry(6, 0), 0xCBD5E1, 25, 5, -20);
+
+            // Add shapes suitable for Dark Section
+
+            createShape(new THREE.TetrahedronGeometry(12, 1), 0x1E293B, -15, -25, -30); // Navy
+
+            createShape(new THREE.IcosahedronGeometry(10, 0), 0x6366F1, 20, -35, -15); // Indigo Accent
+
+
+
+            // Lights
+
+            const ambient = new THREE.AmbientLight(0xffffff, 0.5);
+
+            scene.add(ambient);
+
+            const dirLight = new THREE.DirectionalLight(0xffffff, 0.5);
+
+            dirLight.position.set(10, 20, 20);
+
+            scene.add(dirLight);
+
+
+
+            let time = 0;
+
+            function animate() {
+
+                requestAnimationFrame(animate);
+
+                time += 0.01;
+
+
+
+                shapesGroup.children.forEach(mesh => {
+
+                    mesh.rotation.x += mesh.userData.rx;
+
+                    mesh.rotation.y += mesh.userData.ry;
+
+                    mesh.rotation.z += mesh.userData.rz;
+
+                    // Gentle float up and down
+
+                    mesh.position.y = mesh.userData.oy + Math.sin(time + mesh.userData.offset) * 2;
+
+                });
+
+
+
+                // Scroll Parallax effect on entire group
+
+                const scrollY = window.scrollY;
+
+                shapesGroup.position.y = scrollY * 0.02; // Move up slightly as we scroll down
+
+
+
+                renderer.render(scene, camera);
+
+            }
+
+            animate();
+
+
+
+            window.addEventListener('resize', () => {
+
+                camera.aspect = window.innerWidth / window.innerHeight;
+
+                camera.updateProjectionMatrix();
+
+                renderer.setSize(window.innerWidth, window.innerHeight);
+
+            });
+
+        };
+
+
+
+        window.addEventListener('DOMContentLoaded', () => {
+
+            initBgScene();
+
+        });
+
+
+
+        // Intersection Observer for Theme Switching (Header Glassmorphism)
+
+        const nav = document.getElementById('main-header');
+
+        const logo = document.getElementById('header-logo');
+
+        const observer = new IntersectionObserver((entries) => {
+
+            entries.forEach(entry => {
+
+                if (entry.target.id === 'section-brand-system') {
+
+                    if (entry.isIntersecting && entry.boundingClientRect.top < 0) {
+
+                        // In Light Section
+
+                        nav.classList.remove('dark-mode');
+
+                        nav.classList.add('light-mode');
+
+                        nav.querySelectorAll('.nav-link').forEach(a => {
+
+                             if(!a.classList.contains('active')) a.style.color = '#64748B';
+
+                        });
+
+                        document.getElementById('user-circle').classList.replace('border-white/20', 'border-brand-grey');
+
+                    } 
+
+                } else if (entry.target.id === 'section-services') {
+
+                    if (entry.isIntersecting) {
+
+                        // In Dark Section
+
+                        nav.classList.add('dark-mode');
+
+                        nav.classList.remove('light-mode');
+
+                        nav.querySelectorAll('.nav-link').forEach(a => {
+
+                             if(!a.classList.contains('active')) a.style.color = '#E2E8F0';
+
+                        });
+
+                        document.getElementById('user-circle').classList.replace('border-brand-grey', 'border-white/20');
+
+                    }
+
+                }
+
+            });
+
+        }, { threshold: 0.1 });
+
+
+
+        observer.observe(document.getElementById('section-brand-system'));
+
+        observer.observe(document.getElementById('section-services'));
+
+    </script>
+
+</body>
+
+</html>

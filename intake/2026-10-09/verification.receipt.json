@@ -1,0 +1,56 @@
+{
+  "schema": "agentsam.design-mining-receipt.v1",
+  "intakeDate": "2026-10-09",
+  "repo": "SamPrimeaux/agentsam-theme-tools",
+  "branch": "feat/design-mining-intake-20261009",
+  "data": {
+    "rawAttachments": {
+      "expected": 5,
+      "storedInR2": 5,
+      "readbackVerified": 5
+    },
+    "normalizedHTML": {
+      "expected": 3,
+      "storedInR2": 3,
+      "readbackVerified": 3,
+      "sha256VerifiedByLocalProcessing": true
+    },
+    "catalog": {
+      "github": true,
+      "r2Get": true
+    },
+    "d1": {
+      "table": "agentsam_artifacts",
+      "privateDrafts": 4,
+      "queriedBack": 4
+    },
+    "priorHtmlArchive": {
+      "count": 7,
+      "referencedOnly": true
+    },
+    "studio3d": {
+      "catalogCount": 32,
+      "sourceRendersUploadedByThisBatch": 0,
+      "status": "blocked-local-source-unavailable"
+    }
+  },
+  "code": {
+    "githubSources": 3,
+    "glassBuildDraft": true,
+    "pythonNormalizer": true,
+    "pythonUnitTests": {
+      "passed": 2,
+      "failed": 0,
+      "execution": "isolated ChatGPT container; Mac tunnel unavailable"
+    }
+  },
+  "runtime": {
+    "localTunnel": "unreachable",
+    "browserPreview": "not-verified",
+    "cmsSections": "not-installed",
+    "realMedia3d": "not-uploaded",
+    "productionDeploy": "not-run",
+    "userReview": "unreviewed"
+  },
+  "acceptance": "SOURCE_ARCHIVED_NOT_READY"
+}
