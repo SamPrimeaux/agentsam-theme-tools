@@ -1,7 +1,7 @@
 {
   "name": "@inneranimalmedia/theme-html-rewriter",
   "version": "0.1.0",
-  "description": "AgentSam Theme Tools: theme-html-rewriter",
+  "description": "Portable source-preserving HTML rewrites and rebuild candidate plans",
   "type": "module",
   "exports": {
     ".": "./src/index.js"
@@ -10,6 +10,9 @@
     "src",
     "README.md"
   ],
+  "scripts": {
+    "test": "node --test tests/*.test.mjs"
+  },
   "engines": {
     "node": ">=22"
   },
