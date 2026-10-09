@@ -1,7 +1,8 @@
 import { ingestSourceInputs } from '@inneranimalmedia/theme-source-ingest';
 import { buildThemeModuleGraph, planModuleExtraction } from '@inneranimalmedia/theme-graph';
+import { planHtmlRebuild } from '@inneranimalmedia/theme-html-rewriter';
 
-export const CLI_COMMANDS = ['ingest', 'inspect', 'inventory', 'graph', 'check', 'closure'];
+export const CLI_COMMANDS = ['ingest', 'inspect', 'inventory', 'graph', 'check', 'closure', 'plan'];
 
 function readArgs(argv, command) {
   const args = [...argv];
@@ -12,7 +13,7 @@ function readArgs(argv, command) {
     if (!entryPoint || entryPoint.startsWith('--')) throw new Error('missing_entry_point');
     args.splice(index, 2);
   }
-  if (command !== 'closure' && entryPoint !== null) throw new Error('entry_only_supported_for_closure');
+  if (!['closure', 'plan'].includes(command) && entryPoint !== null) throw new Error('entry_only_supported_for_closure_or_plan');
   return { json: args.includes('--json'), entryPoint, inputs: args.filter((value) => value !== '--json') };
 }
 
@@ -88,8 +89,9 @@ export async function runThemeCommand(argv, { stdout = process.stdout, stderr = 
   if (command === 'help' || command === '--help' || command === '-h') {
     stdout.write(
       'AgentSam Theme Tools (foundation)\n' +
-      'Usage: agentsam-theme <ingest|inspect|inventory|graph|check|closure> <paths...> [--json]\n' +
+      'Usage: agentsam-theme <ingest|inspect|inventory|graph|check|closure|plan> <paths...> [--json]\n' +
       '       agentsam-theme closure <one path> [--entry relative/path] [--json]\n' +
+      '       agentsam-theme plan <one path> [--entry relative/path.html] [--json]\n' +
       'Sources: HTML, directory, ZIP, TAR, TAR.GZ, stdin (-); Git bundle snapshots\n' +
       'Closure is a source-backed candidate report, not a runnable converted theme.\n'
     );
@@ -111,12 +113,53 @@ export async function runThemeCommand(argv, { stdout = process.stdout, stderr = 
     stderr.write('source_required: supply one or more paths or -\n');
     return 2;
   }
-  if (command === 'closure' && inputs.length !== 1) {
+  if (['closure', 'plan'].includes(command) && inputs.length !== 1) {
     stderr.write('closure_requires_exactly_one_source\n');
     return 2;
   }
   try {
     const report = await ingestSourceInputs(inputs, { stdin });
+    if (command === 'plan') {
+      const material = report.materials[0];
+      const graph = buildThemeModuleGraph(material.files);
+      const entries = entryPoint ? [entryPoint] : [...graph.entryPoints];
+      if (entries.some(entry => !Object.prototype.hasOwnProperty.call(graph.modules, entry) ||
+          graph.modules[entry].type !== 'html')) {
+        stderr.write('invalid_html_entry_point: ' + entries.join(', ') + '\n');
+        return 2;
+      }
+      const results = entries.map(entry => {
+        const file = material.files.find(file => file.path === entry);
+        if (!file || typeof file.text !== 'string') {
+          throw new Error('html_source_text_unavailable: ' + entry);
+        }
+        return {
+          html: planHtmlRebuild(file.text, { filename: entry }),
+          extraction: planModuleExtraction(graph, entry),
+        };
+      });
+      const output = {
+        schema:'agentsam.theme-rebuild-plan-report.v1',
+        material:{ label:material.label, origin:material.origin, fileCount:material.fileCount },
+        candidates:results, readyForCms:false, verifiedPreview:false,
+      };
+      if (json) stdout.write(JSON.stringify(output, null, 2) + '\n');
+      else {
+        stdout.write(material.label + ' [' + material.origin + ']\n');
+        for (const item of results) {
+          stdout.write('  ' + item.html.source.filename + ': ' +
+            item.html.candidates.length + ' source-backed section/global candidates\n');
+          stdout.write('    closure: ' + item.extraction.files.length + ' files; ' +
+            item.extraction.dependencyClosure.blockers.length + ' unverified conditions\n');
+          for (const candidate of item.html.candidates) {
+            stdout.write('    ' + candidate.type + ': ' + candidate.candidateId +
+              ' · hazards=' + candidate.hazards.length + '\n');
+          }
+        }
+        stdout.write('  readiness: SOURCE_CANDIDATE_ONLY (no CMS install, JS evaluation or browser proof)\n');
+      }
+      return 0;
+    }
     if (command === 'closure') {
       const material = report.materials[0];
       const graph = buildThemeModuleGraph(material.files);

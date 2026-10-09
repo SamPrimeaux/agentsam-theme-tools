@@ -1,19 +1,40 @@
 {
   "name": "@inneranimalmedia/theme-html-rewriter",
   "version": "0.1.0",
-  "description": "AgentSam Theme Tools: theme-html-rewriter",
+  "description": "Portable, source-preserving HTML rewrite and reconstruct-plan contracts",
   "type": "module",
   "exports": {
-    ".": "./src/index.js"
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/index.js"
+    }
   },
   "files": [
     "src",
     "README.md"
   ],
+  "scripts": {
+    "test": "node --test tests/*.test.mjs"
+  },
   "engines": {
     "node": ">=22"
   },
   "dependencies": {
     "@inneranimalmedia/theme-syntax-html": "0.1.0"
-  }
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SamPrimeaux/agentsam-theme-tools.git",
+    "directory": "packages/html-rewriter"
+  },
+  "keywords": [
+    "html",
+    "theme-tools",
+    "source-maps",
+    "html-rewriter",
+    "cms-sections"
+  ],
+  "sideEffects": false,
+  "types": "./src/index.d.ts"
 }
