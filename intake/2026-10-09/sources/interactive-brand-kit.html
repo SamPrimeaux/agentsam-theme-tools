@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+
+<html lang="en" class="antialiased">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Interactive Brand Kit Demo | InnerAnimal Media</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Nunito:wght@600;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+
+        tailwind.config = {
+
+            theme: {
+
+                extend: {
+
+                    fontFamily: { 
+
+                        sans: ['Inter', 'sans-serif'],
+
+                        mono: ['JetBrains Mono', 'monospace'],
+
+                        display: ['Nunito', 'sans-serif']
+
+                    },
+
+                    colors: {
+
+                        brand: {
+
+                            // Binding Tailwind classes to live CSS variables
+
+                            bg: 'var(--color-bg)',
+
+                            panel: 'var(--color-panel)',
+
+                            border: 'var(--color-border)',
+
+                            textMain: 'var(--color-text-main)',
+
+                            textMuted: 'var(--color-text-muted)',
+
+                            primary: 'var(--color-primary)',
+
+                            secondary: 'var(--color-secondary)',
+
+                            accent: 'var(--color-accent)',
+
+                        }
+
+                    },
+
+                    boxShadow: {
+
+                        'glass': '0 20px 40px -10px rgba(0,0,0,0.5)',
+
+                        'glow': '0 0 20px var(--color-primary)',
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    </script>
+
+
+
+    <style>
+
+        /* BASE THEME (Moon Glass) */
+
+        :root {
+
+            --color-bg: #0A0F18;
+
+            --color-panel: #172333;
+
+            --color-border: #2E3B4E;
+
+            --color-text-main: #FAFBFC;
+
+            --color-text-muted: #7A8B9E;
+
+            --color-primary: #4F8CFF;
+
+            --color-secondary: #8FD7FF;
+
+            --color-accent: #E9EEF4;
+
+        }
+
+
+
+        body {
+
+            background-color: var(--color-bg);
+
+            color: var(--color-text-main);
+
+            min-height: 100vh;
+
+            transition: background-color 0.3s ease, color 0.3s ease;
+
+        }
+
+
+
+        /* Premium Glass Panels */
+
+        .glass-panel {
+
+            background: color-mix(in srgb, var(--color-panel) 70%, transparent);
+
+            backdrop-filter: blur(24px);
+
+            -webkit-backdrop-filter: blur(24px);
+
+            border: 1px solid color-mix(in srgb, var(--color-border) 50%, transparent);
+
+            border-top: 1px solid color-mix(in srgb, var(--color-text-main) 15%, transparent);
+
+            border-radius: 20px;
+
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
+
+            transition: background 0.3s ease, border-color 0.3s ease;
+
+        }
+
+
+
+        /* Editable Text UX */
+
+        [contenteditable="true"] {
+
+            outline: none;
+
+            transition: all 0.2s ease;
+
+            border-radius: 6px;
+
+            border: 1px dashed transparent;
+
+            padding: 2px 4px;
+
+            margin: -2px -4px;
+
+        }
+
+        [contenteditable="true"]:hover {
+
+            border-color: color-mix(in srgb, var(--color-text-main) 30%, transparent);
+
+            background: color-mix(in srgb, var(--color-text-main) 5%, transparent);
+
+            cursor: text;
+
+        }
+
+
+
+        [contenteditable="true"]:focus {
+
+            background: color-mix(in srgb, var(--color-bg) 50%, transparent);
+
+            border-color: var(--color-primary);
+
+            box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary) 20%, transparent);
+
+        }
+
+
+
+        /* Interactive Color Swatches */
+
+        .color-picker-wrapper {
+
+            position: relative;
+
+            cursor: pointer;
+
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+        }
+
+        .color-picker-wrapper:hover {
+
+            transform: scale(1.05) translateY(-2px);
+
+        }
+
+
+
+        .color-picker-wrapper::after {
+
+            content: 'Edit';
+
+            position: absolute;
+
+            inset: 0;
+
+            background: rgba(0,0,0,0.4);
+
+            color: white;
+
+            font-size: 11px;
+
+            font-weight: bold;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            opacity: 0;
+
+            border-radius: inherit;
+
+            transition: opacity 0.2s;
+
+            pointer-events: none;
+
+        }
+
+
+
+        .color-picker-wrapper:hover::after {
+
+            opacity: 1;
+
+        }
+
+
+
+        /* Invisible native color input stretched over the swatch */
+
+        input[type="color"] {
+
+            position: absolute;
+
+            inset: 0;
+
+            opacity: 0;
+
+            width: 100%;
+
+            height: 100%;
+
+            cursor: pointer;
+
+        }
+
+
+
+        /* Dynamic Background Art */
+
+        .brand-bg-art {
+
+            background: 
+
+                radial-gradient(circle at 80% 20%, color-mix(in srgb, var(--color-secondary) 15%, transparent) 0%, transparent 40%),
+
+                radial-gradient(circle at 20% 80%, color-mix(in srgb, var(--color-primary) 10%, transparent) 0%, transparent 50%),
+
+                linear-gradient(180deg, var(--color-bg) 0%, color-mix(in srgb, var(--color-panel) 30%, var(--color-bg)) 100%);
+
+            position: absolute;
+
+            inset: 0;
+
+            overflow: hidden;
+
+            transition: background 0.3s ease;
+
+        }
+
+        /* Smooth transitions for all colored elements */
+
+        * {
+
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+
+        }
+
+
+
+        /* Scrollbar */
+
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+
+        ::-webkit-scrollbar-track { background: transparent; }
+
+        ::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 10px; }
+
+        ::-webkit-scrollbar-thumb:hover { background: var(--color-text-muted); }
+
+    </style>
+
+</head>
+
+<body class="p-4 md:p-8 overflow-x-hidden">
+
+
+
+    <div class="max-w-[1600px] mx-auto mb-8 flex flex-col md:flex-row justify-between items-center gap-4 bg-brand-primary/10 border border-brand-primary/20 rounded-xl p-4 backdrop-blur-md">
+
+        <div class="flex items-center gap-3">
+
+            <span class="relative flex h-3 w-3">
+
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-primary opacity-75"></span>
+
+              <span class="relative inline-flex rounded-full h-3 w-3 bg-brand-primary"></span>
+
+            </span>
+
+            <div class="font-mono text-sm text-brand-textMain font-medium tracking-wide">
+
+                Interactive Brand Kit Demo
+
+            </div>
+
+        </div>
+
+        <div class="text-sm text-brand-textMuted flex items-center gap-4">
+
+            <span>Click text to edit. Click swatches to change colors.</span>
+
+            <button id="resetTheme" class="px-3 py-1.5 rounded bg-brand-panel hover:bg-brand-border text-brand-textMain text-xs font-bold transition-colors shadow-sm">
+
+                Reset Default
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="max-w-[1600px] mx-auto grid grid-cols-1 xl:grid-cols-12 gap-8">
+
+        <!-- ==========================================
+
+             LEFT COLUMN (Editor Canvas)
+
+             \========================================== -->
+
+        <div class="xl:col-span-8 flex flex-col gap-8">
+
+            <div class="flex flex-col md:flex-row justify-between items-start gap-8">
+
+                <div class="flex-1">
+
+                    <div class="flex items-center gap-4 mb-3">
+
+                        <!-- Dynamic Logo Mark -->
+
+                        <div class="w-14 h-14 rounded-full border-2 border-brand-primary bg-gradient-to-br from-brand-bg to-brand-panel flex items-center justify-center relative overflow-hidden shadow-[0_0_20px_var(--color-primary)]">
+
+                            <div class="absolute right-[-2px] w-6 h-12 bg-brand-primary/30 blur-md"></div>
+
+                            <svg class="w-7 h-7 text-brand-textMain" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+
+                        </div>
+
+                        <h1 class="text-5xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-brand-textMain to-brand-textMuted" contenteditable="true">Moon Glass</h1>
+
+                    </div>
+
+                    <h2 class="text-xs font-bold tracking-widest text-brand-primary uppercase mt-4 mb-2" contenteditable="true">A Refined Theme for the Agent Dashboard</h2>
+
+                    <p class="text-brand-textMuted leading-relaxed max-w-xl text-lg" contenteditable="true">
+
+                        Sleek. Modern. Focused. This theme balances clarity and depth with soft glass surfaces, cool accents, and lunar-inspired tones.
+
+                    </p>
+
+                </div>
+
+
+
+                <!-- Feature Pills -->
+
+                <div class="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+                    <div class="glass-panel p-5 border-l-4 border-l-brand-primary">
+
+                        <h3 class="text-sm font-bold text-brand-textMain mb-1" contenteditable="true">Clear & Focused</h3>
+
+                        <p class="text-sm text-brand-textMuted" contenteditable="true">High contrast canvas with calm surroundings.</p>
+
+                    </div>
+
+                    <div class="glass-panel p-5 border-l-4 border-l-brand-secondary">
+
+                        <h3 class="text-sm font-bold text-brand-textMain mb-1" contenteditable="true">Premium Feel</h3>
+
+                        <p class="text-sm text-brand-textMuted" contenteditable="true">Glassmorphic surfaces and semantic depth.</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="glass-panel overflow-hidden flex flex-col border border-brand-border">
+
+                <!-- Top Bar -->
+
+                <div class="h-14 bg-brand-bg/80 border-b border-brand-border flex items-center justify-between px-4">
+
+                    <div class="flex items-center gap-3">
+
+                        <div class="w-3 h-3 rounded-full bg-brand-primary"></div>
+
+                        <span class="text-sm font-semibold text-brand-textMain tracking-wide">MeauxIDE Mockup</span>
+
+                    </div>
+
+                    <div class="flex items-center gap-4 text-brand-textMuted">
+
+                        <div class="w-7 h-7 rounded-full bg-brand-primary/20 flex items-center justify-center text-[10px] font-bold text-brand-primary border border-brand-primary/30">AS</div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Main IDE Body -->
+
+                <div class="flex h-[450px]">
+
+                    <!-- Sidebar -->
+
+                    <div class="w-48 bg-brand-panel/50 border-r border-brand-border flex flex-col text-xs font-medium">
+
+                        <div class="px-4 py-3 text-brand-textMuted uppercase tracking-wider text-[10px] font-bold">Workspace</div>
+
+                        <div class="flex-1 overflow-y-auto p-2 space-y-1">
+
+                            <div class="flex items-center gap-2 py-2 px-3 text-brand-textMain bg-brand-textMain/5 rounded-lg"><span class="text-brand-textMuted">▼</span> <span contenteditable="true">Components</span></div>
+
+                            <div class="flex items-center gap-2 py-2 px-3 pl-7 text-brand-textMuted hover:bg-brand-textMain/5 rounded-lg transition-colors"><span class="text-brand-primary">#</span> <span contenteditable="true">Header.jsx</span></div>
+
+                            <div class="flex items-center gap-2 py-2 px-3 pl-7 text-brand-primary bg-brand-primary/10 rounded-lg border border-brand-primary/20 transition-colors"><span class="text-brand-secondary">#</span> <span contenteditable="true">Hero.jsx</span></div>
+
+                            <div class="flex items-center gap-2 py-2 px-3 pl-7 text-brand-textMuted hover:bg-brand-textMain/5 rounded-lg transition-colors"><span class="text-brand-primary">#</span> <span contenteditable="true">Footer.jsx</span></div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Editor Canvas (Light embedded UI to show contrast) -->
+
+                    <div class="flex-1 bg-brand-bg p-6 flex flex-col relative overflow-hidden">
+
+                        <!-- Top actions -->
+
+                        <div class="absolute top-4 right-4 flex gap-2 z-10">
+
+                            <button class="bg-brand-primary hover:brightness-110 text-brand-bg font-bold text-xs px-4 py-2 rounded-lg shadow-[0_4px_14px_var(--color-primary)] transition-all">
+
+                                Publish Changes
+
+                            </button>
+
+                        </div>
+
+
+
+                        <!-- Embedded Component Mockup -->
+
+                        <div class="bg-brand-textMain rounded-xl shadow-2xl flex-1 flex flex-col overflow-hidden mt-10 border-4 border-brand-panel">
+
+                            <div class="px-8 py-6 flex justify-between items-center border-b border-gray-100">
+
+                                <div class="font-display font-black text-brand-bg text-2xl" contenteditable="true">BrandStore</div>
+
+                                <div class="flex gap-6 text-sm font-semibold text-brand-textMuted">
+
+                                    <span class="text-brand-bg border-b-2 border-brand-primary pb-1">Shop</span>
+
+                                    <span>Collections</span>
+
+                                </div>
+
+                            </div>
+
+                            <div class="flex-1 bg-gradient-to-br from-brand-secondary/20 to-transparent p-10 relative overflow-hidden flex flex-col justify-center">
+
+                                <!-- Fake Vector art using variables -->
+
+                                <div class="absolute bottom-0 right-0 w-64 h-64 bg-brand-primary/10 rounded-full blur-3xl"></div>
+
+                                <div class="absolute top-0 right-32 w-48 h-48 bg-brand-secondary/20 rounded-full blur-2xl"></div>
+
+                                <div class="relative z-10 max-w-md">
+
+                                    <h1 class="text-5xl font-display font-black text-brand-bg leading-tight mb-4" contenteditable="true">Redefining digital experiences.</h1>
+
+                                    <p class="text-brand-textMuted mb-8" contenteditable="true">The colors you pick in the kit surround this white canvas, creating perfect contrast.</p>
+
+                                    <button class="bg-brand-bg text-brand-textMain text-sm font-bold px-6 py-3 rounded-lg hover:opacity-90 transition-opacity">Explore Collection</button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="glass-panel p-8">
+
+                <div class="flex justify-between items-center mb-6">
+
+                    <h3 class="text-sm font-bold tracking-widest text-brand-textMain uppercase">Core Color Palette</h3>
+
+                    <span class="text-xs font-mono text-brand-primary animate-pulse">Click any swatch to edit</span>
+
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
+
+                    <!-- Swatch 1: Background -->
+
+                    <div class="flex flex-col gap-2">
+
+                        <div class="color-picker-wrapper h-24 rounded-xl border border-white/10 shadow-inner" style="background-color: var(--color-bg);" data-var="--color-bg">
+
+                            <input type="color" value="#0A0F18">
+
+                        </div>
+
+                        <div class="text-sm font-bold text-brand-textMain mt-2" contenteditable="true">Deep Background</div>
+
+                        <div class="text-xs text-brand-textMuted font-mono hex-display">#0A0F18</div>
+
+                    </div>
+
+
+
+                    <!-- Swatch 2: Panel -->
+
+                    <div class="flex flex-col gap-2">
+
+                        <div class="color-picker-wrapper h-24 rounded-xl border border-white/10 shadow-inner" style="background-color: var(--color-panel);" data-var="--color-panel">
+
+                            <input type="color" value="#172333">
+
+                        </div>
+
+                        <div class="text-sm font-bold text-brand-textMain mt-2" contenteditable="true">Surface / Panel</div>
+
+                        <div class="text-xs text-brand-textMuted font-mono hex-display">#172333</div>
+
+                    </div>
+
+
+
+                    <!-- Swatch 3: Primary -->
+
+                    <div class="flex flex-col gap-2">
+
+                        <div class="color-picker-wrapper h-24 rounded-xl border border-white/10 shadow-inner" style="background-color: var(--color-primary);" data-var="--color-primary">
+
+                            <input type="color" value="#4F8CFF">
+
+                        </div>
+
+                        <div class="text-sm font-bold text-brand-textMain mt-2" contenteditable="true">Brand Primary</div>
+
+                        <div class="text-xs text-brand-textMuted font-mono hex-display">#4F8CFF</div>
+
+                    </div>
+
+
+
+                    <!-- Swatch 4: Secondary -->
+
+                    <div class="flex flex-col gap-2">
+
+                        <div class="color-picker-wrapper h-24 rounded-xl border border-white/10 shadow-inner" style="background-color: var(--color-secondary);" data-var="--color-secondary">
+
+                            <input type="color" value="#8FD7FF">
+
+                        </div>
+
+                        <div class="text-sm font-bold text-brand-textMain mt-2" contenteditable="true">Brand Secondary</div>
+
+                        <div class="text-xs text-brand-textMuted font-mono hex-display">#8FD7FF</div>
+
+                    </div>
+
+
+
+                    <!-- Swatch 5: Text Main -->
+
+                    <div class="flex flex-col gap-2">
+
+                        <div class="color-picker-wrapper h-24 rounded-xl border border-brand-border shadow-inner" style="background-color: var(--color-text-main);" data-var="--color-text-main">
+
+                            <input type="color" value="#FAFBFC">
+
+                        </div>
+
+                        <div class="text-sm font-bold text-brand-textMain mt-2" contenteditable="true">Text Primary</div>
+
+                        <div class="text-xs text-brand-textMuted font-mono hex-display">#FAFBFC</div>
+
+                    </div>
+
+
+
+                    <!-- Swatch 6: Accent -->
+
+                    <div class="flex flex-col gap-2">
+
+                        <div class="color-picker-wrapper h-24 rounded-xl border border-brand-border shadow-inner" style="background-color: var(--color-accent);" data-var="--color-accent">
+
+                            <input type="color" value="#E9EEF4">
+
+                        </div>
+
+                        <div class="text-sm font-bold text-brand-textMain mt-2" contenteditable="true">Neutral Accent</div>
+
+                        <div class="text-xs text-brand-textMuted font-mono hex-display">#E9EEF4</div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+        </div>
+
+
+
+        <!-- ==========================================
+
+             RIGHT COLUMN (Brandback & Tokens)
+
+             \========================================== -->
+
+        <div class="xl:col-span-4 flex flex-col gap-8">
+
+            <div class="glass-panel flex-1 flex flex-col relative overflow-hidden min-h-[400px] border-brand-primary/30">
+
+                <div class="p-8 relative z-10 flex flex-col h-full">
+
+                    <h3 class="text-xs font-bold tracking-widest text-brand-textMain uppercase mb-auto">Brand Atmosphere</h3>
+
+                    <div class="mt-auto">
+
+                        <p class="text-brand-textMain text-2xl font-display font-bold leading-tight mb-4" contenteditable="true">
+
+                            Design systems shouldn't be static.
+
+                        </p>
+
+                        <p class="text-brand-secondary text-sm leading-relaxed drop-shadow-md" contenteditable="true">
+
+                            Notice how this background dynamically shifts to match your primary and secondary color selections.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <!-- The CSS variable driven background -->
+
+                <div class="brand-bg-art z-0 opacity-80"></div>
+
+                <!-- Overlay glow -->
+
+                <div class="absolute inset-0 bg-gradient-to-t from-brand-bg via-transparent to-transparent z-0"></div>
+
+            </div>
+
+
+
+            <div class="glass-panel p-8">
+
+                <h3 class="text-xs font-bold tracking-widest text-brand-textMain uppercase mb-6">Semantic Tokens</h3>
+
+                <ul class="flex flex-col gap-5">
+
+                    <li class="flex items-center justify-between group">
+
+                        <div class="flex items-center gap-4">
+
+                            <div class="w-6 h-6 rounded-md bg-brand-bg border border-brand-border shadow-inner"></div>
+
+                            <span class="text-sm font-medium text-brand-textMain">Background</span>
+
+                        </div>
+
+                        <span class="text-xs font-mono text-brand-textMuted hex-display-sync" data-sync="--color-bg">#0A0F18</span>
+
+                    </li>
+
+                    <div class="h-px w-full bg-brand-border/50"></div>
+
+
+
+                    <li class="flex items-center justify-between group">
+
+                        <div class="flex items-center gap-4">
+
+                            <div class="w-6 h-6 rounded-md bg-brand-panel border border-brand-border shadow-inner"></div>
+
+                            <span class="text-sm font-medium text-brand-textMain">Surface</span>
+
+                        </div>
+
+                        <span class="text-xs font-mono text-brand-textMuted hex-display-sync" data-sync="--color-panel">#172333</span>
+
+                    </li>
+
+                    <div class="h-px w-full bg-brand-border/50"></div>
+
+
+
+                    <li class="flex items-center justify-between group">
+
+                        <div class="flex items-center gap-4">
+
+                            <div class="w-6 h-6 rounded-md bg-brand-textMain border border-brand-border shadow-inner"></div>
+
+                            <span class="text-sm font-medium text-brand-textMain">Text Primary</span>
+
+                        </div>
+
+                        <span class="text-xs font-mono text-brand-textMuted hex-display-sync" data-sync="--color-text-main">#FAFBFC</span>
+
+                    </li>
+
+                    <div class="h-px w-full bg-brand-border/50"></div>
+
+
+
+                    <li class="flex items-center justify-between group">
+
+                        <div class="flex items-center gap-4">
+
+                            <div class="w-6 h-6 rounded-md bg-brand-primary border border-brand-border shadow-inner"></div>
+
+                            <span class="text-sm font-medium text-brand-textMain">Interactive / Focus</span>
+
+                        </div>
+
+                        <span class="text-xs font-mono text-brand-textMuted hex-display-sync" data-sync="--color-primary">#4F8CFF</span>
+
+                    </li>
+
+                    <div class="h-px w-full bg-brand-border/50"></div>
+
+
+
+                    <li class="flex items-center justify-between group">
+
+                        <div class="flex items-center gap-4">
+
+                            <div class="w-6 h-6 rounded-md bg-brand-secondary border border-brand-border shadow-inner"></div>
+
+                            <span class="text-sm font-medium text-brand-textMain">Highlight / Glow</span>
+
+                        </div>
+
+                        <span class="text-xs font-mono text-brand-textMuted hex-display-sync" data-sync="--color-secondary">#8FD7FF</span>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // Default "Moon Glass" Theme
+
+            const defaultTheme = {
+
+                '--color-bg': '#0A0F18',
+
+                '--color-panel': '#172333',
+
+                '--color-primary': '#4F8CFF',
+
+                '--color-secondary': '#8FD7FF',
+
+                '--color-text-main': '#FAFBFC',
+
+                '--color-accent': '#E9EEF4'
+
+            };
+
+
+
+            const wrappers = document.querySelectorAll('.color-picker-wrapper');
+
+            const syncDisplays = document.querySelectorAll('.hex-display-sync');
+
+
+
+            // Function to update everything when a color changes
+
+            const applyColor = (cssVar, hexCode) => {
+
+                // 1. Update CSS root variable
+
+                document.documentElement.style.setProperty(cssVar, hexCode);
+
+                // 2. Update the specific hex display under the swatch
+
+                const wrapper = document.querySelector(`.color-picker-wrapper[data-var="${cssVar}"]`);
+
+                if(wrapper) {
+
+                    wrapper.querySelector('.hex-display').textContent = hexCode.toUpperCase();
+
+                    // Keep input value in sync
+
+                    wrapper.querySelector('input').value = hexCode;
+
+                }
+
+
+
+                // 3. Update any synced token lists
+
+                syncDisplays.forEach(display => {
+
+                    if(display.dataset.sync === cssVar) {
+
+                        display.textContent = hexCode.toUpperCase();
+
+                        // Add a tiny flash effect to show it updated
+
+                        display.style.color = 'var(--color-primary)';
+
+                        setTimeout(() => display.style.color = '', 400);
+
+                    }
+
+                });
+
+            };
+
+
+
+            // Setup Listeners for Native Color Pickers
+
+            wrappers.forEach(wrapper => {
+
+                const picker = wrapper.querySelector('input[type="color"]');
+
+                const cssVar = wrapper.dataset.var;
+
+
+
+                picker.addEventListener('input', (e) => {
+
+                    applyColor(cssVar, e.target.value);
+
+                });
+
+            });
+
+
+
+            // Prevent enter key in contenteditable fields from creating divs
+
+            document.querySelectorAll('[contenteditable="true"]').forEach(el => {
+
+                el.addEventListener('keydown', (e) => {
+
+                    if (e.key === 'Enter') {
+
+                        e.preventDefault();
+
+                        el.blur();
+
+                    }
+
+                });
+
+            });
+
+
+
+            // Reset Button Logic
+
+            document.getElementById('resetTheme').addEventListener('click', () => {
+
+                for (const [cssVar, hexCode] of Object.entries(defaultTheme)) {
+
+                    applyColor(cssVar, hexCode);
+
+                }
+
+            });
+
+        });
+
+    </script>
+
+</body>
+
+</html>

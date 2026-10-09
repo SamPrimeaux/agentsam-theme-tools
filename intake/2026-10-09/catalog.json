@@ -1,0 +1,153 @@
+{
+  "schema": "agentsam.design-mining-intake.v1",
+  "batch": "2026-10-09",
+  "repository": "SamPrimeaux/agentsam-theme-tools",
+  "branch": "feat/design-mining-intake-20261009",
+  "state": "archived-not-approved",
+  "authority": {
+    "brand": "@inneranimalmedia/agentsam-brand",
+    "asset": "agentsam-assets-core ast_*",
+    "cms": "inneranimalmedia-cms",
+    "harvest": "agentsam-theme-tools"
+  },
+  "storage": {
+    "bucket": "cms",
+    "prefix": "design-library/v1/intake/2026-10-09/",
+    "public": false
+  },
+  "originals": [
+    {
+      "filename": "Pasted text(20261009-031254).txt",
+      "sha256": "75847315eda276de523fc857c5486330220102e1e14bc6dd956799d079092491",
+      "r2Key": "design-library/v1/intake/2026-10-09/raw/glass-shapes-and-intake-ledger.txt",
+      "logicalId": "glass-shapes-operator-notes"
+    },
+    {
+      "filename": "Pasted markdown (2)(20261009-031353).md",
+      "sha256": "6382befbcfbafa8e1b2bfeae257ab2e225280dec029e8006704120db299f19ee",
+      "r2Key": "design-library/v1/intake/2026-10-09/raw/iam-services.pasted.md",
+      "logicalId": "iam-services"
+    },
+    {
+      "filename": "Pasted markdown (3)(20261009-031427).md",
+      "sha256": "1af3bbfcb274c8359354aa46d319a227506fbe1197f0d9cedff889951ac179ec",
+      "r2Key": "design-library/v1/intake/2026-10-09/raw/interactive-brand-kit.a.pasted.md",
+      "logicalId": "interactive-brand-kit"
+    },
+    {
+      "filename": "Pasted markdown (4)(20261009-031450).md",
+      "sha256": "1af3bbfcb274c8359354aa46d319a227506fbe1197f0d9cedff889951ac179ec",
+      "r2Key": "design-library/v1/intake/2026-10-09/raw/interactive-brand-kit.b.pasted.md",
+      "logicalId": "interactive-brand-kit",
+      "duplicateOf": "Pasted markdown (3)(20261009-031427).md"
+    },
+    {
+      "filename": "Pasted markdown (5)(20261009-031553).md",
+      "sha256": "0ca44ac0051a8a25f37e8d1cd09108e6571e96f9812619d99a988de17666b6b1",
+      "r2Key": "design-library/v1/intake/2026-10-09/raw/agentsam-create.pasted.md",
+      "logicalId": "agentsam-create"
+    }
+  ],
+  "findings": [
+    {
+      "id": "iam-services",
+      "type": "page-template",
+      "title": "Services editorial page, three.js scene, light/dark structure and filters",
+      "status": "archived-unreviewed",
+      "sourceHash": "6382befbcfbafa8e1b2bfeae257ab2e225280dec029e8006704120db299f19ee",
+      "sourceR2": "design-library/v1/intake/2026-10-09/raw/iam-services.pasted.md",
+      "candidateR2": "design-library/v1/intake/2026-10-09/normalized/iam-services.html",
+      "githubSource": "intake/2026-10-09/sources/iam-services.html",
+      "dependencies": [
+        "tailwind-cdn",
+        "three.js-r128",
+        "google-fonts"
+      ],
+      "proposedOwner": "sections/components to extract",
+      "validation": {
+        "sourcePreserved": true,
+        "encodingRecovered": true,
+        "isolatedRuntime": false,
+        "browserVerified": false,
+        "cmsInstalled": false
+      }
+    },
+    {
+      "id": "interactive-brand-kit",
+      "type": "brand-studio-donor",
+      "title": "Editable brand kit surface with token swatches and typography controls",
+      "status": "archived-unreviewed",
+      "sourceHash": "1af3bbfcb274c8359354aa46d319a227506fbe1197f0d9cedff889951ac179ec",
+      "sourceR2": "design-library/v1/intake/2026-10-09/raw/interactive-brand-kit.a.pasted.md",
+      "candidateR2": "design-library/v1/intake/2026-10-09/normalized/interactive-brand-kit.html",
+      "githubSource": "intake/2026-10-09/sources/interactive-brand-kit.html",
+      "dependencies": [
+        "tailwind-cdn",
+        "google-fonts"
+      ],
+      "proposedOwner": "BrandPack presentation only; SDK contract remains authority",
+      "validation": {
+        "sourcePreserved": true,
+        "encodingRecovered": true,
+        "isolatedRuntime": false,
+        "browserVerified": false,
+        "cmsInstalled": false
+      }
+    },
+    {
+      "id": "agentsam-create",
+      "type": "page-template",
+      "title": "Create and design-system page with marquees, layered sections and 3D background",
+      "status": "archived-unreviewed",
+      "sourceHash": "0ca44ac0051a8a25f37e8d1cd09108e6571e96f9812619d99a988de17666b6b1",
+      "sourceR2": "design-library/v1/intake/2026-10-09/raw/agentsam-create.pasted.md",
+      "candidateR2": "design-library/v1/intake/2026-10-09/normalized/agentsam-create.html",
+      "githubSource": "intake/2026-10-09/sources/agentsam-create.html",
+      "dependencies": [
+        "tailwind-cdn",
+        "three.js-r128",
+        "google-fonts"
+      ],
+      "proposedOwner": "extract into CMS sections, avoid brand-specific hardcoded values",
+      "validation": {
+        "sourcePreserved": true,
+        "encodingRecovered": true,
+        "isolatedRuntime": false,
+        "browserVerified": false,
+        "cmsInstalled": false
+      }
+    }
+  ],
+  "relatedArchives": {
+    "htmlCurated": {
+      "bucket": "cms",
+      "prefix": "design-library/v1/archived/",
+      "count": 7,
+      "source": "cms_liquid_imports",
+      "status": "archived-not-installed"
+    },
+    "studio3d": {
+      "bucket": "cms",
+      "r2Key": "design-library/v1/curation/3d-studio-catalog.json",
+      "count": 32,
+      "sourceRepo": "SamPrimeaux/agentsam-3d-studio",
+      "sourceBytesUploaded": false,
+      "status": "catalog-only"
+    },
+    "glassScript": {
+      "githubSource": "intake/2026-10-09/experiments/glass-shapes/build.py",
+      "status": "draft-not-rendered"
+    }
+  },
+  "promotionGates": [
+    "source_and_hash_verified",
+    "dependencies_mapped",
+    "license_and_secrets_checked",
+    "typed_settings_and_blocks",
+    "safe_js_lane",
+    "responsive_a11y_quality",
+    "editor_roundtrip",
+    "d1_r2_install_receipt",
+    "explicit_approval"
+  ]
+}
