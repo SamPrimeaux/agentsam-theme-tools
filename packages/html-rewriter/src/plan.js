@@ -83,7 +83,7 @@ export function planHtmlRebuild(source, { filename = 'index.html', includeSource
       length:original.length, dependencies:deps,
       proposedFields:{headings,paragraphs,media,links},
       hazards:[...new Set(hazards)],
-      state:'requires-normalization',
+      state: nativeId ? 'already-canonical-native' : 'requires-normalization',
     };
     if (includeSource) entry.sourceHtml = original;
     candidates.push(entry);
