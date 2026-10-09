@@ -35,7 +35,7 @@ try{
   const smoke=[
     "import {analyzeHtml} from '@inneranimalmedia/theme-syntax-html';",
     "import {analyzeJsonc} from '@inneranimalmedia/lang-jsonc';",
-    "import {rewriteAssetReferences} from '@inneranimalmedia/theme-html-rewriter';",
+    "import {rewriteAssetReferences,compileStaticSection,renderStaticSection} from '@inneranimalmedia/theme-html-rewriter';",
     "import {buildThemeGraph,buildThemeModuleGraph,planModuleExtraction} from '@inneranimalmedia/theme-graph';",
     "import {ingestSourceInputs,buildSourceInventory} from '@inneranimalmedia/theme-source-ingest';",
     "const s='<!doctype html><html><body><section data-cms-section=\"hero\"><img src=\"logo.png\"></section></body></html>';",
