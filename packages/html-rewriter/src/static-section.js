@@ -117,9 +117,13 @@ function inspectGlobal(source) {
   }
   return {css:css.join('\n'),issues};
 }
-function extract(source,marker) {
-  const matching=nodesOf(source).filter(n=>attribute(n,'data-cms-section')===marker);
-  if(matching.length!==1)throw Error('section_marker_must_be_unique:'+marker+':'+matching.length);
+function extract(source,{marker,start}) {
+  if(!marker&&!Number.isInteger(start))throw TypeError('section_marker_or_source_start_required');
+  const matching=nodesOf(source).filter(n=>marker
+    ? attribute(n,'data-cms-section')===marker
+    : n.sourceCodeLocation?.startOffset===start&&
+      ['section','article','header','footer','aside','main','nav'].includes(n.tagName));
+  if(matching.length!==1)throw Error('section_selection_must_be_unique:'+matching.length);
   const r=matching[0].sourceCodeLocation;
   if(!r?.endTag||!r.startTag)throw Error('section_requires_end_tag');
   return source.slice(r.startOffset,r.endOffset);
