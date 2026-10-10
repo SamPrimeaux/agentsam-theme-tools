@@ -56,7 +56,7 @@ function assertCssValue(kind, value) {
   if (typeof value !== 'string' && typeof value !== 'number') throw new Error('invalid_css_value');
   const str = String(value).trim();
   if (!str || str.length>160 || /[;{}<>\\\r\n]/.test(str) || /url\s*\(/i.test(str)) throw new Error('unsafe_css_value');
-  const valid = kind === 'color' ? COLOR.test(str)
+  const valid = /^var\(--[a-zA-Z0-9_-]+\)$/.test(str) || (kind === 'color' ? COLOR.test(str)
     : kind === 'font' ? FONT.test(str)
     : kind === 'length' ? SIMPLE_LENGTH.test(str)
     : kind === 'dimension' ? SIMPLE_LENGTH.test(str) || /^(min-content|max-content|fit-content)$/.test(str)
@@ -66,7 +66,7 @@ function assertCssValue(kind, value) {
     : kind === 'display' ? /^(block|inline|inline-block|flex|inline-flex|grid|none)$/.test(str)
     : kind === 'fit' ? /^(cover|contain|fill|none|scale-down)$/.test(str)
     : kind === 'opacity' ? Number.isFinite(Number(str)) && Number(str)>=0 && Number(str)<=1
-    : false;
+    : false);
   if (!valid) throw new Error('invalid_css_value_for_' + kind);
   return str;
 }
@@ -81,17 +81,32 @@ function controlTypes(node) {
  * Binds previously unseen HTML by AST source ranges, not by field-name heuristics.
  * Scope and stable editor IDs live only in annotatedHtml; original source untouched.
  */
-export function compileHtmlAuthoring({ html, filename='component.html', scope='component', fragment=false }={}) {
+export function compileHtmlAuthoring({ html, filename='component.html', scope='component', fragment=false, sourceHash=null }={}) {
   if (typeof html!=='string') throw new TypeError('html_required');
   safeToken(scope,'scope');
   const parsed=parseHtml(html,{fragment});
-  const bindings=[],patches=[],used=new Set(),scopeNodes=[];
-  walkHtml(parsed.document,node=>{
+  if(sourceHash!==null && !/^[a-f0-9]{64}$/i.test(sourceHash)) throw new Error('canonical_source_sha256_required');
+  const bindings=[],patches=[],used=new Set(),scopeNodes=[],identityNotes=[];
+  const parents=new WeakMap(),dup=new Map();
+  walkHtml(parsed.document,(node,parent)=>{
+    const context=parent?parents.get(parent)||'root':'root';
+    const owner=attribute(node,'data-cms-section')||attribute(node,'data-cms-block')||attribute(node,'data-h-section-id')||attribute(node,'data-sam-authoring-scope');
+    parents.set(node,owner?context+'/'+owner:context);
+
     if (EXCLUDED.has(node.tagName)) return;
     const loc=node.sourceCodeLocation;
     if (!loc?.startTag || !loc?.endOffset) return;
     const explicit=attribute(node,'data-sam-node');
-    const id=explicit ? safeToken(explicit,'node_id') : 'n_'+hexHash(filename+':'+node.tagName+':'+loc.startOffset+':'+html.slice(loc.startOffset,loc.startTag.endOffset));
+    const semantic=attribute(node,'id')||attribute(node,'data-cms')||owner;
+    const ownText=(node.childNodes||[]).filter(c=>c.nodeName==='#text').map(c=>c.value).join(' ').trim().slice(0,180);
+    const stableBase=filename+':'+context+':'+node.tagName+':'+(semantic?'ref:'+semantic:'fingerprint:'+html.slice(loc.startOffset,loc.startTag.endOffset)+':'+ownText);
+    const rawId=explicit ? safeToken(explicit,'node_id') : 'n_'+hexHash(stableBase);
+    const occurrence=dup.get(rawId)||0;
+    dup.set(rawId,occurrence+1);
+    if(explicit&&occurrence) throw new Error('duplicate_authoring_node:'+rawId);
+    const id=occurrence?rawId+'_'+(occurrence+1):rawId;
+    if(occurrence) identityNotes.push({severity:'warning',code:'AMBIGUOUS_SOURCE_IDENTITY',nodeId:id,
+      message:'Duplicate source signature; clone/reorder needs a stable host-provided key or reviewed rebind'});
     if (used.has(id)) throw new Error('duplicate_authoring_node:'+id);
     used.add(id);
     const controls=controlTypes(node);
@@ -128,12 +143,13 @@ export function compileHtmlAuthoring({ html, filename='component.html', scope='c
   for(const patch of patches) merged.set(patch.start,(merged.get(patch.start)||'')+patch.after);
   const annotation=[...merged].map(([start,after])=>({start,end:start,before:'',after}));
   const annotatedHtml=applyPatches(html,annotation);
-  return {schema:AUTHORING_SCHEMA,filename,scope,originalHtml:html,annotatedHtml,
-    bindings,diagnostics:parsed.errors,counts:{elements:bindings.length,controls:bindings.reduce((n,b)=>n+b.controls.length,0)}};
+  return {schema:AUTHORING_SCHEMA,filename,scope,sourceHash,originalHtml:html,annotatedHtml,
+    bindings,diagnostics:[...parsed.errors,...identityNotes],counts:{elements:bindings.length,controls:bindings.reduce((n,b)=>n+b.controls.length,0)}};
 }
 /** Compile sparse per-element edits; removing an edit resets authored CSS unchanged. */
-export function compileScopedStyles({compiled,edits=[]}={}) {
+export function compileScopedStyles({compiled,edits=[],expectedSourceHash=null}={}) {
   if (compiled?.schema!==AUTHORING_SCHEMA) throw new Error('authoring_compilation_required');
+  if(expectedSourceHash!==null && expectedSourceHash!==compiled.sourceHash) throw new Error('authoring_source_revision_conflict');
   const scope=safeToken(compiled.scope,'scope');
   const byId=new Map(compiled.bindings.map(b=>[b.id,b]));
   const rules=new Map();
@@ -150,7 +166,18 @@ export function compileScopedStyles({compiled,edits=[]}={}) {
     if (!rules.has(key)) rules.set(key,{breakpoint,id,properties:new Map()});
     rules.get(key).properties.set(control.css,value);
   }
-  const selector=id=>':where([data-sam-authoring-scope="'+scope+'"]) [data-sam-node="'+id+'"],:where([data-sam-authoring-scope="'+scope+'"])[data-sam-node="'+id+'"]';
+  const fieldCounts=new Map();
+  for(const binding of compiled.bindings) {
+    const field=binding.authored.cmsField;
+    if(field) fieldCounts.set(field,(fieldCounts.get(field)||0)+1);
+  }
+  const scopedRoots=compiled.bindings.filter(b=>b.authored.cmsSection===scope);
+  const selector=id=>{
+    const annotation=':where([data-sam-authoring-scope="'+scope+'"]) [data-sam-node="'+id+'"],:where([data-sam-authoring-scope="'+scope+'"])[data-sam-node="'+id+'"]';
+    const field=byId.get(id).authored.cmsField;
+    if(scopedRoots.length!==1 || !field || fieldCounts.get(field)!==1 || !/^[\w.-]+$/.test(field)) return annotation;
+    return annotation+',:where([data-cms-section="'+scope+'"]) [data-cms="'+field+'"]';
+  };
   const chunks=[];
   for (const rule of rules.values()) {
     const declaration=[...rule.properties].map(([name,val])=>name+':'+val+' !important').join(';');
