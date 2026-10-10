@@ -16,7 +16,8 @@
   },
   "dependencies": {
     "@inneranimalmedia/theme-source-ingest": "0.1.0",
-    "@inneranimalmedia/theme-graph": "0.1.0"
+    "@inneranimalmedia/theme-graph": "0.1.0",
+    "@inneranimalmedia/theme-authoring-compiler": "0.1.0"
   },
   "bin": {
     "agentsam-theme": "./bin/agentsam-theme.mjs"

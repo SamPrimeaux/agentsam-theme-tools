@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "type": "module",
   "description": "Portable, source-preserving HTML authoring bindings and scoped visual transformations",
-  "exports": { ".": "./src/index.js" },
+  "exports": { ".": "./src/index.js", "./consumer": "./src/consumer.js" },
   "files": ["src", "README.md"],
   "engines": { "node": ">=22" },
   "dependencies": {

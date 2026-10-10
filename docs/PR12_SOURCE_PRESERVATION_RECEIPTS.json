@@ -1,0 +1,66 @@
+{
+  "schema": "agentsam.authoring-source-receipts.v1",
+  "generatedFrom": "local-compilation",
+  "cases": [
+    {
+      "name": "original-fnf-shop-hero",
+      "source": {
+        "path": "shop-original.html",
+        "sha256": "0af3e7f6c750a28f6920e346a5ed52c5ea262d8e8e287709b026373a86e98398",
+        "bytes": 10206,
+        "revision": null
+      },
+      "scope": "hero",
+      "elementCount": 106,
+      "selectedBinding": {
+        "id": "n_2ovcct",
+        "tag": "h1",
+        "source": {
+          "filename": "shop-original.html",
+          "start": 1515,
+          "end": 1593
+        }
+      },
+      "diagnostics": [],
+      "verification": {
+        "sourceHashMatched": true,
+        "sourcePreserved": true,
+        "bindingsValid": true,
+        "stylesCompiled": true,
+        "renderedBrowser": false,
+        "cmsPersisted": false,
+        "published": false
+      }
+    },
+    {
+      "name": "independent-non-fnf-sample",
+      "source": {
+        "path": "index.html",
+        "sha256": "0ebbe1b7c1ae45a5bcda42ebb9b687cb9ed59259349b7ae49021ab420e745551",
+        "bytes": 280,
+        "revision": null
+      },
+      "scope": "hero",
+      "elementCount": 5,
+      "selectedBinding": {
+        "id": "n_8axpke",
+        "tag": "h1",
+        "source": {
+          "filename": "index.html",
+          "start": 170,
+          "end": 196
+        }
+      },
+      "diagnostics": [],
+      "verification": {
+        "sourceHashMatched": true,
+        "sourcePreserved": true,
+        "bindingsValid": true,
+        "stylesCompiled": true,
+        "renderedBrowser": false,
+        "cmsPersisted": false,
+        "published": false
+      }
+    }
+  ]
+}
