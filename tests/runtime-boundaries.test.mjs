@@ -57,7 +57,7 @@ test('Git bundle intake exports the branch snapshot without running donor code',
     git(['init','-q',repo]);
     await writeFile(path.join(repo,'index.html'),'<!doctype html><title>Fixture</title>');
     git(['-C',repo,'add','index.html']);
-    git(['-C',repo,'-c','user.name=Fixture','-c','user.email=fixture@example.invalid','commit','-qm','seed']);
+    git(['-C',repo,'-c','user.name=Fixture','-c','user.email=fixture@example.invalid','-c','commit.gpgsign=false','commit','-qm','seed']);
     git(['-C',repo,'bundle','create',bundle,'--all']);
     const result=await ingestSourceInputs(bundle);
     assert.equal(result.materials[0].origin,'git-bundle');

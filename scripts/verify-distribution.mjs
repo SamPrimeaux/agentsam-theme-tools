@@ -12,6 +12,7 @@ const names=[
   '@inneranimalmedia/theme-html-rewriter',
   '@inneranimalmedia/theme-graph',
   '@inneranimalmedia/theme-source-ingest',
+  '@inneranimalmedia/theme-authoring-compiler',
   '@inneranimalmedia/theme-cli',
   '@inneranimalmedia/lang-jsonc'
 ];
@@ -31,9 +32,10 @@ try{
   const project=path.join(work,'consumer');
   fs.mkdirSync(project);
   fs.writeFileSync(path.join(project,'package.json'),JSON.stringify({name:'test-consumer',private:true,type:'module'})+'\n');
-  run('npm',['install','--ignore-scripts','--no-audit','--no-fund','--prefix',project,...archives]);
+  run('npm',['install','--offline','--ignore-scripts','--no-audit','--no-fund','--prefix',project,...archives]);
   const smoke=[
     "import {analyzeHtml} from '@inneranimalmedia/theme-syntax-html';",
+    "import {verifyAuthoringSource} from '@inneranimalmedia/theme-authoring-compiler/consumer';",
     "import {analyzeJsonc} from '@inneranimalmedia/lang-jsonc';",
     "import {rewriteAssetReferences} from '@inneranimalmedia/theme-html-rewriter';",
     "import {buildThemeGraph,buildThemeModuleGraph,planModuleExtraction} from '@inneranimalmedia/theme-graph';",
@@ -48,6 +50,8 @@ try{
     "const mat=(await ingestSourceInputs({kind:'bytes',bytes:new TextEncoder().encode(s),name:'index.html'})).materials[0];",
     "if(mat.graph.pages.length!==1)throw Error('Ingest failed');",
     "if(buildSourceInventory(mat).totals.files!==1 || mat.inventory.coverage.htmlPagesAnalyzed!==1)throw Error('Inventory failed');",
+    "const receipt=verifyAuthoringSource({sourceFile:mat.files[0],scope:'hero'});",
+    "if(receipt.compilation.elementCount<2 || !receipt.verification.sourcePreserved)throw Error('Compiler failed');",
     "console.log('independent-package-consumer: PASS');",
   ].join('\n');
   console.log(run(process.execPath,['--input-type=module','-e',smoke],project));
@@ -58,6 +62,9 @@ try{
   const inv=JSON.parse(run(process.execPath,[path.join(project,'node_modules/@inneranimalmedia/theme-cli/bin/agentsam-theme.mjs'),'inventory',path.join(root,'examples/basic'),'--json'],project));
   if(inv.materials[0].totals.files!==3 || !inv.materials[0].folders.some(f=>f.folder==='assets/'))throw new Error('Independent CLI inventory failed');
   console.log('independent-cli-inventory: PASS');
+  const authoring=JSON.parse(run(process.execPath,[path.join(project,'node_modules/@inneranimalmedia/theme-cli/bin/agentsam-theme.mjs'),'verify',path.join(root,'examples/basic'),'--entry','index.html','--scope','hero','--json'],project));
+  if(!authoring.verification.sourcePreserved || !authoring.evidence.source.sha256) throw new Error('Independent authoring verify failed');
+  console.log('independent-cli-authoring: PASS');
   console.log('independent-packaged-install: PASS ('+archives.length+' packages)');
 } finally {
   fs.rmSync(work,{recursive:true,force:true});
