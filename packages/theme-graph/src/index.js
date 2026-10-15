@@ -86,3 +86,5 @@ function normalizePath(value) {
   }
   return segments.join('/') || '.';
 }
+
+export { mineStyleCandidates, STYLE_CANDIDATES_SCHEMA } from "./style-candidates.js";
