@@ -108,3 +108,53 @@ export declare function rewriteResponseWithCloudflare<T>(
     transform: (response:T) => T;
   }
 ): T;
+
+/** A static normalized section candidate, not a CMS-installed component. */
+export declare const STATIC_SECTION_SCHEMA: 'agentsam.static-section.v1';
+export interface StaticSectionBinding {
+  id: string;
+  label: string;
+  type: 'text' | 'textarea' | 'media' | 'url';
+  range: {start:number;end:number};
+  original: string;
+  before: string;
+  attribute: string | null;
+}
+export interface StaticSectionDefinition {
+  schema: typeof STATIC_SECTION_SCHEMA;
+  kind: 'artifact-backed-static';
+  type: 'generated-static';
+  source: {id:string;marker?:string;start?:number};
+  template: string;
+  css: string;
+  settingsSchema: Array<{id:string;label:string;type:string}>;
+  bindings: StaticSectionBinding[];
+  defaults: Record<string,string>;
+  blockers: string[];
+  state: 'blocked' | 'compiled-static-candidate';
+  cmsInstalled: false;
+  visualVerified: false;
+}
+export declare function scopeStaticCss(css: string): string;
+export declare function compileStaticSection(source: string, options: {
+  marker?: string;
+  start?: number;
+  sourceId?: string;
+  css?: string;
+  assets?: string[];
+  strict?: boolean;
+}): StaticSectionDefinition;
+export declare function renderStaticSection(
+  definition: StaticSectionDefinition,
+  options: {uid:string;settings?:Record<string,string>}
+): {
+  html:string;
+  css:string;
+  sectionInstance: {
+    type:'generated-static';
+    layout:{width:'full';bleed:'background'};
+    responsive:{mobileFirst:true};
+    motion:{reducedMotionSafe:true};
+    data:{artifactId:string;settings:Record<string,string>};
+  };
+};

@@ -31,7 +31,14 @@ export function planHtmlRebuild(source, { filename = 'index.html', includeSource
     const loc = node.sourceCodeLocation;
     const tag = node.tagName;
     const marker = attribute(node, 'data-cms-section');
-    if (!CANDIDATE_TAGS.has(tag) && !marker) continue;
+    const nativePreset = attribute(node, 'data-site-preset');
+    const nativeId = nativePreset && attribute(node, 'id');
+    if (!CANDIDATE_TAGS.has(tag) && !marker && !nativeId &&
+        !(tag==='div'&&attribute(node,'role')==='region')) continue;
+    let owner = node.parentNode;
+    while (owner && !attribute(owner, 'data-site-preset')) owner = owner.parentNode;
+    const ownerSectionId = owner ? attribute(owner, 'id') : null;
+    const ownerPreset = owner ? attribute(owner, 'data-site-preset') : null;
     if (!loc || !Number.isInteger(loc.startOffset) || !Number.isInteger(loc.endOffset)) continue;
     const original = source.slice(loc.startOffset, loc.endOffset);
     // Walk this actual subtree rather than scanning the entire document per candidate.
@@ -60,19 +67,23 @@ export function planHtmlRebuild(source, { filename = 'index.html', includeSource
       if (child.tagName === 'img') media.push({role:'media.image',src:attribute(child,'src'),alt:attribute(child,'alt')});
       if (child.tagName === 'a') links.push({href:attribute(child,'href'),label:value});
     }
-    const type = tag === 'header' || tag === 'footer' ? 'global-region'
+    const type = nativeId ? 'native-section-instance'
+      : ownerSectionId ? 'subcomponent-candidate'
+      : tag === 'header' || tag === 'footer' ? 'global-region'
       : tag === 'nav' ? 'navigation'
       : tag === 'main' ? 'page-shell' : 'section';
     const entry = {
       candidateId: filename + '#' + (marker || attribute(node,'id') || tag + '@' + loc.startOffset),
       type, marker: marker || null, tag, id: attribute(node,'id'),
+      nativePreset: nativePreset || null,
+      ownerSectionId: ownerSectionId || null, ownerPreset: ownerPreset || null,
       sourceRange:{start:loc.startOffset,end:loc.endOffset,
         contentStart:loc.startTag?.endOffset ?? loc.startOffset,
         contentEnd:loc.endTag?.startOffset ?? loc.endOffset},
       length:original.length, dependencies:deps,
       proposedFields:{headings,paragraphs,media,links},
       hazards:[...new Set(hazards)],
-      state:'requires-normalization',
+      state: nativeId ? 'already-canonical-native' : 'requires-normalization',
     };
     if (includeSource) entry.sourceHtml = original;
     candidates.push(entry);
@@ -85,7 +96,11 @@ export function planHtmlRebuild(source, { filename = 'index.html', includeSource
     evidence:{title:analyzed.title,elementCount:analyzed.elementCount,
       scriptElements,styleElements,inlineHandlers,inlineStyles,duplicateIds,
       parseErrors:errors,references:analyzed.references},
-    candidates,state:'source-backed-candidates-only',
+    candidates,
+    nativeSections: candidates.filter(c => c.type === 'native-section-instance')
+      .map(c => ({id:c.id,preset:c.nativePreset,sourceRange:c.sourceRange})),
+    nestedPatterns: candidates.filter(c => c.type === 'subcomponent-candidate').length,
+    state:'source-backed-candidates-only',
     readyForCms:false,verifiedPreview:false,approved:false,
   };
 }

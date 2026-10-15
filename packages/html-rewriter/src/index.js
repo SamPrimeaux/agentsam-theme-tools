@@ -1,5 +1,6 @@
 import { parseHtml, walkHtml, attribute } from '@inneranimalmedia/theme-syntax-html';
 export { planHtmlRebuild, HTML_REBUILD_PLAN_SCHEMA } from './plan.js';
+export { compileStaticSection, renderStaticSection, scopeStaticCss, STATIC_SECTION_SCHEMA } from './static-section.js';
 
 export const HTML_REWRITE_SCHEMA = 'agentsam.html-rewrite.v1';
 const REFERENCE_ATTRS = ['src', 'href', 'poster', 'data-src'];
