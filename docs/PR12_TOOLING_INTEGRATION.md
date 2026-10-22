@@ -35,7 +35,7 @@ node packages/theme-cli/bin/agentsam-theme.mjs analyze fixtures/fnf/shop-origina
 node packages/theme-cli/bin/agentsam-theme.mjs verify examples/basic --entry index.html --scope hero --json
 ```
 
-The local Git bundle intake test now opts out of *only the temporary fixture commit's* machine-wide SSH signing setting via `git -c commit.gpgsign=false` while leaving all actual code commits/signing untouched. Independent installation uses local packed tarballs with `npm install --offline` so a network/DNS outage cannot disguise correctness.
+The local Git bundle intake test now opts out of *only the temporary fixture commit's* machine-wide SSH signing setting via `git -c commit.gpgsign=false` while leaving all actual code commits/signing untouched. Independent installation uses local packed workspace tarballs with `npm install --prefer-offline`: known packages are built from repository sources, while third-party dependencies may resolve from npm on a clean runner. A missing network/cache entry fails the gate explicitly rather than silently skipping distribution verification.
 
 ## Mandatory host acceptance not yet done
 
