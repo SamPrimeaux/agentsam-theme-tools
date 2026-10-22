@@ -32,7 +32,9 @@ try{
   const project=path.join(work,'consumer');
   fs.mkdirSync(project);
   fs.writeFileSync(path.join(project,'package.json'),JSON.stringify({name:'test-consumer',private:true,type:'module'})+'\n');
-  run('npm',['install','--offline','--ignore-scripts','--no-audit','--no-fund','--prefix',project,...archives]);
+  // Independent package install: use cached resolutions when present, but do not
+  // require a prewarmed registry cache on a clean CI runner.
+  run('npm',['install','--prefer-offline','--ignore-scripts','--no-audit','--no-fund','--prefix',project,...archives]);
   const smoke=[
     "import {analyzeHtml} from '@inneranimalmedia/theme-syntax-html';",
     "import {verifyAuthoringSource} from '@inneranimalmedia/theme-authoring-compiler/consumer';",
