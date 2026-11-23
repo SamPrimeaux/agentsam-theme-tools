@@ -3,10 +3,11 @@ name = "theme-rewriter-lab-core"
 version = "0.1.0"
 edition = "2021"
 license = "MIT"
-description = "Customer-neutral streaming HTML transformation core for AgentSam Theme Tools"
+description = "Portable AgentSam Rust HTML harvest, inspection, rewrite, and verification core"
 
 [lib]
 crate-type = ["rlib"]
 
 [dependencies]
 lol_html = "3.0.0"
+serde = { version = "1.0", features = ["derive"] }

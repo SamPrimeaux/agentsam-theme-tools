@@ -18,6 +18,8 @@ The objective is straightforward:
 
 Track verified behavior and remaining full-product requirements in [Implementation Status](docs/IMPLEMENTATION_STATUS.md) and [SDK Reuse Boundaries](docs/SDK_REUSE_BOUNDARIES.md).
 
+**Current refinery branch:** [2026-10-09 machinery audit](docs/refinery/2026-10-09-audit.md) and [machine verification receipt](docs/refinery/2026-10-09.receipt.json). The existing `agentsam-theme normalize <source> --marker <id>` (or `--start <offset>`) command now produces real editable static-section candidates with source-backed fields and isolated CSS. Three SHA-verified archived story panels have normalized R2/D1 **draft** artifacts. Browser fidelity, approved media masters, and CMS installation remain outstanding; these are not yet stock sections.
+
 ### Canonical product and delivery plan
 
 - [Product Charter](docs/PRODUCT_CHARTER.md) — what Theme Tools **is**, the company-level outcomes, ownership laws, non-goals and definition of finished.

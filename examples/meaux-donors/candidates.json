@@ -1,0 +1,734 @@
+{
+  "schema": "agentsam.style-candidates.v1",
+  "sources": [
+    {
+      "path": "examples/meaux-donors/original/partners.html",
+      "sha256": "c8ce535da35782ea9dc3d94fd309f75b157654444071c4db9225b36a6ddc8d1c",
+      "bytes": 39424
+    },
+    {
+      "path": "examples/meaux-donors/original/enhanced-brand.html",
+      "sha256": "25fea00d39ebdbbb636cea96c105c64f88181994ebfb5ab5185a96b89470e328",
+      "bytes": 30480
+    },
+    {
+      "path": "examples/meaux-donors/original/help-links.html",
+      "sha256": "dd5dd23a969c951a4f1e6179aea3043b10e625f95480c647bd9d101b88ccc9ba",
+      "bytes": 2555
+    }
+  ],
+  "candidates": [
+    {
+      "id": "meaux.partner.glass-card",
+      "kind": "card",
+      "status": "candidate",
+      "portable": false,
+      "source": {
+        "path": "examples/meaux-donors/original/partners.html",
+        "sha256": "c8ce535da35782ea9dc3d94fd309f75b157654444071c4db9225b36a6ddc8d1c"
+      },
+      "selector": ".partner-block",
+      "evidence": [
+        {
+          "selectors": ".partner-block",
+          "line": 527,
+          "declarationCount": 9,
+          "declarations": {
+            "background": "var(--bg-card)",
+            "backdrop-filter": "blur(15px)",
+            "border-radius": "var(--radius)",
+            "box-shadow": "var(--shadow-base)",
+            "position": "relative",
+            "overflow": "hidden",
+            "transition": "var(--transition)",
+            "border": "1px solid var(--tier-border)",
+            "transform": "translateZ(0)"
+          },
+          "interactions": {
+            "box-shadow": "var(--shadow-base)",
+            "transition": "var(--transition)",
+            "transform": "translateZ(0)"
+          }
+        },
+        {
+          "selectors": ".partner-block:hover",
+          "line": 539,
+          "declarationCount": 3,
+          "declarations": {
+            "transform": "translateY(-6px) scale(1.01)",
+            "box-shadow": "var(--shadow-hover), 0 0 40px var(--tier-glow)",
+            "border-color": "var(--tier-color)"
+          },
+          "interactions": {
+            "transform": "translateY(-6px) scale(1.01)",
+            "box-shadow": "var(--shadow-hover), 0 0 40px var(--tier-glow)"
+          }
+        },
+        {
+          "selectors": ".partner-block:hover .partner-link::before",
+          "line": 576,
+          "declarationCount": 2,
+          "declarations": {
+            "left": "100%",
+            "opacity": "1"
+          },
+          "interactions": {
+            "left": "100%",
+            "opacity": "1"
+          }
+        },
+        {
+          "selectors": ".partner-block:hover .partner-logo img",
+          "line": 600,
+          "declarationCount": 2,
+          "declarations": {
+            "transform": "scale(1.05)",
+            "filter": "brightness(1.1) contrast(1.15)"
+          },
+          "interactions": {
+            "transform": "scale(1.05)",
+            "filter": "brightness(1.1) contrast(1.15)"
+          }
+        },
+        {
+          "selectors": ".partner-block:hover .read-more",
+          "line": 642,
+          "declarationCount": 2,
+          "declarations": {
+            "color": "var(--orange)",
+            "transform": "translateX(6px)"
+          },
+          "interactions": {
+            "transform": "translateX(6px)"
+          }
+        },
+        {
+          "selectors": ".partner-block:hover .partner-content h2",
+          "line": 647,
+          "declarationCount": 1,
+          "declarations": {
+            "color": "var(--tier-color)"
+          },
+          "interactions": {}
+        },
+        {
+          "selectors": ".partner-block:hover .partner-content p",
+          "line": 651,
+          "declarationCount": 2,
+          "declarations": {
+            "opacity": "1",
+            "color": "var(--white)"
+          },
+          "interactions": {
+            "opacity": "1"
+          }
+        }
+      ],
+      "unresolved": [
+        "browser_fidelity",
+        "typed_settings",
+        "host_integration",
+        "license_review",
+        "cms_install",
+        "second_site_proof"
+      ]
+    },
+    {
+      "id": "meaux.motion.title-underline",
+      "kind": "motion",
+      "status": "candidate",
+      "portable": false,
+      "source": {
+        "path": "examples/meaux-donors/original/partners.html",
+        "sha256": "c8ce535da35782ea9dc3d94fd309f75b157654444071c4db9225b36a6ddc8d1c"
+      },
+      "selector": ".section-title",
+      "evidence": [
+        {
+          "selectors": ".section-title",
+          "line": 467,
+          "declarationCount": 10,
+          "declarations": {
+            "color": "var(--white)",
+            "font-size": "clamp(2.5rem, 5vw, 3.5rem)",
+            "font-weight": "800",
+            "margin": "0",
+            "text-shadow": "0 4px 12px rgba(0, 0, 0, 0.7)",
+            "transition": "var(--transition)",
+            "display": "inline-block",
+            "cursor": "pointer",
+            "position": "relative",
+            "letter-spacing": "-0.02em"
+          },
+          "interactions": {
+            "transition": "var(--transition)"
+          }
+        },
+        {
+          "selectors": "/* Tier-specific title animations */\n.section-title::after",
+          "line": 480,
+          "declarationCount": 10,
+          "declarations": {
+            "content": "''",
+            "position": "absolute",
+            "bottom": "-8px",
+            "left": "50%",
+            "transform": "translateX(-50%)",
+            "width": "0",
+            "height": "4px",
+            "background": "var(--tier-color)",
+            "transition": "var(--transition-slow)",
+            "border-radius": "2px"
+          },
+          "interactions": {
+            "left": "50%",
+            "transform": "translateX(-50%)",
+            "width": "0",
+            "transition": "var(--transition-slow)"
+          }
+        },
+        {
+          "selectors": ".section-title:hover",
+          "line": 494,
+          "declarationCount": 2,
+          "declarations": {
+            "color": "var(--tier-color)",
+            "transform": "scale(1.03)"
+          },
+          "interactions": {
+            "transform": "scale(1.03)"
+          }
+        },
+        {
+          "selectors": ".section-title:hover::after",
+          "line": 499,
+          "declarationCount": 1,
+          "declarations": {
+            "width": "100%"
+          },
+          "interactions": {
+            "width": "100%"
+          }
+        },
+        {
+          "selectors": ".section-title:focus-visible",
+          "line": 1009,
+          "declarationCount": 2,
+          "declarations": {
+            "outline": "3px solid var(--tier-color)",
+            "outline-offset": "4px"
+          },
+          "interactions": {}
+        }
+      ],
+      "unresolved": [
+        "browser_fidelity",
+        "typed_settings",
+        "host_integration",
+        "license_review",
+        "cms_install",
+        "second_site_proof"
+      ]
+    },
+    {
+      "id": "meaux.motion.glisten-sweep",
+      "kind": "motion",
+      "status": "candidate",
+      "portable": false,
+      "source": {
+        "path": "examples/meaux-donors/original/partners.html",
+        "sha256": "c8ce535da35782ea9dc3d94fd309f75b157654444071c4db9225b36a6ddc8d1c"
+      },
+      "selector": ".partner-link::before",
+      "evidence": [
+        {
+          "selectors": ".section-header::before,\n  .partner-link::before",
+          "line": 996,
+          "declarationCount": 1,
+          "declarations": {
+            "display": "none"
+          },
+          "interactions": {}
+        }
+      ],
+      "unresolved": [
+        "browser_fidelity",
+        "typed_settings",
+        "host_integration",
+        "license_review",
+        "cms_install",
+        "second_site_proof"
+      ]
+    },
+    {
+      "id": "meaux.motion.card-lift",
+      "kind": "motion",
+      "status": "candidate",
+      "portable": false,
+      "source": {
+        "path": "examples/meaux-donors/original/partners.html",
+        "sha256": "c8ce535da35782ea9dc3d94fd309f75b157654444071c4db9225b36a6ddc8d1c"
+      },
+      "selector": ".partner-block:hover",
+      "evidence": [
+        {
+          "selectors": ".partner-block:hover",
+          "line": 539,
+          "declarationCount": 3,
+          "declarations": {
+            "transform": "translateY(-6px) scale(1.01)",
+            "box-shadow": "var(--shadow-hover), 0 0 40px var(--tier-glow)",
+            "border-color": "var(--tier-color)"
+          },
+          "interactions": {
+            "transform": "translateY(-6px) scale(1.01)",
+            "box-shadow": "var(--shadow-hover), 0 0 40px var(--tier-glow)"
+          }
+        },
+        {
+          "selectors": ".partner-block:hover .partner-link::before",
+          "line": 576,
+          "declarationCount": 2,
+          "declarations": {
+            "left": "100%",
+            "opacity": "1"
+          },
+          "interactions": {
+            "left": "100%",
+            "opacity": "1"
+          }
+        },
+        {
+          "selectors": ".partner-block:hover .partner-logo img",
+          "line": 600,
+          "declarationCount": 2,
+          "declarations": {
+            "transform": "scale(1.05)",
+            "filter": "brightness(1.1) contrast(1.15)"
+          },
+          "interactions": {
+            "transform": "scale(1.05)",
+            "filter": "brightness(1.1) contrast(1.15)"
+          }
+        },
+        {
+          "selectors": ".partner-block:hover .read-more",
+          "line": 642,
+          "declarationCount": 2,
+          "declarations": {
+            "color": "var(--orange)",
+            "transform": "translateX(6px)"
+          },
+          "interactions": {
+            "transform": "translateX(6px)"
+          }
+        },
+        {
+          "selectors": ".partner-block:hover .partner-content h2",
+          "line": 647,
+          "declarationCount": 1,
+          "declarations": {
+            "color": "var(--tier-color)"
+          },
+          "interactions": {}
+        },
+        {
+          "selectors": ".partner-block:hover .partner-content p",
+          "line": 651,
+          "declarationCount": 2,
+          "declarations": {
+            "opacity": "1",
+            "color": "var(--white)"
+          },
+          "interactions": {
+            "opacity": "1"
+          }
+        }
+      ],
+      "unresolved": [
+        "browser_fidelity",
+        "typed_settings",
+        "host_integration",
+        "license_review",
+        "cms_install",
+        "second_site_proof"
+      ]
+    },
+    {
+      "id": "meaux.partner.title-hover",
+      "kind": "typography",
+      "status": "candidate",
+      "portable": false,
+      "source": {
+        "path": "examples/meaux-donors/original/partners.html",
+        "sha256": "c8ce535da35782ea9dc3d94fd309f75b157654444071c4db9225b36a6ddc8d1c"
+      },
+      "selector": ".partner-content h2",
+      "evidence": [
+        {
+          "selectors": ".partner-content h2",
+          "line": 613,
+          "declarationCount": 6,
+          "declarations": {
+            "font-size": "clamp(1.5rem, 3vw, 2rem)",
+            "color": "var(--white)",
+            "margin": "0 0 1rem 0",
+            "font-weight": "700",
+            "transition": "var(--transition)",
+            "line-height": "1.3"
+          },
+          "interactions": {
+            "transition": "var(--transition)"
+          }
+        }
+      ],
+      "unresolved": [
+        "browser_fidelity",
+        "typed_settings",
+        "host_integration",
+        "license_review",
+        "cms_install",
+        "second_site_proof"
+      ]
+    },
+    {
+      "id": "meaux.button.partner-apply",
+      "kind": "button",
+      "status": "candidate",
+      "portable": false,
+      "source": {
+        "path": "examples/meaux-donors/original/partners.html",
+        "sha256": "c8ce535da35782ea9dc3d94fd309f75b157654444071c4db9225b36a6ddc8d1c"
+      },
+      "selector": ".apply-button",
+      "evidence": [
+        {
+          "selectors": ".apply-button",
+          "line": 737,
+          "declarationCount": 12,
+          "declarations": {
+            "background": "var(--green)",
+            "color": "var(--white)",
+            "border": "none",
+            "padding": "1rem 2.5rem",
+            "border-radius": "12px",
+            "font-size": "1.1rem",
+            "font-weight": "700",
+            "cursor": "pointer",
+            "transition": "var(--transition)",
+            "text-transform": "uppercase",
+            "letter-spacing": "0.5px",
+            "box-shadow": "0 4px 20px rgba(33, 196, 140, 0.3)"
+          },
+          "interactions": {
+            "transition": "var(--transition)",
+            "box-shadow": "0 4px 20px rgba(33, 196, 140, 0.3)"
+          }
+        },
+        {
+          "selectors": ".apply-button:hover",
+          "line": 752,
+          "declarationCount": 3,
+          "declarations": {
+            "background": "#1ea574",
+            "transform": "translateY(-2px)",
+            "box-shadow": "0 8px 30px rgba(33, 196, 140, 0.5)"
+          },
+          "interactions": {
+            "transform": "translateY(-2px)",
+            "box-shadow": "0 8px 30px rgba(33, 196, 140, 0.5)"
+          }
+        },
+        {
+          "selectors": "/* Focus styles for accessibility */\n.partner-link:focus-visible,\n.apply-button:focus-visible",
+          "line": 1002,
+          "declarationCount": 2,
+          "declarations": {
+            "outline": "3px solid var(--orange)",
+            "outline-offset": "4px"
+          },
+          "interactions": {}
+        }
+      ],
+      "unresolved": [
+        "browser_fidelity",
+        "typed_settings",
+        "host_integration",
+        "license_review",
+        "cms_install",
+        "second_site_proof"
+      ]
+    },
+    {
+      "id": "meaux.brand.swamp-hero",
+      "kind": "composition",
+      "status": "candidate",
+      "portable": false,
+      "source": {
+        "path": "examples/meaux-donors/original/enhanced-brand.html",
+        "sha256": "25fea00d39ebdbbb636cea96c105c64f88181994ebfb5ab5185a96b89470e328"
+      },
+      "selector": ".meaux-swamp-cta-hero",
+      "evidence": [
+        {
+          "selectors": ".meauxx-brand-page .meaux-swamp-cta-hero::before",
+          "line": 90,
+          "declarationCount": 11,
+          "declarations": {
+            "content": "\"\"",
+            "position": "absolute",
+            "left": "0",
+            "top": "0",
+            "right": "0",
+            "height": "280px",
+            "width": "100%",
+            "z-index": "1",
+            "background": "url('https://cdn.shopify.com/s/files/1/0685/1654/4672/files/FF7619.png?v=1753075822') top center/cover no-repeat",
+            "opacity": "1",
+            "pointer-events": "none"
+          },
+          "interactions": {
+            "left": "0",
+            "width": "100%",
+            "opacity": "1"
+          }
+        },
+        {
+          "selectors": ".meauxx-brand-page .meaux-swamp-cta-hero::before",
+          "line": 440,
+          "declarationCount": 1,
+          "declarations": {
+            "height": "120px"
+          },
+          "interactions": {}
+        }
+      ],
+      "unresolved": [
+        "browser_fidelity",
+        "typed_settings",
+        "host_integration",
+        "license_review",
+        "cms_install",
+        "second_site_proof"
+      ]
+    },
+    {
+      "id": "meaux.brand.swatch",
+      "kind": "card",
+      "status": "candidate",
+      "portable": false,
+      "source": {
+        "path": "examples/meaux-donors/original/enhanced-brand.html",
+        "sha256": "25fea00d39ebdbbb636cea96c105c64f88181994ebfb5ab5185a96b89470e328"
+      },
+      "selector": ".brand-color-swatch",
+      "evidence": [
+        {
+          "selectors": ".meauxx-brand-page .brand-color-swatch:hover",
+          "line": 258,
+          "declarationCount": 3,
+          "declarations": {
+            "transform": "translateY(-2px)",
+            "border-color": "var(--border-color)",
+            "box-shadow": "0 8px 20px rgba(0,0,0,0.2)"
+          },
+          "interactions": {
+            "transform": "translateY(-2px)",
+            "box-shadow": "0 8px 20px rgba(0,0,0,0.2)"
+          }
+        },
+        {
+          "selectors": ".meauxx-brand-page .brand-color-swatch .color-code",
+          "line": 264,
+          "declarationCount": 4,
+          "declarations": {
+            "font-weight": "700",
+            "font-size": "0.9rem",
+            "margin-bottom": "0.25rem",
+            "font-family": "'Monaco', monospace"
+          },
+          "interactions": {}
+        },
+        {
+          "selectors": ".meauxx-brand-page .brand-color-swatch .color-name",
+          "line": 271,
+          "declarationCount": 3,
+          "declarations": {
+            "font-weight": "500",
+            "font-size": "0.85rem",
+            "opacity": "0.9"
+          },
+          "interactions": {
+            "opacity": "0.9"
+          }
+        }
+      ],
+      "unresolved": [
+        "browser_fidelity",
+        "typed_settings",
+        "host_integration",
+        "license_review",
+        "cms_install",
+        "second_site_proof"
+      ]
+    },
+    {
+      "id": "meaux.brand.font-row",
+      "kind": "typography",
+      "status": "candidate",
+      "portable": false,
+      "source": {
+        "path": "examples/meaux-donors/original/enhanced-brand.html",
+        "sha256": "25fea00d39ebdbbb636cea96c105c64f88181994ebfb5ab5185a96b89470e328"
+      },
+      "selector": ".brand-font-item",
+      "evidence": [
+        {
+          "selectors": ".meauxx-brand-page .brand-font-item:hover",
+          "line": 349,
+          "declarationCount": 3,
+          "declarations": {
+            "background": "rgba(74, 171, 184, 0.12)",
+            "border-color": "var(--meaux-orange)",
+            "transform": "translateX(4px)"
+          },
+          "interactions": {
+            "transform": "translateX(4px)"
+          }
+        }
+      ],
+      "unresolved": [
+        "browser_fidelity",
+        "typed_settings",
+        "host_integration",
+        "license_review",
+        "cms_install",
+        "second_site_proof"
+      ]
+    },
+    {
+      "id": "meaux.brand.cta",
+      "kind": "button",
+      "status": "candidate",
+      "portable": false,
+      "source": {
+        "path": "examples/meaux-donors/original/enhanced-brand.html",
+        "sha256": "25fea00d39ebdbbb636cea96c105c64f88181994ebfb5ab5185a96b89470e328"
+      },
+      "selector": ".swamp-cta-btn",
+      "evidence": [
+        {
+          "selectors": ".meauxx-brand-page .swamp-cta-btn:hover",
+          "line": 197,
+          "declarationCount": 4,
+          "declarations": {
+            "background": "linear-gradient(135deg, var(--meaux-teal-steel) 0%, var(--meaux-shine) 100%)",
+            "color": "var(--meaux-text)",
+            "transform": "translateY(-2px)",
+            "box-shadow": "0 6px 20px rgba(74, 171, 184, 0.3)"
+          },
+          "interactions": {
+            "transform": "translateY(-2px)",
+            "box-shadow": "0 6px 20px rgba(74, 171, 184, 0.3)"
+          }
+        }
+      ],
+      "unresolved": [
+        "browser_fidelity",
+        "typed_settings",
+        "host_integration",
+        "license_review",
+        "cms_install",
+        "second_site_proof"
+      ]
+    },
+    {
+      "id": "meaux.button.invert-help-link",
+      "kind": "button",
+      "status": "candidate",
+      "portable": false,
+      "source": {
+        "path": "examples/meaux-donors/original/help-links.html",
+        "sha256": "dd5dd23a969c951a4f1e6179aea3043b10e625f95480c647bd9d101b88ccc9ba"
+      },
+      "selector": ".meaux-help-link",
+      "evidence": [
+        {
+          "selectors": ".meaux-help-link",
+          "line": 19,
+          "declarationCount": 17,
+          "declarations": {
+            "display": "block",
+            "width": "100%",
+            "background": "var(--meaux-teal)",
+            "color": "#fff",
+            "font-size": "1.23rem",
+            "font-weight": "800",
+            "font-family": "'Montserrat',Arial,sans-serif",
+            "text-align": "left",
+            "text-decoration": "none",
+            "padding": "20px 38px",
+            "border-radius": "var(--soft-radius)",
+            "box-shadow": "0 4px 18px rgba(31,151,169,.11)",
+            "letter-spacing": ".01em",
+            "position": "relative",
+            "overflow": "hidden",
+            "border": "2.5px solid var(--meaux-teal)",
+            "transition": "background .17s,color .17s,border-color .16s,box-shadow .16s,transform .12s"
+          },
+          "interactions": {
+            "width": "100%",
+            "box-shadow": "0 4px 18px rgba(31,151,169,.11)",
+            "transition": "background .17s,color .17s,border-color .16s,box-shadow .16s,transform .12s"
+          }
+        },
+        {
+          "selectors": ".meaux-help-link:hover,.meaux-help-link:focus",
+          "line": 20,
+          "declarationCount": 6,
+          "declarations": {
+            "background": "var(--meaux-white)",
+            "color": "var(--meaux-teal)",
+            "border-color": "var(--meaux-orange)",
+            "box-shadow": "0 8px 30px rgba(255,118,25,.13),0 2px 8px #21c48c15",
+            "transform": "scale(1.025)",
+            "text-decoration": "none"
+          },
+          "interactions": {
+            "box-shadow": "0 8px 30px rgba(255,118,25,.13),0 2px 8px #21c48c15",
+            "transform": "scale(1.025)"
+          }
+        },
+        {
+          "selectors": ".meaux-help-link",
+          "line": 22,
+          "declarationCount": 3,
+          "declarations": {
+            "font-size": "1.01rem",
+            "padding": "13px 14px",
+            "border-radius": "13px"
+          },
+          "interactions": {}
+        }
+      ],
+      "unresolved": [
+        "browser_fidelity",
+        "typed_settings",
+        "host_integration",
+        "license_review",
+        "cms_install",
+        "second_site_proof"
+      ]
+    }
+  ],
+  "diagnostics": [],
+  "origin": "founder-source-2026-10-15",
+  "promotion": "review-only",
+  "meta": {
+    "notes": "Source-complete HTML remains unchanged; style evidence is NOT an executable/verified component.",
+    "sourceAttachmentSha256": {
+      "partners.html": "c8ce535da35782ea9dc3d94fd309f75b157654444071c4db9225b36a6ddc8d1c",
+      "enhanced-brand.html": "25fea00d39ebdbbb636cea96c105c64f88181994ebfb5ab5185a96b89470e328"
+    }
+  }
+}

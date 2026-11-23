@@ -1,0 +1,133 @@
+{
+  "schema": "agentsam.design-library.3d-studio-catalog.v1",
+  "recorded": "2026-10-08",
+  "repo": {
+    "path": "~/agentsam-3d-studio",
+    "head": "9d863f4",
+    "dirty": false
+  },
+  "status": "catalogued-not-installed",
+  "decisions": "unreviewed for every item except the original set, which Sam said to keep (do not delete). No keep/maybe/reject has been chosen by an agent.",
+  "classification": "stills are static media; scenes are interactive (JavaScript) so they are catalogue-only until the artifact_interactive runtime contract is wired",
+  "sets": {
+    "brand": {
+      "palette": "inneranimalmedia-brand-tokens.v1.css (luminous / editorial / midnight)",
+      "stills": [
+        "bowl",
+        "stack",
+        "cluster",
+        "ribbon",
+        "knot",
+        "arch",
+        "twist",
+        "links",
+        "pills-editorial",
+        "cluster-duo",
+        "cluster-duo-midnight",
+        "cluster-duo-original",
+        "ringball",
+        "domes"
+      ],
+      "scenes": {
+        "orbit-luminous": [
+          "sphere",
+          "accent",
+          "frost",
+          "dot"
+        ],
+        "orbit-midnight": [
+          "sphere",
+          "accent",
+          "frost",
+          "dot"
+        ],
+        "layers-midnight": [
+          "workspace",
+          "memory",
+          "tools",
+          "agent"
+        ],
+        "tiles-luminous": [
+          "brand",
+          "build",
+          "support"
+        ],
+        "cards-luminous": [
+          "api",
+          "memory",
+          "tools",
+          "agent"
+        ],
+        "cards-original": [
+          "api",
+          "memory",
+          "tools",
+          "agent"
+        ]
+      }
+    },
+    "original": {
+      "palette": "first violet / mint / coral set, restored from git commit 03e8c69 (kept at Sam's request)",
+      "stills": [
+        "bowl",
+        "stack",
+        "cluster",
+        "ribbon",
+        "knot",
+        "pills",
+        "arch",
+        "twist",
+        "links"
+      ],
+      "scenes": {
+        "orbit": [
+          "sphere",
+          "violet",
+          "frost",
+          "dot"
+        ],
+        "layers": [
+          "workspace",
+          "memory",
+          "tools",
+          "agent"
+        ],
+        "tiles": [
+          "install",
+          "connect",
+          "ship"
+        ]
+      }
+    }
+  },
+  "counts": {
+    "brand_stills": 14,
+    "brand_scenes": 6,
+    "original_stills": 9,
+    "original_scenes": 3,
+    "total_items": 32
+  },
+  "components": [
+    "components/clay-orbit.js",
+    "components/orbit-demo.html",
+    "components/orbit-demo-original.html",
+    "components/orbit-demo-cards.html"
+  ],
+  "external": [
+    {
+      "name": "work-globe-original viewer",
+      "url": "http://127.0.0.1:4327/assets/scenes/work-globe-original/viewer.html",
+      "note": "source directory not yet identified"
+    }
+  ],
+  "storage_plan": {
+    "r2": "design-library/v1/3d-studio/<set>/<name>/ (webp, avif, scene json)",
+    "media_assets": "one hero preview per approved item; no bulk registration",
+    "not_used": "cms_3d_assets is the Meshy GLB-generation table and does not fit rendered stills or scene manifests"
+  },
+  "known_gaps": [
+    "both zips in Downloads predate the cards scenes",
+    "brand-set renders have not been individually reviewed by Sam",
+    "no curation UI exists for these items (the gallery covers donor HTML only)"
+  ]
+}

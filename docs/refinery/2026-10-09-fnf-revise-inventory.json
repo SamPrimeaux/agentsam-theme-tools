@@ -1,0 +1,401 @@
+{
+  "schema": "agentsam.site-source-inventory.v1",
+  "batchDate": "2026-10-09",
+  "site": {
+    "id": "fnf-revise-site",
+    "brand": "Fuel & Free Time",
+    "theme": "revise",
+    "siteDocumentVersion": 1,
+    "source": "examples/revise-foundation/src/site-data.ts",
+    "renderer": "@inneranimalmedia/section-library",
+    "headerFooter": "shared site globals"
+  },
+  "provenance": {
+    "repo": "SamPrimeaux/inneranimalmedia-cms",
+    "localBranch": "feat/revise-pages-source-mining-20261009",
+    "localPreview": "http://127.0.0.1:4319/",
+    "localSource": "SiteDocument.initialSite",
+    "browserLocalStorageEditsIncluded": false,
+    "browserRendered": false
+  },
+  "pages": [
+    {
+      "id": "home",
+      "path": "/",
+      "sections": [
+        {
+          "id": "home-sticky-curtain-1",
+          "preset": "revise/sticky-curtain",
+          "type": "media-hero",
+          "blocks": 0,
+          "implementationClass": "native-semantic-section",
+          "cmsInstalledInLocalFixture": true,
+          "productionInstalledNotVerified": true
+        },
+        {
+          "id": "home-wardrobe-rail-2",
+          "preset": "revise/wardrobe-rail",
+          "type": "media-gallery",
+          "blocks": 5,
+          "implementationClass": "native-semantic-section",
+          "cmsInstalledInLocalFixture": true,
+          "productionInstalledNotVerified": true
+        },
+        {
+          "id": "home-editorial-statement-3",
+          "preset": "revise/editorial-statement",
+          "type": "statement",
+          "blocks": 0,
+          "implementationClass": "native-semantic-section",
+          "cmsInstalledInLocalFixture": true,
+          "productionInstalledNotVerified": true
+        },
+        {
+          "id": "home-campaign-teaser-4",
+          "preset": "revise/campaign-teaser",
+          "type": "campaign-teaser",
+          "blocks": 0,
+          "implementationClass": "native-semantic-section",
+          "cmsInstalledInLocalFixture": true,
+          "productionInstalledNotVerified": true
+        },
+        {
+          "id": "home-brand-film-5",
+          "preset": "revise/brand-film",
+          "type": "brand-film",
+          "blocks": 0,
+          "implementationClass": "native-semantic-section",
+          "cmsInstalledInLocalFixture": true,
+          "productionInstalledNotVerified": true
+        },
+        {
+          "id": "home-newsletter-6",
+          "preset": "revise/newsletter",
+          "type": "cta-band",
+          "blocks": 0,
+          "implementationClass": "native-semantic-section",
+          "cmsInstalledInLocalFixture": true,
+          "productionInstalledNotVerified": true
+        }
+      ]
+    },
+    {
+      "id": "products",
+      "path": "/products/",
+      "sections": [
+        {
+          "id": "products-tabbed-products-1",
+          "preset": "revise/tabbed-products",
+          "type": "collection-track",
+          "blocks": 0,
+          "implementationClass": "native-semantic-section",
+          "cmsInstalledInLocalFixture": true,
+          "productionInstalledNotVerified": true
+        },
+        {
+          "id": "products-pinned-pdp-2",
+          "preset": "revise/pinned-pdp",
+          "type": "featured-product",
+          "blocks": 0,
+          "implementationClass": "native-semantic-section",
+          "cmsInstalledInLocalFixture": true,
+          "productionInstalledNotVerified": true
+        },
+        {
+          "id": "products-hotspot-lookbook-3",
+          "preset": "revise/hotspot-lookbook",
+          "type": "shop-the-look",
+          "blocks": 0,
+          "implementationClass": "native-semantic-section",
+          "cmsInstalledInLocalFixture": true,
+          "productionInstalledNotVerified": true
+        },
+        {
+          "id": "products-sticky-summary-4",
+          "preset": "revise/sticky-summary",
+          "type": "bundle-builder",
+          "blocks": 3,
+          "implementationClass": "native-semantic-section",
+          "cmsInstalledInLocalFixture": true,
+          "productionInstalledNotVerified": true
+        },
+        {
+          "id": "products-trust-row-5",
+          "preset": "revise/trust-row",
+          "type": "trust-row",
+          "blocks": 4,
+          "implementationClass": "native-semantic-section",
+          "cmsInstalledInLocalFixture": true,
+          "productionInstalledNotVerified": true
+        }
+      ]
+    },
+    {
+      "id": "stories",
+      "path": "/stories/",
+      "sections": [
+        {
+          "id": "stories-campaign-teaser-1",
+          "preset": "revise/campaign-teaser",
+          "type": "campaign-teaser",
+          "blocks": 0,
+          "implementationClass": "native-semantic-section",
+          "cmsInstalledInLocalFixture": true,
+          "productionInstalledNotVerified": true
+        },
+        {
+          "id": "stories-sticky-card-deck-2",
+          "preset": "revise/sticky-card-deck",
+          "type": "editorial-posts",
+          "blocks": 3,
+          "implementationClass": "native-semantic-section",
+          "cmsInstalledInLocalFixture": true,
+          "productionInstalledNotVerified": true
+        },
+        {
+          "id": "stories-full-bleed-grid-3",
+          "preset": "revise/full-bleed-grid",
+          "type": "social-gallery",
+          "blocks": 6,
+          "implementationClass": "native-semantic-section",
+          "cmsInstalledInLocalFixture": true,
+          "productionInstalledNotVerified": true
+        },
+        {
+          "id": "stories-brand-film-4",
+          "preset": "revise/brand-film",
+          "type": "brand-film",
+          "blocks": 0,
+          "implementationClass": "native-semantic-section",
+          "cmsInstalledInLocalFixture": true,
+          "productionInstalledNotVerified": true
+        }
+      ],
+      "nestedVisualPatterns": 9
+    },
+    {
+      "id": "campaigns",
+      "path": "/campaigns/",
+      "sections": [
+        {
+          "id": "campaigns-dark-promo-grid-1",
+          "preset": "revise/dark-promo-grid",
+          "type": "editorial-grid",
+          "blocks": 3,
+          "implementationClass": "native-semantic-section",
+          "cmsInstalledInLocalFixture": true,
+          "productionInstalledNotVerified": true
+        },
+        {
+          "id": "campaigns-pinned-media-grid-2",
+          "preset": "revise/pinned-media-grid",
+          "type": "collection-split-media",
+          "blocks": 4,
+          "implementationClass": "native-semantic-section",
+          "cmsInstalledInLocalFixture": true,
+          "productionInstalledNotVerified": true
+        },
+        {
+          "id": "campaigns-before-after-3",
+          "preset": "revise/before-after",
+          "type": "before-after",
+          "blocks": 0,
+          "implementationClass": "native-semantic-section",
+          "cmsInstalledInLocalFixture": true,
+          "productionInstalledNotVerified": true
+        },
+        {
+          "id": "campaigns-testimonials-4",
+          "preset": "revise/testimonials",
+          "type": "testimonials",
+          "blocks": 3,
+          "implementationClass": "native-semantic-section",
+          "cmsInstalledInLocalFixture": true,
+          "productionInstalledNotVerified": true
+        }
+      ],
+      "nestedVisualPatterns": 17
+    },
+    {
+      "id": "ideas",
+      "path": "/ideas/",
+      "sections": [
+        {
+          "id": "ideas-merch-lab-1",
+          "preset": "revise/merch-lab",
+          "type": "commerce-offers",
+          "blocks": 0,
+          "implementationClass": "native-semantic-section",
+          "cmsInstalledInLocalFixture": true,
+          "productionInstalledNotVerified": true
+        },
+        {
+          "id": "ideas-commerce-marquee-2",
+          "preset": "revise/commerce-marquee",
+          "type": "marquee",
+          "blocks": 5,
+          "implementationClass": "native-semantic-section",
+          "cmsInstalledInLocalFixture": true,
+          "productionInstalledNotVerified": true
+        },
+        {
+          "id": "ideas-faq-3",
+          "preset": "revise/faq",
+          "type": "faq",
+          "blocks": 3,
+          "implementationClass": "native-semantic-section",
+          "cmsInstalledInLocalFixture": true,
+          "productionInstalledNotVerified": true
+        },
+        {
+          "id": "ideas-newsletter-4",
+          "preset": "revise/newsletter",
+          "type": "cta-band",
+          "blocks": 0,
+          "implementationClass": "native-semantic-section",
+          "cmsInstalledInLocalFixture": true,
+          "productionInstalledNotVerified": true
+        }
+      ]
+    }
+  ],
+  "totalSections": 23,
+  "toolingEvidence": {
+    "themeToolsBranch": "feat/portable-section-refinery-20261009",
+    "commands": [
+      "ingest",
+      "inventory",
+      "graph",
+      "check",
+      "plan"
+    ],
+    "exportedFileCount": 35,
+    "exportedHtmlPages": 5,
+    "exportedSectionDefinitions": 23,
+    "exportedStylesheets": 5,
+    "htmlReferences": 99,
+    "sourceValidation": {
+      "duplicateIds": 0,
+      "unresolvedMediaKeys": 0,
+      "invalidLocalRoutes": 0
+    },
+    "canonicalNativeSectionsStories": 4,
+    "canonicalNativeSectionsCampaigns": 4,
+    "nestedVisualPatternsStories": 9,
+    "nestedVisualPatternsCampaigns": 17,
+    "parsedCssJsLiquidCompleteness": false,
+    "nativeOwnershipClassifierCommit": "9636245bf5481db8366585f0409ab621f5a033d8",
+    "nativeClassifierBranch": "feat/portable-section-refinery-20261009"
+  },
+  "storage": {
+    "archiveCreatedOnMac": true,
+    "archiveSha256": "e55b914ad19067e9f1ced41da84ddb6f38f9d01ad7848ec30224db930fad60bc",
+    "archiveBytes": 69882,
+    "archiveObjectKey": null,
+    "archiveUploadStatus": "blocked-local-device-connection",
+    "sourceInventoryR2Key": "design-library/v1/site-source/2026-10-09/fnf-revise/source-inventory.json",
+    "githubMainSourceFilesUploaded": 14,
+    "githubMainSourceObjects": [
+      {
+        "repo": "SamPrimeaux/inneranimalmedia-cms",
+        "ref": "main",
+        "path": "examples/revise-foundation/src/site-data.ts",
+        "r2Key": "design-library/v1/site-source/2026-10-09/fnf-revise/github-main/examples/revise-foundation/src/site-data.ts"
+      },
+      {
+        "repo": "SamPrimeaux/inneranimalmedia-cms",
+        "ref": "main",
+        "path": "examples/revise-foundation/src/site-main.ts",
+        "r2Key": "design-library/v1/site-source/2026-10-09/fnf-revise/github-main/examples/revise-foundation/src/site-main.ts"
+      },
+      {
+        "repo": "SamPrimeaux/inneranimalmedia-cms",
+        "ref": "main",
+        "path": "examples/revise-foundation/src/fixtures/fnf-concept.ts",
+        "r2Key": "design-library/v1/site-source/2026-10-09/fnf-revise/github-main/examples/revise-foundation/src/fixtures/fnf-concept.ts"
+      },
+      {
+        "repo": "SamPrimeaux/inneranimalmedia-cms",
+        "ref": "main",
+        "path": "packages/revise-theme/src/presets/showcase.ts",
+        "r2Key": "design-library/v1/site-source/2026-10-09/fnf-revise/github-main/packages/revise-theme/src/presets/showcase.ts"
+      },
+      {
+        "repo": "SamPrimeaux/inneranimalmedia-cms",
+        "ref": "main",
+        "path": "packages/section-library/src/site.ts",
+        "r2Key": "design-library/v1/site-source/2026-10-09/fnf-revise/github-main/packages/section-library/src/site.ts"
+      },
+      {
+        "repo": "SamPrimeaux/inneranimalmedia-cms",
+        "ref": "main",
+        "path": "packages/site-contracts/src/site-document.ts",
+        "r2Key": "design-library/v1/site-source/2026-10-09/fnf-revise/github-main/packages/site-contracts/src/site-document.ts"
+      },
+      {
+        "repo": "SamPrimeaux/inneranimalmedia-cms",
+        "ref": "main",
+        "path": "packages/section-library/src/render.ts",
+        "r2Key": "design-library/v1/site-source/2026-10-09/fnf-revise/github-main/packages/section-library/src/render.ts"
+      },
+      {
+        "repo": "SamPrimeaux/inneranimalmedia-cms",
+        "ref": "main",
+        "path": "packages/section-library/src/sections/showcase.ts",
+        "r2Key": "design-library/v1/site-source/2026-10-09/fnf-revise/github-main/packages/section-library/src/sections/showcase.ts"
+      },
+      {
+        "repo": "SamPrimeaux/inneranimalmedia-cms",
+        "ref": "main",
+        "path": "packages/section-library/src/sections/media-hero.ts",
+        "r2Key": "design-library/v1/site-source/2026-10-09/fnf-revise/github-main/packages/section-library/src/sections/media-hero.ts"
+      },
+      {
+        "repo": "SamPrimeaux/inneranimalmedia-cms",
+        "ref": "main",
+        "path": "packages/section-library/src/sections/statement.ts",
+        "r2Key": "design-library/v1/site-source/2026-10-09/fnf-revise/github-main/packages/section-library/src/sections/statement.ts"
+      },
+      {
+        "repo": "SamPrimeaux/inneranimalmedia-cms",
+        "ref": "main",
+        "path": "packages/section-library/css/layout.css",
+        "r2Key": "design-library/v1/site-source/2026-10-09/fnf-revise/github-main/packages/section-library/css/layout.css"
+      },
+      {
+        "repo": "SamPrimeaux/inneranimalmedia-cms",
+        "ref": "main",
+        "path": "examples/revise-foundation/src/site.css",
+        "r2Key": "design-library/v1/site-source/2026-10-09/fnf-revise/github-main/examples/revise-foundation/src/site.css"
+      },
+      {
+        "repo": "SamPrimeaux/inneranimalmedia-cms",
+        "ref": "main",
+        "path": "examples/revise-foundation/src/site-polish.css",
+        "r2Key": "design-library/v1/site-source/2026-10-09/fnf-revise/github-main/examples/revise-foundation/src/site-polish.css"
+      },
+      {
+        "repo": "SamPrimeaux/inneranimalmedia-cms",
+        "ref": "main",
+        "path": "examples/revise-foundation/src/demo.css",
+        "r2Key": "design-library/v1/site-source/2026-10-09/fnf-revise/github-main/examples/revise-foundation/src/demo.css"
+      }
+    ],
+    "localZipUploadStatus": "pending-mac-reconnection"
+  },
+  "promotion": {
+    "sourceStructureVerified": true,
+    "allPagesInNativeSiteDocument": true,
+    "sectionTemplateRegistryKnown": true,
+    "externalMediaMastersVerified": false,
+    "localBrowserFidelityVerified": false,
+    "hostedCmsD1DraftPreviewPublishVerified": false,
+    "stockReady": false
+  },
+  "rules": [
+    "Never copy native CMS sections into generated HTML components as stock",
+    "Nested visual patterns may be mined as subcomponents but require typed settings and review",
+    "Keep raw source and provenance immutable",
+    "Do not claim the local source fixture includes user localStorage edits"
+  ]
+}

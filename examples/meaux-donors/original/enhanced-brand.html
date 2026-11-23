@@ -1,0 +1,702 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEAUXX Brand Guidelines - Enhanced Teal Steel System</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        
+        /* ISOLATED BRAND PAGE STYLES - PERFORMANCE OPTIMIZED */
+        .meauxx-brand-page * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .meauxx-brand-page {
+            /* ORIGINAL BRAND COLORS */
+            --meaux-orange: #FF7619;
+            --meaux-teal: #1F97A9;
+            --meaux-background: #23272B;
+            --meaux-dark-text: #333333;
+            --meaux-white: #FFFFFF;
+            
+            /* EXTENDED PALETTE */
+            --meaux-dark-teal: #0F7A8A;
+            --meaux-light-orange: #FFB380;
+            --meaux-navy: #1A2B3D;
+            --meaux-charcoal: #2C2C2C;
+            --meaux-silver: #8E9AAF;
+            
+            /* NEW TEAL STEEL SYSTEM */
+            --meaux-deep: #051b1e;
+            --meaux-dark: #0a2427;
+            --meaux-blue: #0f2f33;
+            --meaux-teal-steel: #1a4a52;
+            --meaux-metallic: #2a6b75;
+            --meaux-shine: #3a8b98;
+            --meaux-light-teal: #4aabb8;
+            --meaux-text: #f0f9fa;
+            --meaux-sub-text: #c8e1e6;
+            --meaux-green: #21c48c;
+            
+            /* SIMPLIFIED BACKGROUNDS - BETTER PERFORMANCE */
+            --header-bg: linear-gradient(135deg, #051b1e 0%, #1a4a52 100%);
+            --hero-overlay: linear-gradient(135deg, rgba(5,27,30,0.8) 0%, rgba(26,74,82,0.6) 100%);
+            --metallic-shine: linear-gradient(45deg, var(--meaux-metallic), var(--meaux-light-teal));
+            
+            /* PARTNER COLORS */
+            --partner-green: #21c48c;
+            --partner-blue: #2196F3;
+            --partner-purple: #9C27B0;
+            --partner-amber: #FFC107;
+            --partner-red: #F44336;
+            --partner-cyan: #00BCD4;
+            
+            /* OPTIMIZED THEME COLORS */
+            --page-background: #051b1e;
+            --card-background: rgba(26, 74, 82, 0.1);
+            --text-primary: #f0f9fa;
+            --text-secondary: #c8e1e6;
+            --border-color: rgba(74, 171, 184, 0.2);
+            --hover-overlay: rgba(74, 171, 184, 0.08);
+            
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--page-background);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .meauxx-brand-page .brand-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* SIMPLIFIED SWAMP HERO STYLES */
+        .meauxx-brand-page .meaux-swamp-cta-hero {
+            position: relative;
+            min-height: 350px;
+            background: var(--header-bg);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 8px;
+            overflow: hidden;
+        }
+        
+        .meauxx-brand-page .meaux-swamp-cta-hero::before {
+            content: "";
+            position: absolute;
+            left: 0; top: 0; right: 0;
+            height: 280px;
+            width: 100%;
+            z-index: 1;
+            background: url('https://cdn.shopify.com/s/files/1/0685/1654/4672/files/FF7619.png?v=1753075822') top center/cover no-repeat;
+            opacity: 1;
+            pointer-events: none;
+        }
+        
+        .meauxx-brand-page .swamp-cta-overlay {
+            position: absolute;
+            left: 0; right: 0; top: 0; bottom: 0;
+            background: var(--hero-overlay);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .meauxx-brand-page .swamp-cta-inner {
+            position: relative;
+            z-index: 3;
+            width: 100%;
+            max-width: 720px;
+            margin: 0 auto;
+            text-align: center;
+            padding-top: 3px;
+        }
+        
+        .meauxx-brand-page .meaux-swamp-logo {
+            width: 78px;
+            height: 78px;
+            object-fit: contain;
+            filter: brightness(0) invert(1) drop-shadow(0 4px 20px rgba(74, 171, 184, 0.5));
+            margin-bottom: 6px;
+        }
+        
+        .meauxx-brand-page .swamp-cta-title {
+            color: var(--meaux-orange);
+            font-family: 'Inter', Arial, sans-serif;
+            font-size: 3.2rem;
+            font-weight: 900;
+            letter-spacing: 1.21px;
+            margin-bottom: .1px;
+            text-shadow: 0 5px 16px rgba(74, 171, 184, 0.6), 0 2px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .meauxx-brand-page .swamp-banner-outer {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto 12px auto;
+            height: 58px;
+            overflow: hidden;
+            border-radius: 18px;
+            background: rgba(74, 171, 184, 0.15);
+            box-shadow: 0 4px 15px rgba(74, 171, 184, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(74, 171, 184, 0.3);
+        }
+
+        .meauxx-brand-page .swamp-banner-marquee {
+            display: inline-block;
+            white-space: nowrap;
+            animation: swampScroll 13s linear infinite;
+            will-change: transform;
+            min-width: 120%;
+        }
+
+        .meauxx-brand-page .swamp-banner-marquee span {
+            font-size: 4.05rem;
+            font-weight: 900;
+            font-family: 'Inter', Arial, sans-serif;
+            color: var(--meaux-text);
+            text-shadow: 0 2px 8px rgba(74, 171, 184, 0.4);
+            letter-spacing: 2px;
+            padding: 0 20px;
+            line-height: 58px;
+            display: inline-block;
+        }
+
+        @keyframes swampScroll {
+            0% { transform: translateX(0%);}
+            100% { transform: translateX(-50%);}
+        }
+
+        .meauxx-brand-page .swamp-cta-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--meaux-orange) 0%, #e55a00 100%);
+            color: var(--meaux-white);
+            font-family: 'Inter', Arial, sans-serif;
+            font-size: 1.2rem;
+            font-weight: 800;
+            padding: 11px 38px;
+            border-radius: 28px;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(255, 118, 25, 0.3);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-top: 9px;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 118, 25, 0.4);
+        }
+        
+        .meauxx-brand-page .swamp-cta-btn:hover {
+            background: linear-gradient(135deg, var(--meaux-teal-steel) 0%, var(--meaux-shine) 100%);
+            color: var(--meaux-text);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 171, 184, 0.3);
+        }
+
+        /* CONTENT GRID LAYOUT - ENHANCED */
+        .meauxx-brand-page .brand-content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+
+        @media (max-width: 968px) {
+            .meauxx-brand-page .brand-content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .meauxx-brand-page .brand-section {
+            padding: 3rem;
+            border-right: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            background: var(--card-background);
+        }
+
+        .meauxx-brand-page .brand-section:nth-child(even) {
+            border-right: none;
+            background: rgba(74, 171, 184, 0.05);
+        }
+
+        .meauxx-brand-page .brand-section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            background: var(--metallic-shine);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* SIMPLIFIED COLOR PALETTE STYLES */
+        .meauxx-brand-page .brand-color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .meauxx-brand-page .brand-color-swatch {
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .meauxx-brand-page .brand-color-swatch:hover {
+            transform: translateY(-2px);
+            border-color: var(--border-color);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .meauxx-brand-page .brand-color-swatch .color-code {
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+            font-family: 'Monaco', monospace;
+        }
+
+        .meauxx-brand-page .brand-color-swatch .color-name {
+            font-weight: 500;
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .meauxx-brand-page .brand-color-swatch.light-bg .color-code,
+        .meauxx-brand-page .brand-color-swatch.light-bg .color-name {
+            color: var(--meaux-dark-text);
+        }
+
+        .meauxx-brand-page .brand-color-swatch.dark-bg .color-code,
+        .meauxx-brand-page .brand-color-swatch.dark-bg .color-name {
+            color: var(--meaux-text);
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+
+        /* TEAL STEEL SWATCHES - SIMPLIFIED */
+        .meauxx-brand-page .teal-steel-swatch {
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* SUBSECTION STYLING - SIMPLIFIED */
+        .meauxx-brand-page .color-subsection {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .meauxx-brand-page .color-subsection h3 {
+            color: var(--text-primary);
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            background: linear-gradient(45deg, var(--meaux-orange), var(--meaux-light-teal));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* SIMPLIFIED TEAL STEEL SECTION */
+        .meauxx-brand-page .teal-steel-section {
+            grid-column: 1 / -1;
+            background: var(--header-bg);
+            border: 1px solid rgba(74, 171, 184, 0.3);
+        }
+
+        .meauxx-brand-page .teal-steel-description {
+            background: rgba(74, 171, 184, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--meaux-orange);
+        }
+
+        .meauxx-brand-page .teal-steel-description p {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* SIMPLIFIED TYPOGRAPHY STYLES */
+        .meauxx-brand-page .brand-font-list {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .meauxx-brand-page .brand-font-item {
+            padding: 2rem;
+            background: var(--hover-overlay);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .meauxx-brand-page .brand-font-item:hover {
+            background: rgba(74, 171, 184, 0.12);
+            border-color: var(--meaux-orange);
+            transform: translateX(4px);
+        }
+
+        .meauxx-brand-page .brand-font-name {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .meauxx-brand-page .brand-font-usage {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            font-style: italic;
+        }
+
+        /* SIMPLIFIED FONT ANIMATIONS - PERFORMANCE OPTIMIZED */
+        @media (prefers-reduced-motion: no-preference) {
+            .meauxx-brand-page .inter-gradient:hover {
+                transform: scale(1.03);
+                filter: brightness(1.1);
+            }
+
+            .meauxx-brand-page .bison-bold:hover {
+                transform: scale(1.02);
+            }
+
+            .meauxx-brand-page .masterday:hover {
+                transform: translateY(-2px);
+            }
+        }
+
+        /* SIMPLIFIED USAGE GUIDELINES */
+        .meauxx-brand-page .brand-usage-section {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, var(--meaux-deep), var(--meaux-blue));
+            border: none;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .meauxx-brand-page .brand-usage-notes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .meauxx-brand-page .brand-usage-item {
+            background: var(--hover-overlay);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--meaux-orange);
+            transition: all 0.2s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .meauxx-brand-page .brand-usage-item:hover {
+            background: rgba(74, 171, 184, 0.12);
+            border-left-color: var(--meaux-light-teal);
+            transform: translateX(4px);
+        }
+
+        .meauxx-brand-page .brand-usage-item p {
+            margin: 0;
+            line-height: 1.6;
+            color: var(--text-primary);
+        }
+
+        .meauxx-brand-page .brand-contact-link {
+            color: var(--meaux-orange);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .meauxx-brand-page .brand-contact-link:hover {
+            color: var(--meaux-light-teal);
+        }
+
+        /* MOBILE RESPONSIVE TWEAKS FOR ENHANCED SWAMP HERO */
+        @media (max-width: 700px) {
+            .meauxx-brand-page .meaux-swamp-logo { width: 45px; height: 45px; }
+            .meauxx-brand-page .swamp-cta-title { font-size: 1rem; margin-bottom: 8px; }
+            .meauxx-brand-page .swamp-cta-inner { padding-top: 12px; }
+            .meauxx-brand-page .swamp-cta-btn { font-size: 0.99rem; padding: 6px 22px; border-radius: 18px; }
+            .meauxx-brand-page .swamp-banner-outer { height: 34px; }
+            .meauxx-brand-page .swamp-banner-marquee span { font-size: 1.18rem; line-height: 34px; padding: 0 10px; }
+            .meauxx-brand-page .meaux-swamp-cta-hero { min-height: 220px; padding-bottom: 0px; }
+            .meauxx-brand-page .meaux-swamp-cta-hero::before { height: 120px; }
+        }
+
+        /* GENERAL MOBILE RESPONSIVE */
+        @media (max-width: 768px) {
+            .meauxx-brand-page .brand-section {
+                padding: 2rem 1.5rem;
+            }
+            
+            .meauxx-brand-page .brand-color-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 1rem;
+            }
+            
+            .meauxx-brand-page .brand-font-name {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="meauxx-brand-page">
+        <div class="brand-container">
+            <!-- Enhanced Swamp Hero Section -->
+            <section class="meaux-swamp-cta-hero">
+                <div class="swamp-cta-overlay"></div>
+                <div class="swamp-cta-inner">
+                    <img src="https://cdn.shopify.com/s/files/1/0685/1654/4672/files/Untitled_design_6_7fc5f0fd-48c7-4788-8565-12a426a13516.png?v=1752709026" class="meaux-swamp-logo" alt="Meauxbility Logo">
+                    <h1 class="swamp-cta-title">ENHANCED BRAND SYSTEM</h1>
+                    <div class="swamp-banner-outer">
+                        <div class="swamp-banner-marquee">
+                            <span>Teal Steel. Liquid Metal. Pure Innovation.&nbsp;&nbsp;&nbsp;</span>
+                            <span>Teal Steel. Liquid Metal. Pure Innovation.&nbsp;&nbsp;&nbsp;</span>
+                        </div>
+                    </div>
+                    <a href="https://meauxbility.org/pages/about-us?view=inquires-form" class="swamp-cta-btn">
+                        Contact
+                    </a>
+                </div>
+            </section>
+
+            <!-- Content Grid -->
+            <div class="brand-content-grid">
+                <!-- Original Color Palette Section -->
+                <div class="brand-section">
+                    <h2 class="brand-section-title">Core Brand Colors</h2>
+                    
+                    <!-- Primary Colors -->
+                    <div class="brand-color-grid">
+                        <div class="brand-color-swatch dark-bg" style="background: var(--meaux-orange);">
+                            <div class="color-code">#FF7619</div>
+                            <div class="color-name">Meaux Orange</div>
+                        </div>
+                        <div class="brand-color-swatch dark-bg" style="background: var(--meaux-teal);">
+                            <div class="color-code">#1F97A9</div>
+                            <div class="color-name">Meaux Teal</div>
+                        </div>
+                        <div class="brand-color-swatch light-bg" style="background: #F4F4F4; border: 1px solid #ccc;">
+                            <div class="color-code">#F4F4F4</div>
+                            <div class="color-name">Background</div>
+                        </div>
+                        <div class="brand-color-swatch dark-bg" style="background: var(--meaux-dark-text);">
+                            <div class="color-code">#333333</div>
+                            <div class="color-name">Dark Text</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Extended Palette -->
+                    <div class="color-subsection">
+                        <h3>Extended Palette</h3>
+                        <div class="brand-color-grid">
+                            <div class="brand-color-swatch dark-bg" style="background: var(--meaux-dark-teal);">
+                                <div class="color-code">#0F7A8A</div>
+                                <div class="color-name">Dark Teal</div>
+                            </div>
+                            <div class="brand-color-swatch dark-bg" style="background: var(--meaux-light-orange);">
+                                <div class="color-code">#FFB380</div>
+                                <div class="color-name">Light Orange</div>
+                            </div>
+                            <div class="brand-color-swatch dark-bg" style="background: var(--meaux-navy);">
+                                <div class="color-code">#1A2B3D</div>
+                                <div class="color-name">Navy</div>
+                            </div>
+                            <div class="brand-color-swatch dark-bg" style="background: var(--meaux-silver);">
+                                <div class="color-code">#8E9AAF</div>
+                                <div class="color-name">Silver</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Partner Colors -->
+                    <div class="color-subsection">
+                        <h3>Partner Colors</h3>
+                        <div class="brand-color-grid">
+                            <div class="brand-color-swatch dark-bg" style="background: var(--partner-green);">
+                                <div class="color-code">#21c48c</div>
+                                <div class="color-name">Partner Green</div>
+                            </div>
+                            <div class="brand-color-swatch dark-bg" style="background: var(--partner-blue);">
+                                <div class="color-code">#2196F3</div>
+                                <div class="color-name">Partner Blue</div>
+                            </div>
+                            <div class="brand-color-swatch dark-bg" style="background: var(--partner-purple);">
+                                <div class="color-code">#9C27B0</div>
+                                <div class="color-name">Partner Purple</div>
+                            </div>
+                            <div class="brand-color-swatch dark-bg" style="background: var(--partner-amber);">
+                                <div class="color-code">#FFC107</div>
+                                <div class="color-name">Partner Amber</div>
+                            </div>
+                            <div class="brand-color-swatch dark-bg" style="background: var(--partner-red);">
+                                <div class="color-code">#F44336</div>
+                                <div class="color-name">Partner Red</div>
+                            </div>
+                            <div class="brand-color-swatch dark-bg" style="background: var(--partner-cyan);">
+                                <div class="color-code">#00BCD4</div>
+                                <div class="color-name">Partner Cyan</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Typography Section -->
+                <div class="brand-section">
+                    <h2 class="brand-section-title">Typography</h2>
+                    <div class="brand-font-list">
+                        <div class="brand-font-item">
+                            <div class="brand-font-name inter-gradient" style="font-family: 'Inter', sans-serif; font-weight: 700; background: linear-gradient(45deg, var(--meaux-metallic), var(--meaux-light-teal)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                                Inter Bold Gradient
+                            </div>
+                            <div class="brand-font-usage">Section Titles &amp; Premium Headers</div>
+                        </div>
+                        
+                        <div class="brand-font-item">
+                            <div class="brand-font-name bison-bold" style="font-family: 'Bison Bold', 'Inter', sans-serif;">
+                                Bison Bold
+                            </div>
+                            <div class="brand-font-usage">Headers &amp; Impact</div>
+                        </div>
+                        
+                        <div class="brand-font-item">
+                            <div class="brand-font-name masterday" style="font-family: 'Masterday', 'Inter', cursive;">
+                                Masterday
+                            </div>
+                            <div class="brand-font-usage">Accent &amp; Style</div>
+                        </div>
+                        
+                        <div class="brand-font-item">
+                            <div class="brand-font-name futura-medium" style="font-family: 'Futura PT Medium', 'Inter', sans-serif;">
+                                Futura PT Medium
+                            </div>
+                            <div class="brand-font-usage">Body &amp; Captions</div>
+                        </div>
+                        
+                        <div class="brand-font-item">
+                            <div class="brand-font-name futura-bold" style="font-family: 'Futura PT Bold', 'Inter', sans-serif;">
+                                Futura PT Bold
+                            </div>
+                            <div class="brand-font-usage">Sub-headers</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NEW: Teal Steel System Section -->
+            <div class="brand-section teal-steel-section">
+                <h2 class="brand-section-title">Teal Steel Design System</h2>
+                
+                <div class="teal-steel-description">
+                    <p><strong>Liquid Metal Aesthetic:</strong> Our advanced color system creates depth through industrial teal gradients, glass morphism effects, and metallic shines. Perfect for premium interfaces, hero sections, and immersive experiences that embody strength, innovation, and fluid adaptability.</p>
+                </div>
+                
+                <!-- Teal Steel Color Progression -->
+                <div class="color-subsection">
+                    <h3>Depth Progression (Deep → Light)</h3>
+                    <div class="brand-color-grid">
+                        <div class="brand-color-swatch dark-bg teal-steel-swatch" style="background: var(--meaux-deep);">
+                            <div class="color-code">#051b1e</div>
+                            <div class="color-name">Meaux Deep</div>
+                        </div>
+                        <div class="brand-color-swatch dark-bg teal-steel-swatch" style="background: var(--meaux-dark);">
+                            <div class="color-code">#0a2427</div>
+                            <div class="color-name">Meaux Dark</div>
+                        </div>
+                        <div class="brand-color-swatch dark-bg teal-steel-swatch" style="background: var(--meaux-blue);">
+                            <div class="color-code">#0f2f33</div>
+                            <div class="color-name">Meaux Blue</div>
+                        </div>
+                        <div class="brand-color-swatch dark-bg teal-steel-swatch" style="background: var(--meaux-teal-steel);">
+                            <div class="color-code">#1a4a52</div>
+                            <div class="color-name">Teal Steel</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Metallic Range -->
+                <div class="color-subsection">
+                    <h3>Metallic Range</h3>
+                    <div class="brand-color-grid">
+                        <div class="brand-color-swatch dark-bg teal-steel-swatch" style="background: var(--meaux-metallic);">
+                            <div class="color-code">#2a6b75</div>
+                            <div class="color-name">Metallic</div>
+                        </div>
+                        <div class="brand-color-swatch dark-bg teal-steel-swatch" style="background: var(--meaux-shine);">
+                            <div class="color-code">#3a8b98</div>
+                            <div class="color-name">Shine</div>
+                        </div>
+                        <div class="brand-color-swatch dark-bg teal-steel-swatch" style="background: var(--meaux-light-teal);">
+                            <div class="color-code">#4aabb8</div>
+                            <div class="color-name">Light Teal</div>
+                        </div>
+                        <div class="brand-color-swatch dark-bg teal-steel-swatch" style="background: var(--meaux-green);">
+                            <div class="color-code">#21c48c</div>
+                            <div class="color-name">Accent Green</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Text Colors -->
+                <div class="color-subsection">
+                    <h3>Typography Colors</h3>
+                    <div class="brand-color-grid">
+                        <div class="brand-color-swatch dark-bg teal-steel-swatch" style="background: #2a6b75;">
+                            <div class="color-code" style="color: var(--meaux-text);">#f0f9fa</div>
+                            <div class="color-name" style="color: var(--meaux-text);">Primary Text</div>
+                        </div>
+                        <div class="brand-color-swatch dark-bg teal-steel-swatch" style="background: #2a6b75;">
+                            <div class="color-code" style="color: var(--meaux-sub-text);">#c8e1e6</div>
+                            <div class="color-name" style="color: var(--meaux-sub-text);">Secondary Text</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Usage Guidelines Section -->
+            <div class="brand-section brand-usage-section">
+                <h2 class="brand-section-title">Usage Guidelines</h2>
+                <div class="brand-usage-notes">
+                    <div class="brand-usage-item">
+                        <p><strong>Logo Files:</strong> All logo files are PDF/SVG vectors—do not rasterize or recolor.</p>
+                    </div>
+                    <div class="brand-usage-item">
+                        <p><strong>Color Accuracy:</strong> Use only approved color values; do not substitute.</p>
+                    </div>
+                    <div class="brand-usage-item">
+                        <p><strong>Teal Steel System:</strong> Use for premium interfaces, glass morphism effects, and sophisticated gradients. Perfect for headers, hero sections, and immersive experiences.</p>
+                    </div>
+                    <div class="brand-usage-item">
+                        <p><strong>Clear Space:</strong> Maintain clear space equal to the height of the "M" around all logos.</p>
+                    </div>
+                    <div class="brand-usage-item">
+                        <p><strong>Glass Effects:</strong> Combine backdrop-filter: blur() with teal steel colors for liquid metal aesthetic.</p>
+                    </div>
+                    <div class="brand-usage-item">
+                        <p><strong>Contact:</strong> For additional versions, contact <a href="mailto:hey@meauxbility.com" class="brand-contact-link">hey@meauxbility.com</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<browser-mcp-container data-wxt-shadow-root=""></browser-mcp-container></body></html>
