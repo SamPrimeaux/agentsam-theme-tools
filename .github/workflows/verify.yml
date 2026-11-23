@@ -58,6 +58,9 @@ jobs:
       - name: Install SDK public API dependencies
         working-directory: agentsam-sdk-integration
         run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Build canonical SDK Contracts for the public SAM API
+        working-directory: agentsam-sdk-integration
+        run: npm run build:contracts
       - name: Require real compiler and five SAM operations
         env:
           AGENTSAM_SDK_ROOT: ${{ github.workspace }}/agentsam-sdk-integration
