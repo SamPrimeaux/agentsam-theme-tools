@@ -1,8 +1,9 @@
 import { ingestSourceInputs } from '@inneranimalmedia/theme-source-ingest';
 import { buildThemeModuleGraph, planModuleExtraction } from '@inneranimalmedia/theme-graph';
+import { runAuthoringCommand } from './authoring.js';
 import { planHtmlRebuild, compileStaticSection } from '@inneranimalmedia/theme-html-rewriter';
 
-export const CLI_COMMANDS = ['ingest', 'inspect', 'inventory', 'graph', 'check', 'closure', 'plan', 'normalize'];
+export const CLI_COMMANDS = ['ingest', 'inspect', 'inventory', 'graph', 'check', 'closure', 'plan', 'normalize', 'analyze', 'authoring', 'verify'];
 
 function readArgs(argv, command) {
   const args = [...argv];
@@ -100,11 +101,12 @@ export async function runThemeCommand(argv, { stdout = process.stdout, stderr = 
   if (command === 'help' || command === '--help' || command === '-h') {
     stdout.write(
       'AgentSam Theme Tools (foundation)\n' +
-      'Usage: agentsam-theme <ingest|inspect|inventory|graph|check|closure|plan|normalize> <paths...> [--json]\n' +
+      'Usage: agentsam-theme <ingest|inspect|inventory|graph|check|closure|plan|normalize|analyze|authoring|verify> <paths...> [--json]\n' +
       '       agentsam-theme closure <one path> [--entry relative/path] [--json]\n' +
       '       agentsam-theme plan <one path> [--entry relative/path.html] [--json]\n' +
       '       agentsam-theme normalize <one path> [--entry relative/path.html] (--marker name|--start offset) [--asset URL] [--json]\n' +
       'Sources: HTML, directory, ZIP, TAR, TAR.GZ, stdin (-); Git bundle snapshots\n' +
+      'Authoring: --entry file.html --scope component [--edits edits.json] [--expected-sha SHA256] [--json]\n' +
       'Closure is a source-backed candidate report, not a runnable converted theme.\n'
     );
     return 0;
@@ -113,6 +115,7 @@ export async function runThemeCommand(argv, { stdout = process.stdout, stderr = 
     stderr.write('unknown_command: ' + command + '\n');
     return 2;
   }
+  if (['analyze','authoring','verify'].includes(command)) return runAuthoringCommand(command,args,{stdout,stderr,stdin});
   let options;
   try {
     options = readArgs(args, command);
